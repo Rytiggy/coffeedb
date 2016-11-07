@@ -4,22 +4,23 @@ import java.util.*;
 
 public class DLFaculty {
    // Table attributes
-   private String facultyID, fName, lName, password, email;
+   private int facultyID;
+   private String fName, lName, password, email;
    private MySQLDatabase database;
    
    // Constructor
-   DLFaculty(String myFacultyID, String myPassword) {
-      database = new MySQLDatabase("jdbc:mysql://localhost/travel?autoReconnect=true&useSSL=false","root", "student");
-      facultyID = myFacultyID;
+   DLFaculty(String myEmail, String myPassword) {
+      database = new MySQLDatabase("jdbc:mysql://localhost/facresearchdb?autoReconnect=true&useSSL=false","root", "student");
+      // Need to authenticate user here. If = true, is good
+      email = myEmail;
       password = myPassword;
       fName = null;
       lName = null;
-      email = null;  
-      //user.authenticate if = true is good
+      facultyID = 0;
    }
    
    // Getters
-   public String getFacultyID() {
+   public int getFacultyID() {
       return facultyID;
    }
    public String getFName() {
@@ -39,18 +40,18 @@ public class DLFaculty {
    public void fetch() {
       database.connect();
       
-      String fetchSQL = "SELECT * FROM faculty WHERE id = ?";
+      String fetchSQL = "SELECT * FROM faculty WHERE email = ?"; // this assumes user has been authenticated in constructor
       ArrayList<String> facultyAttributes = new ArrayList<String>();
       
       try {
-         facultyAttributes.add(facultyID);
+         facultyAttributes.add(String.valueOf(facultyID));
          ArrayList<ArrayList<String>> results = database.getData(fetchSQL, facultyAttributes);
+         facultyID = Integer.valueOf(results.get(1).get(0));
          fName = results.get(1).get(1);
-         lName = results.get(1).get(2);
-         email = results.get(1).get(4);
+         lName = results.get(1).get(2);         
       }
       catch (Exception e) {
-      
+         // Needs to be a DLException
       }
       database.close();
    }
