@@ -4,11 +4,11 @@ import java.util.ArrayList;
 public class DLPapers {
 
     private String title, paperAbstract, citation, paperID;
-    private MySQLDatabase msqlDB;;
+    private MySQLDatabase msqlDB;
 
     public DLPapers(String _paperID) {
         this.paperID = _paperID;
-        msqlDB = new MySQLDatabase();
+        msqlDB = new MySQLDatabase(null,null,null);//<SHOULD NOT BE NULL NULL NULL SHOULD NTO TAKE ANY ARGS 
         title = null;
         paperAbstract = null;
         citation = null;
