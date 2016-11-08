@@ -10,8 +10,9 @@ public class DLFaculty {
    
    // Constructor
    DLFaculty(String myEmail, String myPassword) {
-      database = new MySQLDatabase("jdbc:mysql://localhost/facresearchdb?autoReconnect=true&useSSL=false","root", "student");
-      // Need to authenticate user here. If = true, is good
+      database = new MySQLDatabase();
+      
+      // Set faculty attributes
       email = myEmail;
       password = myPassword;
       fName = null;
@@ -44,7 +45,7 @@ public class DLFaculty {
       ArrayList<String> facultyAttributes = new ArrayList<String>();
       
       try {
-         facultyAttributes.add(String.valueOf(facultyID));
+         facultyAttributes.add(email);
          ArrayList<ArrayList<String>> results = database.getData(fetchSQL, facultyAttributes);
          facultyID = Integer.valueOf(results.get(1).get(0));
          fName = results.get(1).get(1);
@@ -54,5 +55,60 @@ public class DLFaculty {
          // Needs to be a DLException
       }
       database.close();
+   }
+   
+   // Get all papers authored by this faculty
+   public ArrayList<String> getPapers() {
+      database.connect();
+      
+      ArrayList<String> facultyPapers = new ArrayList<String>();
+      String getPapersSQL = "SELECT paperid FROM authorship WHERE facultyid = ?)";
+      ArrayList<String> facultyAttributes = new ArrayList<String>();
+      
+      try {
+         facultyAttributes.add(String.valueOf(facultyID));
+         ArrayList<ArrayList<String>> results = database.getData(getPapersSQL, facultyAttributes);
+         
+         for(int i = 0; i < results.size(); i++) {
+            facultyPapers.add(results.get(1).get(i));
+         }                  
+      }
+      catch(SQLException sqle) {
+         // needs to throw DLException
+      }
+      return facultyPapers;
+   }
+   
+   // Verify user credentials
+   public boolean login(String myEmail, String myPassword) {
+      email = myEmail;
+      password = myPassword;
+      
+      boolean isValidLogin = false;
+      database.connect();
+      String getUserDataSQL = "";
+      
+      try { 
+         // Create SQL statement using provided user credentials
+         getUserDataSQL = "SELECT * FROM faculty WHERE Email = ? AND Password = ?";
+         ArrayList<String> myAttributes = new ArrayList<String>();
+         myAttributes.add(email);
+         myAttributes.add(password);
+         
+         // Attempt to retrieve user attributes
+         ArrayList<ArrayList<String>> userData = database.getData(getUserDataSQL, myAttributes);
+         email = userData.get(1).get(3);
+         password = userData.get(1).get(4);
+         
+         // User attributes verified         
+         isValidLogin = true;
+      }            
+      catch (IndexOutOfBoundsException ioobe)
+      {
+         // Failed to validate user credentials
+         //throw new DLException(ioobe, "Cannot perform operation at this time.", getUserDataSQL, "login: 83");         
+      }
+      database.close();
+      return isValidLogin;
    }
 }
