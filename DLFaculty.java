@@ -38,7 +38,7 @@ public class DLFaculty {
    }
    
    // Populate faculty attributes
-   public void fetch() {
+   public void fetch() throws DLException {
       database.connect();
       
       String fetchSQL = "SELECT * FROM faculty WHERE email = ?"; // this assumes user has been authenticated in constructor
@@ -58,29 +58,25 @@ public class DLFaculty {
    }
    
    // Get all papers authored by this faculty
-   public ArrayList<String> getPapers() {
+   public ArrayList<String> getPapers() throws DLException {
       database.connect();
       
       ArrayList<String> facultyPapers = new ArrayList<String>();
-      String getPapersSQL = "SELECT paperid FROM authorship WHERE facultyid = ?)";
+      String getPapersSQL = "SELECT paperid FROM authorship WHERE facultyid = ?";
       ArrayList<String> facultyAttributes = new ArrayList<String>();
       
-      try {
-         facultyAttributes.add(String.valueOf(facultyID));
-         ArrayList<ArrayList<String>> results = database.getData(getPapersSQL, facultyAttributes);
-         
-         for(int i = 0; i < results.size(); i++) {
-            facultyPapers.add(results.get(1).get(i));
-         }                  
-      }
-      catch(SQLException sqle) {
-         // needs to throw DLException
-      }
+      facultyAttributes.add(String.valueOf(facultyID));
+      ArrayList<ArrayList<String>> results = database.getData(getPapersSQL, facultyAttributes);
+       
+      for(int i = 0; i < results.size(); i++) {
+         facultyPapers.add(results.get(i).get(1));
+      }                  // we need to figure out index out of bounds issue
+      
       return facultyPapers;
    }
    
    // Verify user credentials
-   public boolean login(String myEmail, String myPassword) {
+   public boolean login(String myEmail, String myPassword) throws DLException {
       email = myEmail;
       password = myPassword;
       

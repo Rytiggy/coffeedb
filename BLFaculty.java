@@ -26,7 +26,7 @@ class BLFaculty {
    // Other methods?
    
    // Get Papers
-   public ArrayList<String> getPapers() {
+   public ArrayList<String> getPapers() throws DLException {
       return faculty.getPapers();
    }  
 }
