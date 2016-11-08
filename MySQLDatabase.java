@@ -9,11 +9,11 @@ public class MySQLDatabase {
 
    //set up the database connections 
    // hostname, Username, password.
-   public MySQLDatabase(String _uri, String _user, String _password){
-      uri= _uri;
+   public MySQLDatabase(){
+      uri= "jdbc:mysql://localhost/facresearchdb?autoReconnect=true&useSSL=false";
       String driver="com.mysql.jdbc.Driver";
-      user = _user;
-      password = _password;
+      user = "root";
+      password = "student";
    }
    
    //Attempts to connect to the Mysql database with input provided         
@@ -69,7 +69,7 @@ public class MySQLDatabase {
          Statement statment = conn.createStatement();
          ResultSet resultSet = statment.executeQuery(mySql);
          
-         //Change the getData method that “accepts an SQL string and the number of fields”, to use metadata from the SQL query to determine the number of fields requested
+         //Change the getData method that ï¿½accepts an SQL string and the number of fieldsï¿½, to use metadata from the SQL query to determine the number of fields requested
          ResultSetMetaData resultSetMetadata = resultSet.getMetaData();
          int numOfCols = resultSetMetadata.getColumnCount();   
           
@@ -190,7 +190,7 @@ public class MySQLDatabase {
          Statement statment = conn.createStatement();
          ResultSet resultSet = statment.executeQuery(mySql); 
          
-         //Change the getData method that “accepts an SQL string and the number of fields”, to use metadata from the SQL query to determine the number of fields requested
+         //Change the getData method that ï¿½accepts an SQL string and the number of fieldsï¿½, to use metadata from the SQL query to determine the number of fields requested
          ResultSetMetaData resultSetMetadata = resultSet.getMetaData();
          int numOfCols = resultSetMetadata.getColumnCount();   
       
