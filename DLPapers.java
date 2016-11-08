@@ -125,13 +125,17 @@ public class DLPapers {
       ArrayList<String> list = new ArrayList<String>(); 
       try {
          msqlDB.connect();
+         list.add(this.keyword);
+         String sql = "SELECT * FROM paper_keywords WHERE keyword = ?;";
+         arr = msqlDB.getData(sql, list);
+         msqlDB.setData(sql, list);
+         msqlDB.close();
       }
       catch(Exception e){
          e.printStackTrace();
+         msqlDB.close();
       }
-      list.add(this.keyword);
-      String sql = "SELECT * FROM paper_keywords WHERE keyword = ?;";
-      arr = msqlDB.getData(sql, list);
+   
    
    }
 
@@ -140,27 +144,40 @@ public class DLPapers {
       
       try {
          msqlDB.connect();
+         list.add(this.keyword);
+         String sql = "INSERT INTO paper_keywords (keyword)" + "VALUES (?);";
+         msqlDB.setData(sql, list);
+         msqlDB.close();
+      
       }
       catch(Exception e){
          e.printStackTrace();
+         msqlDB.close();
+      
       }
       
-      list.add(this.keyword);
-      String sql = "INSERT INTO paper_keywords ";
+   
    }
 
    public void deleteKeyword(String _keyword) {
    
       try {
          msqlDB.connect();
+         ArrayList list = new ArrayList();
+         list.add(this.keyword);
+         String sql = "DELETE FROM paper_keywords WHERE keyword = ?;";
+         msqlDB.setData(sql, list);
+         msqlDB.close();
+      
          
       }
       catch(Exception e){
          e.printStackTrace();
+         msqlDB.close();
+      
+      
       }
-      ArrayList list = new ArrayList();
-      list.add(this.keyword);
-      String sql = "DELETE FROM paper_keywords WHERE keyword = ?;";
+   
    
    }
 
@@ -168,13 +185,19 @@ public class DLPapers {
       ArrayList list = new ArrayList();
       try {
          msqlDB.connect();
+         list.add(this.keyword);
+         String sql = "UPDATE keyword_papers SET keyword = ?;";
+         msqlDB.setData(sql, list);
+         msqlDB.close();
+      
       }
       catch(Exception e){
          e.printStackTrace();
+         msqlDB.close();
+      
       }
            
-      list.add(this.keyword);
-      String sql = "UPDATE keyword_papers SET keyword = ?;";
+   
    
    }
 
