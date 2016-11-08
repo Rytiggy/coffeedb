@@ -9,15 +9,15 @@ public class MySQLDatabase {
 
    //set up the database connections 
    // hostname, Username, password.
-   public MySQLDatabase(String _uri, String _user, String _password){
-      uri= _uri;
+   public MySQLDatabase(){
+      uri= "jdbc:mysql://localhost/facresearchdb?autoReconnect=true&useSSL=false";
       String driver="com.mysql.jdbc.Driver";
-      user = _user;
-      password = _password;
+      user = "root";
+      password = "student";
    }
    
    //Attempts to connect to the Mysql database with input provided         
-   public static boolean connect() { 
+   public static boolean connect() throws DLException{
       boolean result;        
       try{
          conn = DriverManager.getConnection(uri,user,password);
@@ -29,13 +29,13 @@ public class MySQLDatabase {
          map.put("Error Occurred" , "Connect Method" );
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
          map.put("SQLState" , e.getSQLState());
-         //throw new DLException(e, map);
+         throw new DLException(e, map);
       }
       return result;
    }
    
    //Attempts to close the Mysql database with input provided
-   public static boolean close() { 
+   public static boolean close() throws DLException {
       boolean result;                
       try{
          conn.close();
@@ -47,13 +47,11 @@ public class MySQLDatabase {
          map.put("Error Occurred " , "close Method" );
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
          map.put("SQLState" , e.getSQLState());
-      
-         
-         //throw new DLException(e, map);
+         throw new DLException(e, map);
       }
       catch ( NullPointerException e) {
          result = false;
-         //throw new DLException(e);
+         throw new DLException(e);
       }     
      
       return result;
@@ -62,14 +60,14 @@ public class MySQLDatabase {
    //Add another method named getData that accepts an SQLstring and returns a 2-d ArrayList/List 
    //just like your existing getDatamethod, but also accepts a boolean value to indicate whether
    // column names should be included in the returned data the	returned structure.  
-   public ArrayList<ArrayList<String>> getData(String mySql , boolean addColumnNames) {
+   public ArrayList<ArrayList<String>> getData(String mySql , boolean addColumnNames) throws DLException {
       ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
             
       try { 
          Statement statment = conn.createStatement();
          ResultSet resultSet = statment.executeQuery(mySql);
          
-         //Change the getData method that “accepts an SQL string and the number of fields”, to use metadata from the SQL query to determine the number of fields requested
+         //Change the getData method that ï¿½accepts an SQL string and the number of fieldsï¿½, to use metadata from the SQL query to determine the number of fields requested
          ResultSetMetaData resultSetMetadata = resultSet.getMetaData();
          int numOfCols = resultSetMetadata.getColumnCount();   
           
@@ -97,26 +95,30 @@ public class MySQLDatabase {
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
          map.put("SQLState" , e.getSQLState());
       
-         //throw new DLException(e, map);
+         throw new DLException(e, map);
       }
       catch ( NullPointerException e) {
-         //throw new DLException(e);
+         throw new DLException(e);
       }          
       catch(IndexOutOfBoundsException e){
-         //throw new DLException(e);
+         throw new DLException(e);
       
       }  
       return results;
    
    
    }
-   public ArrayList<ArrayList<String>> getData(String mySql) {
-      return getData(mySql , false);
-   
+   public ArrayList<ArrayList<String>> getData(String mySql) throws DLException {
+      try {
+         return getData(mySql , false);
+      } catch (DLException e) {
+         throw new DLException(e);
+      }
+
    }
    
    
-   public boolean setData(String sql) {
+   public boolean setData(String sql) throws DLException {
       boolean results = false;
       try {
          Statement stmnt = conn.createStatement();
@@ -130,14 +132,14 @@ public class MySQLDatabase {
          map.put("SQLErrorCode: " , Integer.toString(e.getErrorCode()));
          map.put("SQLState" , e.getSQLState());
       
-         //throw new DLException(e, map);
+         throw new DLException(e, map);
       }
       catch ( NullPointerException e) {
          results = false;
-         //throw new DLException(e);
+         throw new DLException(e);
       }
       catch(IndexOutOfBoundsException e){
-         //throw new DLException(e);
+         throw new DLException(e);
       
       }  
    
@@ -145,11 +147,11 @@ public class MySQLDatabase {
       return results;
    }
    
-   public void descTable(String table) {
+   public void descTable(String table) throws DLException {
       descTable(table, "*");
    }
    
-   public void descTable(String table, String headers ){
+   public void descTable(String table, String headers ) throws DLException {
       String SQLString = "SELECT "+headers+" FROM " + table;  
       
       try {
@@ -173,15 +175,15 @@ public class MySQLDatabase {
              
       } 
       catch (SQLException sqle) {
-         //throw new DLException(sqle);
+         throw new DLException(sqle);
       }                            
    }
    
    
-   public void displayData(String table ) {
+   public void displayData(String table ) throws DLException {
       displayData(table, "*");
    }
-   public void displayData(String table,String headers ) {
+   public void displayData(String table,String headers ) throws DLException {
       ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
    
       String mySql = "SELECT "+headers+" FROM " + table;  
@@ -190,7 +192,7 @@ public class MySQLDatabase {
          Statement statment = conn.createStatement();
          ResultSet resultSet = statment.executeQuery(mySql); 
          
-         //Change the getData method that “accepts an SQL string and the number of fields”, to use metadata from the SQL query to determine the number of fields requested
+         //Change the getData method that ï¿½accepts an SQL string and the number of fieldsï¿½, to use metadata from the SQL query to determine the number of fields requested
          ResultSetMetaData resultSetMetadata = resultSet.getMetaData();
          int numOfCols = resultSetMetadata.getColumnCount();   
       
@@ -226,17 +228,17 @@ public class MySQLDatabase {
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
          map.put("SQLState" , e.getSQLState());
       
-         //throw new DLException(e, map);
+         throw new DLException(e, map);
       }
       catch ( NullPointerException e) {
-         //throw new DLException(e);
+         throw new DLException(e);
       }          
       catch(IndexOutOfBoundsException e){
-         //throw new DLException(e);      
+         throw new DLException(e);
       }     
    }
 
-   public PreparedStatement prepare(String mySql, ArrayList<String> values) {
+   public PreparedStatement prepare(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement result = null;
       try {
          result = conn.prepareStatement(mySql);
@@ -249,12 +251,12 @@ public class MySQLDatabase {
          HashMap<String, String> map = new HashMap<String, String>();
          map.put("description", "Error while preparing statement");
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
-         //throw new DLException(e, map);
+         throw new DLException(e, map);
       }
       return result;
    }
    
-   public ArrayList<ArrayList<String>> getData(String mySql, ArrayList<String> values) {
+   public ArrayList<ArrayList<String>> getData(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement prepStatment = prepare(mySql, values);
    
       ArrayList<ArrayList<String>> results = null;      
@@ -286,19 +288,19 @@ public class MySQLDatabase {
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
          map.put("SQLState" , e.getSQLState());
       
-         //throw new DLException(e, map);
+         throw new DLException(e, map);
       }
       catch ( NullPointerException e) {
-         //throw new DLException(e);
+         throw new DLException(e);
       }          
       catch(IndexOutOfBoundsException e){
-         //throw new DLException(e);    
+         throw new DLException(e);
       }  
       return results;
    
    }
    
-   public boolean setData(String sql, ArrayList<String> values) {
+   public boolean setData(String sql, ArrayList<String> values) throws DLException {
       boolean results = false;
       results = true;
       if(this.executeStmt(sql , values) == 1){
@@ -310,7 +312,7 @@ public class MySQLDatabase {
       return results;                 
    }   
    
-   public int executeStmt(String mySql, ArrayList<String> values) {
+   public int executeStmt(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement prepStatment = prepare(mySql, values);
       
       int results = -1;      
@@ -324,18 +326,18 @@ public class MySQLDatabase {
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
          map.put("SQLState" , e.getSQLState());
       
-         //throw new DLException(e, map);
+         throw new DLException(e, map);
       }
       catch ( NullPointerException e) {
-         //throw new DLException(e);
+         throw new DLException(e);
       }          
       catch(IndexOutOfBoundsException e){
-         //throw new DLException(e);      
+         throw new DLException(e);
       }  
       return results;          
    }
    
-   public void startTrans()  {
+   public void startTrans() throws DLException {
       try {
          conn.setAutoCommit(false);
       } 
@@ -344,12 +346,12 @@ public class MySQLDatabase {
          map.put("description", "Error in StartTrasns()");
          map.put("sql state", sqle.getSQLState());
          map.put("error code", Integer.toString(sqle.getErrorCode()));
-         //throw new DLException(sqle, map);
+         throw new DLException(sqle, map);
       }
    }
    
    
-   public void endTrans()  {
+   public void endTrans() throws DLException {
       try {
          conn.commit();
          conn.setAutoCommit(true);
@@ -359,11 +361,11 @@ public class MySQLDatabase {
          map.put("description", "Error in EndTrans");
          map.put("sql state", sqle.getSQLState());
          map.put("error code", Integer.toString(sqle.getErrorCode()));
-         //throw new DLException(sqle, map);
+         throw new DLException(sqle, map);
       }
    }
    
-   public void rollbackTrans()  {
+   public void rollbackTrans() throws DLException {
       try {
          conn.rollback();
       } 
@@ -372,7 +374,7 @@ public class MySQLDatabase {
          map.put("description", "Error in rollback() ");
          map.put("sql state", sqle.getSQLState());
          map.put("error code", Integer.toString(sqle.getErrorCode()));
-         //throw new DLException(sqle, map);
+         throw new DLException(sqle, map);
       }
    }                          
 }
