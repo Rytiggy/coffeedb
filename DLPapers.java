@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DLPapers {
@@ -13,36 +14,102 @@ public class DLPapers {
         citation = null;
     }
 
-
-
-    public void fetchPaper() {
+    public ArrayList<ArrayList<String>> fetchPaper() {
         ArrayList<ArrayList<String>> arr = new ArrayList();
         ArrayList<String> list = new ArrayList<String>();
 
-        msqlDB.connect();
+        try {
+            msqlDB.connect();
+        } catch(Exception e) { //fix this
+             }
+
         list.add(this.paperID);
         String sql = "SELECT * FROM papers WHERE ID =?;";
-        arr = msqlDB.getData(sql, list);
 
+        try {
+            arr = msqlDB.getData(sql, list);
+            msqlDB.close();
+        } catch(Exception e) { //Fix this
+        }
 
+        return arr;
     }
 
-    public void postPaper() {
-        msqlDB.connect();
+    public boolean postPaper() {
+        boolean succ = false;
+        try {
+            msqlDB.connect();
+        } catch(Exception e) { //Fix this
+        }
+
         ArrayList list = new ArrayList();
         list.add(this.title);
         list.add(this.paperID);
         list.add(this.paperAbstract);
         list.add(this.citation);
-        String sql = "INSERT INTO papers ";
+
+        String sql = "INSERT INTO papers (ID, title, abstract, citation)" +
+                " VALUES (?, ?, ?, ?);";
+
+        try {
+            msqlDB.setData(sql, list);
+            succ = true;
+            msqlDB.close();
+        } catch(Exception e) { //Fix this
+        }
+        return succ;
     }
 
-    public void putPaper() {
-        msqlDB.connect();
+    public boolean putPaper() {
+        boolean succ = false;
+
+        try {
+            msqlDB.connect();
+        } catch (Exception e) { //Fix this
+            e.printStackTrace();
+        }
+
+        ArrayList list = new ArrayList();
+        list.add(this.paperID);
+        list.add(this.title);
+        list.add(this.paperAbstract);
+        list.add(this.citation);
+        list.add(this.paperID);
+
+        String qu = "UPDATE papers SET ID=?, title=?, abstract=?, citation=? WHERE EquipID=?;";
+
+        try {
+            msqlDB.setData(qu, list);
+            succ = true;
+            msqlDB.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return succ;
     }
 
-    public void deletePaper() {
-        msqlDB.connect();
+    public boolean deletePaper() {
+        boolean succ = false;
+
+        try {
+            msqlDB.connect();
+        } catch (Exception e) { //Fix this
+            e.printStackTrace();
+        }
+
+        ArrayList list = new ArrayList();
+        list.add(this.paperID);
+        String qu = "DELETE FROM papers WHERE ID=?;";
+
+        try {
+            msqlDB.setData(qu, list);
+            succ = true;
+            msqlDB.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return succ;
     }
 
     public void fetchKeyword() {
