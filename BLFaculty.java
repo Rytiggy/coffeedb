@@ -3,7 +3,7 @@ import java.util.*;
 class BLFaculty { 
    DLFaculty faculty;
    boolean isAuthenticated = false;
-   // Constructor
+   // Constructor.
    BLFaculty(String myEmail, String myPassword) {
       try {
          // Login / Authenticate

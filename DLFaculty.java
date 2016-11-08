@@ -3,7 +3,7 @@ import java.sql.*;
 import java.util.*;
 
 public class DLFaculty {
-   // Table attributes
+   // Table attributes.
    private int facultyID;
    private String fName, lName, password, email;
    private MySQLDatabase database;
