@@ -163,8 +163,18 @@ public class DLPapers {
          list.add(this.keyword);
          String sql = "SELECT * FROM paper_keywords WHERE keyword = ?;";
          arr = msqlDB.getData(sql, list);
-         msqlDB.setData(sql, list);
          msqlDB.close();
+   }
+
+   // Return all keywords
+   public ArrayList fetchAllKeywords() throws DLException {
+      ArrayList<ArrayList<String>> arr = new ArrayList();
+
+      msqlDB.connect();
+      String sql = "SELECT * FROM paper_keywords;";
+      arr = msqlDB.getData(sql);
+
+      return arr;
    }
 
    // Create a new keyword
