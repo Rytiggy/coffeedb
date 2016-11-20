@@ -4,36 +4,47 @@ import java.util.ArrayList;
 public class BLPapers {
    DLPapers dataLayer;
   
-
+   public BLPapers() {
+      dataLayer = new DLPapers();
+   }
+   
    public BLPapers(String _paperID){
       dataLayer = new DLPapers(_paperID);
    }
    
-   public boolean postPaper() {
+   public ArrayList<String> fetchAllPapers() throws DLException {
+      return dataLayer.fetchAllPapers();
+   }
+   
+   public ArrayList<ArrayList<String>> fetchAllKeywords() throws DLException {
+      return dataLayer.fetchAllKeywords();
+   }
+   
+   public boolean postPaper() throws DLException {
       return dataLayer.postPaper();
    }
    
-   public boolean putPaper() {
+   public boolean putPaper() throws DLException {
       return dataLayer.putPaper();
    }
    
-   public boolean deletePaper() {
+   public boolean deletePaper() throws DLException {
       return dataLayer.deletePaper();
    }
    
-   public void fetchKeyword() {
+   public void fetchKeyword() throws DLException {
        dataLayer.fetchKeyword();
    }
 
-   public void postKeyword(String _keyword) {
+   public void postKeyword(String _keyword) throws DLException {
       dataLayer.postKeyword(_keyword);
    }
 
-   public void deleteKeyword(String _keyword) {
+   public void deleteKeyword(String _keyword) throws DLException {
        dataLayer.deleteKeyword(_keyword);
    }
 
-   public void putKeyword(String _keyword) {
+   public void putKeyword(String _keyword) throws DLException {
        dataLayer.putKeyword(_keyword);
    }
 
