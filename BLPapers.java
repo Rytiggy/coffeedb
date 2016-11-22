@@ -15,6 +15,10 @@ public class BLPapers {
    public ArrayList<ArrayList<String>> fetchAllPapers() throws DLException {
       return dataLayer.fetchAllPapers();
    }
+
+    public ArrayList<ArrayList<String>> fetchPaper(String _ID) throws DLException {
+        return dataLayer.fetchPaper();
+    }
    
    public ArrayList<ArrayList<String>> fetchAllKeywords() throws DLException {
       return dataLayer.fetchAllKeywords();
@@ -78,6 +82,14 @@ public class BLPapers {
 
     public void setPaperID(String paperID) {
          dataLayer.setPaperID(paperID);
+    }
+
+    public void setPDF(byte[] pdf) {
+        dataLayer.setPdfData(pdf);
+    }
+
+    public byte[] getPDF() {
+        return dataLayer.getPdfData();
     }
    
 }
