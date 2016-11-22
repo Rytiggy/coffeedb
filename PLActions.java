@@ -38,16 +38,30 @@ public class PLActions {
    }
    
    // View Details 
-   public ArrayList<ArrayList<String>> viewDetails(int paperID) {
+   public ArrayList<ArrayList<String>> viewDetails(String _paperID) throws DLException {
+      ArrayList<ArrayList<String>> arr = new ArrayList<>();
+
       // Will return the selected paper's information to the gui
-      
-      return null;
+
+      BLPapers blPapers = new BLPapers(_paperID);
+      arr = blPapers.fetchPaper(blPapers.getPaperID());
+
+      return arr;
    }
    
    // Upload
-   public void uploadPaper() {
+   public void uploadPaper(String _ID, String _title, String _citation, String _abstract) throws DLException {
       // Reads in text from file and then inserts the paper
       // whenever a faculty is "updating" a paper, they will just be re-writing over the old one
+
+      //Read from file?
+
+      BLPapers paper = new BLPapers(_ID);
+      paper.setCitation(_citation);
+      paper.setPaperAbstract(_abstract);
+      paper.setTitle(_title);
+
+      paper.postPaper();
    }
    
    

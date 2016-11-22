@@ -15,6 +15,10 @@ public class BLPapers {
    public ArrayList<String> fetchAllPapers() throws DLException {
       return dataLayer.fetchAllPapers();
    }
+
+    public ArrayList<ArrayList<String>> fetchPaper(String _ID) throws DLException {
+        return dataLayer.fetchPaper();
+    }
    
    public ArrayList<ArrayList<String>> fetchAllKeywords() throws DLException {
       return dataLayer.fetchAllKeywords();
