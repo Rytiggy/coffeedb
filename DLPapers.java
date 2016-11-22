@@ -24,17 +24,19 @@ public class DLPapers {
    }
 
    // Return an ArrayList with all papers
-   public ArrayList<String> fetchAllPapers() throws DLException {
-      ArrayList<String> papers = new ArrayList<String>();
+   public ArrayList<ArrayList<String>> fetchAllPapers() throws DLException {
+      ArrayList<ArrayList<String>> papers = new ArrayList<ArrayList<String>>();
       msqlDB.connect();
-         
-      String sql = "SELECT title FROM papers";
+      
+      // get all titles   
+      String sql = "SELECT * FROM papers";
       ArrayList<ArrayList<String>> results = msqlDB.getData(sql);
-         
+      
+      /*  // Old code
       // Get all titles
       for (int i = 0; i < results.get(0).size(); i++) {
          papers.add(results.get(0).get(i)); // column 0, rows = i
-      }
+      }*/
          
       return papers;
    }

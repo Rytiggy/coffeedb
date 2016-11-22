@@ -6,7 +6,9 @@ import java.util.List;
 public class PLActions {
    
    // Search FacResearchDB for papers given user input
-   public ArrayList<BLPapers> search(String searchInput) {
+   public ArrayList<BLPapers> search(String searchInput) throws DLException {
+      // Used to retrieve all papers and keywords
+      BLPapers blPapers = new BLPapers();
       
       // Sanitize and store user input 
       String[] input = searchInput.split(" ");      
@@ -16,23 +18,28 @@ public class PLActions {
       }
       
       // Get all paper titles from DB
-      ArrayList<String> papers = null;
-      try {
-         BLPapers blPapers = new BLPapers();
-         papers = blPapers.fetchAllPapers();
-      }
-      catch (DLException dle) {
-         // print out error
-      }
-      // Get all paper keywords from DB
-           
-           
+      ArrayList<ArrayList<String>> papers = blPapers.fetchAllPapers();
+      // Get all paper keywords from DB     
+      ArrayList<ArrayList<String>> paperKeywords = blPapers.fetchAllKeywords();
+   
       // Match user input against keywords and titles. If a match, add the paper to the ArrayList of papers
-      ArrayList<BLPapers> matchedPapers = null;
+      ArrayList<String> matchedPapers = new ArrayList<String>();
+      for (int i = 0; i < papers.get(0).size(); i++) {
+         // Check paper titles against user input
+         
+         // If we have a match, add to matchedPapers
+      }
+      
+      for (int i = 0; i < paperKeywords.get(0).size(); i++) {
+         // Check paper keywords against user input
+         
+         // If we have a match, add to matchedPapers
+      }
+      
       return matchedPapers;
    }   
    
-   // Sign-in ------------------ TODO
+   // Sign-in ------------------ Jeremy TODO
    public void signIn() {
       // sign the faculty user in
    }
