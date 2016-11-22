@@ -12,7 +12,7 @@ public class BLPapers {
       dataLayer = new DLPapers(_paperID);
    }
    
-   public ArrayList<String> fetchAllPapers() throws DLException {
+   public ArrayList<ArrayList<String>> fetchAllPapers() throws DLException {
       return dataLayer.fetchAllPapers();
    }
    
