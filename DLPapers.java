@@ -4,6 +4,8 @@ import java.util.ArrayList;
 public class DLPapers {
    private String title, paperAbstract, citation, paperID, keyword;
    private MySQLDatabase msqlDB;
+
+   private byte[] pdfData;
     
    // Default constructor used when paper ID is unknown
    public DLPapers() {
@@ -152,6 +154,14 @@ public class DLPapers {
 
    public void setPaperID(String paperID) {
       this.paperID = paperID;
+   }
+
+   public byte[] getPdfData() {
+      return pdfData;
+   }
+
+   public void setPdfData(byte[] pdfData) {
+      this.pdfData = pdfData;
    }
 
    // Return a keyword

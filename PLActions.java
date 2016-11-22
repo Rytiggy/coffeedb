@@ -1,3 +1,4 @@
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,28 +39,42 @@ public class PLActions {
    }
    
    // View Details 
-   public ArrayList<ArrayList<String>> viewDetails(String _paperID) throws DLException {
+   public ArrayList<ArrayList<String>> viewDetails(String _paperID, String _url) throws DLException {
       ArrayList<ArrayList<String>> arr = new ArrayList<>();
 
       // Will return the selected paper's information to the gui
 
-      BLPapers blPapers = new BLPapers(_paperID);
+      BLPapers blPapers = new BLPapers();
       arr = blPapers.fetchPaper(blPapers.getPaperID());
 
       return arr;
    }
    
    // Upload
-   public void uploadPaper(String _ID, String _title, String _citation, String _abstract) throws DLException {
+   public void uploadPaper(String _title, String _citation, String _abstract, String _url, String _author) throws DLException {
       // Reads in text from file and then inserts the paper
       // whenever a faculty is "updating" a paper, they will just be re-writing over the old one
 
-      //Read from file?
+      String url = null;
+      File pdfFile = new File(url);
+      byte[] pdfData = new byte[(int) pdfFile.length()];
+      DataInputStream dis = null;
 
-      BLPapers paper = new BLPapers(_ID);
+      try {
+         dis = new DataInputStream(new FileInputStream(pdfFile));
+         dis.readFully(pdfData);  // read from file into byte[] array
+         dis.close();
+      } catch (FileNotFoundException fnfe) {
+         fnfe.printStackTrace();
+      } catch (IOException ioe) {
+         ioe.printStackTrace();
+      }
+
+      BLPapers paper = new BLPapers();
       paper.setCitation(_citation);
       paper.setPaperAbstract(_abstract);
       paper.setTitle(_title);
+      paper.setPDF(pdfData);
 
       paper.postPaper();
    }

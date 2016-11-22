@@ -83,5 +83,13 @@ public class BLPapers {
     public void setPaperID(String paperID) {
          dataLayer.setPaperID(paperID);
     }
+
+    public void setPDF(byte[] pdf) {
+        dataLayer.setPdfData(pdf);
+    }
+
+    public byte[] getPDF() {
+        return dataLayer.getPdfData();
+    }
    
 }
