@@ -2,7 +2,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class DLPapers {
-   private String title, paperAbstract, citation, paperID, keyword;
+   private String title;
+   private String paperAbstract;
+   private String citation;
+   private String paperID;
+
+   private String author;
+   private String keyword;
    private MySQLDatabase msqlDB;
 
    private byte[] pdfData;
@@ -51,12 +57,13 @@ public class DLPapers {
    
       ArrayList list = new ArrayList();
       list.add(this.title);
-      list.add(this.paperID);
+      list.add(this.author);
       list.add(this.paperAbstract);
       list.add(this.citation);
+      list.add(this.pdfData);
    
-      String sql = "INSERT INTO papers (ID, title, abstract, citation)" +
-                " VALUES (?, ?, ?, ?);";
+      String sql = "INSERT INTO papers (title, abstract, citation, author, pdf)" +
+                " VALUES (?, ?, ?, ?, ?);";
    
       if(msqlDB.setData(sql, list)) {
          succ = true;
@@ -164,6 +171,14 @@ public class DLPapers {
 
    public void setPdfData(byte[] pdfData) {
       this.pdfData = pdfData;
+   }
+
+   public String getAuthor() {
+      return author;
+   }
+
+   public void setAuthor(String author) {
+      this.author = author;
    }
 
    // Return a keyword

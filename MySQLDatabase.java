@@ -238,12 +238,16 @@ public class MySQLDatabase {
       }     
    }
 
-   public PreparedStatement prepare(String mySql, ArrayList<String> values) throws DLException {
+   public PreparedStatement prepare(String mySql, ArrayList<Object> values) throws DLException {
       PreparedStatement result = null;
       try {
          result = conn.prepareStatement(mySql);
          for (int i=0; i<values.size(); i++) {
-            result.setString(i+1, values.get(i));
+            if (values.get(i) == byte.class) {
+               result.setByte(i+1, (byte) values.get(i));
+            } else {
+            result.setString(i+1, (String) values.get(i));
+         }
          }
       
       } 
@@ -256,7 +260,7 @@ public class MySQLDatabase {
       return result;
    }
    
-   public ArrayList<ArrayList<String>> getData(String mySql, ArrayList<String> values) throws DLException {
+   public ArrayList<ArrayList<String>> getData(String mySql, ArrayList<Object> values) throws DLException {
       PreparedStatement prepStatment = prepare(mySql, values);
    
       ArrayList<ArrayList<String>> results = null;      
@@ -300,7 +304,7 @@ public class MySQLDatabase {
    
    }
    
-   public boolean setData(String sql, ArrayList<String> values) throws DLException {
+   public boolean setData(String sql, ArrayList<Object> values) throws DLException {
       boolean results = false;
       results = true;
       if(this.executeStmt(sql , values) == 1){
@@ -312,7 +316,7 @@ public class MySQLDatabase {
       return results;                 
    }   
    
-   public int executeStmt(String mySql, ArrayList<String> values) throws DLException {
+   public int executeStmt(String mySql, ArrayList<Object> values) throws DLException {
       PreparedStatement prepStatment = prepare(mySql, values);
       
       int results = -1;      

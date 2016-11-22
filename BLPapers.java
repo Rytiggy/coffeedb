@@ -91,5 +91,13 @@ public class BLPapers {
     public byte[] getPDF() {
         return dataLayer.getPdfData();
     }
+
+    public void setAuthor(String _author) {
+        dataLayer.setAuthor(_author);
+    }
+
+    public String getAuthor() {
+        return dataLayer.getAuthor();
+    }
    
 }
