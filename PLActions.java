@@ -46,15 +46,19 @@ public class PLActions {
    }
    
    // View Details 
-   public ArrayList<ArrayList<String>> viewDetails(String _paperID, String _url) throws DLException {
+   public String[] viewDetails(String _paperID, String _url) throws DLException {
       ArrayList<ArrayList<String>> arr = new ArrayList<>();
+      String[] paperDetails = new String[6];
 
       // Will return the selected paper's information to the gui
 
       BLPapers blPapers = new BLPapers();
       arr = blPapers.fetchPaper(blPapers.getPaperID());
+      for(int i = 0; i<arr.get(i).size(); i++) {
+         paperDetails[i] = arr.get(1).get(i);
+      }
 
-      return arr;
+      return paperDetails;
    }
    
    // Upload
@@ -82,6 +86,7 @@ public class PLActions {
       paper.setPaperAbstract(_abstract);
       paper.setTitle(_title);
       paper.setPDF(pdfData);
+      paper.setAuthor(_author);
 
       paper.postPaper();
    }
