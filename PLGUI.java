@@ -35,9 +35,6 @@ public class PLGUI {
       JLabel version = new JLabel("<html>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style='text-align:center'>By CoffeeDB</span> Version 1.0 </html>");
       info.add(version);  
    
-      // JLabel slogan = new JLabel("<html>Full Potential<br>Minimal Knowledge</html>");
-      // info.add(slogan);
-   
       mainPanel.add(info);
       mainPanel.add(Box.createVerticalStrut(20));
    
@@ -46,30 +43,19 @@ public class PLGUI {
       searchBox.setPreferredSize(new Dimension(150,40));
       
       JButton searchButton = new JButton("Search");
-   
-       
-   
+      
       mainPanel.add(searchBox);
       mainPanel.add(searchButton);
-   
-   
-   //Results 
-   
-      mainPanel.add(Box.createVerticalStrut(10));
-      mainPanel.add(new JSeparator());
-      mainPanel.add(Box.createVerticalStrut(10));
-     
-   //    
+    
       JPanel result = new JPanel();
-      JLabel keywords = new JLabel("<html><span style='color: black;'>Finding papers that match: keyword keyword</span></html>");
+      JLabel keywords = new JLabel("<html><span style='color: black;'></span></html>");
       keywords.setHorizontalAlignment(JTextField.LEFT);
-   // 
-   //  
+   
       result.add(keywords);
       mainPanel.add(result);
-   //    
-      Object rowData[][] = { { "The Stars and how they  shine ", "Bob hattington", "Finalized" },{ "A Paper about science", "Ryan Mason", "In Progress" } };
-      Object columnNames[] = { "Title", "PI", "Status" };
+   
+      Object rowData[][] ={ { "The Stars and how they  shine ", "Bob hattington", "Finalized" },{ "A Paper about science", "Ryan Mason", "In Progress" } };
+      Object columnNames[] ={ "Title", "PI", "Status" };
       //JTable table = new JTable(rowData, columnNames);
       JTable table = 
          new JTable(rowData, columnNames) {
@@ -78,6 +64,18 @@ public class PLGUI {
             public boolean isCellEditable(int row, int column) {                
                return false;               
             };
+            
+            
+               //Implement table cell tool tips.           
+            public String getToolTipText(MouseEvent e) {
+               String tip = null;
+               java.awt.Point p = e.getPoint();
+               int rowIndex = rowAtPoint(p);
+               int colIndex = columnAtPoint(p);
+   
+                                   
+               return "Double Click to view more";
+            }
          };
    
        
@@ -113,13 +111,9 @@ public class PLGUI {
          new ActionListener()
          {
             public void actionPerformed(ActionEvent e){
-               String data = searchBox.getText();
-               System.out.println(data);
-               keywords.setText("Finding papers that match: " + data);
-            // display/center the jdialog when the button is pressed
-               // JDialog d = new JDialog(frame, "Hello", true);
-               // d.setLocationRelativeTo(frame);
-               // d.setVisible(true);
+               String searchTerms = searchBox.getText();
+               //System.out.println(data);
+               keywords.setText("Finding papers that match: " + searchTerms);
             }
          });
                
@@ -155,7 +149,13 @@ public class PLGUI {
                }
             }
          });
+   }//end of run
+   
+   
+   public boolean createList(){
+      return true;
    }
+ 
 
 
 }
