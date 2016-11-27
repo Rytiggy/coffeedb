@@ -8,8 +8,25 @@ public class BLPapers {
       dataLayer = new DLPapers();
    }
    
-   public BLPapers(String _paperID){
+   public BLPapers(String _paperID) throws DLException {
       dataLayer = new DLPapers(_paperID);
+   }
+   
+   public ArrayList<BLPapers> searchPapers(String[] searchInput) throws DLException {
+      ArrayList<DLPapers> dlPapers = dataLayer.searchPapers(searchInput);
+      
+      // Add each dlPaper to blPapers
+      ArrayList<BLPapers> blPapers = new ArrayList<BLPapers>();
+      for (DLPapers dlPaper : dlPapers) {
+         BLPapers blPaper = new BLPapers(dlPaper.getPaperID());
+         blPapers.add(blPaper);
+      }
+      
+      return blPapers;
+   }
+   
+   public void fetchPaperAttributes() throws DLException { 
+      dataLayer.fetchPaperAttributes();
    }
    
    public ArrayList<ArrayList<String>> fetchAllPapers() throws DLException {
