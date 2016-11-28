@@ -7,8 +7,6 @@ public class DLException extends Exception{
    private Exception e;
    Writer writer = null;
 
-   
-
 //constructor that accepts a single parameter of type Exception
    public DLException(Exception e) {
       super("Unable to compleate task. Please check logs for more info.");
@@ -17,7 +15,7 @@ public class DLException extends Exception{
    
 //constructor that accepts a parameter of type Exception and a subclass of Map
    public DLException(Exception e, Map<String, String> errorMsg) {
-      super("Unable to compleate task. Please check logs for more info.");
+      super("Unable to complete task. Please check logs for more info.");
       String messageString = "\n" + e.getMessage() + "\n";
       
       for (Map.Entry<String,String> error : errorMsg.entrySet()) {
