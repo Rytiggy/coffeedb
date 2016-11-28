@@ -251,6 +251,28 @@ public class MySQLDatabase {
          HashMap<String, String> map = new HashMap<String, String>();
          map.put("description", "Error while preparing statement");
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
+         //throw new DLException(e, map);
+      }
+      return result;
+   }
+
+   public PreparedStatement preparePDF(String mySql, ArrayList<Object> values) throws DLException {
+      PreparedStatement result = null;
+      try {
+         result = conn.prepareStatement(mySql);
+         for (int i=0; i<values.size(); i++) {
+            if (values.get(i) == byte.class) {
+               result.setByte(i+1, (byte) values.get(i));
+            } else {
+            result.setString(i+1, (String) values.get(i));
+         }
+         }
+      
+      } 
+      catch (SQLException e) {
+         HashMap<String, String> map = new HashMap<String, String>();
+         map.put("description", "Error while preparing statement");
+         map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
          throw new DLException(e, map);
       }
       return result;
@@ -258,6 +280,50 @@ public class MySQLDatabase {
    
    public ArrayList<ArrayList<String>> getData(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement prepStatment = prepare(mySql, values);
+   
+      ArrayList<ArrayList<String>> results = null;      
+      try { 
+         results = new ArrayList<ArrayList<String>>(); 
+         Statement statment = conn.createStatement();
+         ResultSet resultSet = prepStatment.executeQuery();
+         ResultSetMetaData resultSetMetadata = resultSet.getMetaData();
+         int numOfCols = resultSetMetadata.getColumnCount();
+      
+         ArrayList<String> ColumnNames = new ArrayList<String>();
+         for (int i=1; i<=numOfCols; i++) {
+            ColumnNames.add(resultSetMetadata.getColumnName(i));
+         }
+         results.add(ColumnNames);
+                   
+         while (resultSet.next()) {
+            ArrayList<String> rowData = new ArrayList<String>(); 
+            for (int i=1; i<=numOfCols; i++) {
+               rowData.add(resultSet.getString(i));
+            }
+            
+            results.add(rowData);  
+            }        
+      } 
+      catch (SQLException e) {
+         Map<String, String> map = new HashMap<String, String>();
+         map.put("Error Occurred " , "getData Method" );
+         map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
+         map.put("SQLState" , e.getSQLState());
+      
+         //throw new DLException(e, map);
+      }
+      catch ( NullPointerException e) {
+         //throw new DLException(e);
+      }          
+      catch(IndexOutOfBoundsException e){
+         //throw new DLException(e);    
+      }  
+      return results;
+   
+}
+   
+   public ArrayList<ArrayList<String>> getDataPDF(String mySql, ArrayList<Object> values) throws DLException {
+      PreparedStatement prepStatment = preparePDF(mySql, values);
    
       ArrayList<ArrayList<String>> results = null;      
       try { 
@@ -314,6 +380,43 @@ public class MySQLDatabase {
    
    public int executeStmt(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement prepStatment = prepare(mySql, values);
+      
+      int results = -1;      
+      try { 
+         results = prepStatment.executeUpdate();
+         conn.commit();
+      } 
+      catch (SQLException e) {
+         Map<String, String> map = new HashMap<String, String>();
+         map.put("Error Occurred " , "ExecuteStmt Method" );
+         map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
+         map.put("SQLState" , e.getSQLState());
+      
+         //throw new DLException(e, map);
+      }
+      catch ( NullPointerException e) {
+         //throw new DLException(e);
+      }          
+      catch(IndexOutOfBoundsException e){
+         //throw new DLException(e);      
+      }  
+      return results;          
+   }
+   
+   public boolean setDataPDF(String sql, ArrayList<Object> values) throws DLException {
+      boolean results = false;
+      results = true;
+      if(this.executeStmtPDF(sql , values) == 1){
+         results = true;
+      }
+      else{
+         results = false;
+      }
+      return results;                 
+   }   
+   
+   public int executeStmtPDF(String mySql, ArrayList<Object> values) throws DLException {
+      PreparedStatement prepStatment = preparePDF(mySql, values);
       
       int results = -1;      
       try { 
