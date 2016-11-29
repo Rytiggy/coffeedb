@@ -8,13 +8,34 @@ public class BLPapers {
       dataLayer = new DLPapers();
    }
    
-   public BLPapers(String _paperID){
+   public BLPapers(String _paperID) throws DLException {
       dataLayer = new DLPapers(_paperID);
    }
    
-   public ArrayList<String> fetchAllPapers() throws DLException {
+   public ArrayList<BLPapers> searchPapers(String[] searchInput) throws DLException {
+      ArrayList<DLPapers> dlPapers = dataLayer.searchPapers(searchInput);
+      
+      // Add each dlPaper to blPapers
+      ArrayList<BLPapers> blPapers = new ArrayList<BLPapers>();
+      for (DLPapers dlPaper : dlPapers) {
+         BLPapers blPaper = new BLPapers(dlPaper.getPaperID());
+         blPapers.add(blPaper);
+      }
+      
+      return blPapers;
+   }
+   
+   public void fetchPaperAttributes() throws DLException { 
+      dataLayer.fetchPaperAttributes();
+   }
+   
+   public ArrayList<ArrayList<String>> fetchAllPapers() throws DLException {
       return dataLayer.fetchAllPapers();
    }
+
+    public ArrayList<ArrayList<String>> fetchPaper(String _ID) throws DLException {
+        return dataLayer.fetchPaper();
+    }
    
    public ArrayList<ArrayList<String>> fetchAllKeywords() throws DLException {
       return dataLayer.fetchAllKeywords();
@@ -78,6 +99,22 @@ public class BLPapers {
 
     public void setPaperID(String paperID) {
          dataLayer.setPaperID(paperID);
+    }
+
+    public void setPDF(byte[] pdf) {
+        dataLayer.setPdfData(pdf);
+    }
+
+    public byte[] getPDF() {
+        return dataLayer.getPdfData();
+    }
+
+    public void setAuthor(String _author) {
+        dataLayer.setAuthor(_author);
+    }
+
+    public String getAuthor() {
+        return dataLayer.getAuthor();
     }
    
 }
