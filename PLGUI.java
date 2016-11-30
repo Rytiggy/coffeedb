@@ -115,110 +115,8 @@ public class PLGUI {
             public void actionPerformed(ActionEvent e){
              
                System.out.println("Upload Prompt");
-               FileNameExtensionFilter filter = new FileNameExtensionFilter("PDF files only", "pdf");
-               JFileChooser fileChooser = new JFileChooser();
-               fileChooser.setFileFilter(filter);
-               boolean fileUploaded = false;
                
-               int result = fileChooser.showOpenDialog(null);
-               switch (result) {
-                  case JFileChooser.APPROVE_OPTION:
-                     System.out.println("Approve (Open or Save) was clicked");
-                     fileUploaded = true;
-                     break;
-                  case JFileChooser.CANCEL_OPTION:
-                     System.out.println("Cancel or the close-dialog icon was clicked");
-                     fileUploaded = false;
-                     break;
-                  case JFileChooser.ERROR_OPTION:
-                     System.out.println("Error");
-                     break;
-               }
-               
-            
-               int returnValue = fileChooser.showOpenDialog(null);
-               if (returnValue == JFileChooser.APPROVE_OPTION) {
-                  File selectedFile = fileChooser.getSelectedFile();
-                  
-                  
-                  System.out.println(selectedFile);
-                  
-                  
-               }
-               
-               if(fileUploaded){
-                  JFrame uploadFrame = new JFrame("Upload a research project");
-                  JPanel panel = new JPanel();
-                  uploadFrame.add(panel);
-                  placeComponents(panel);
-                  uploadFrame.setVisible(true);
-                  uploadFrame.setSize(300,380);
-                  uploadFrame.setLocationRelativeTo(frame);
-                  
-                  JPanel uploadHeader = new JPanel();
-                  JPanel upload = new JPanel();
-                  JLabel title = new JLabel("<html><span style='color: black;'>Research Title</span><br /></html>");
-                  title.setHorizontalAlignment(JLabel.CENTER);
-                  title.setVerticalAlignment(JLabel.CENTER);
-               
-               
-               
-               //paperTitle
-               //JLabel paperTitleLabel = new JLabel("<html><span style='color: black;'>Research Title</span><br /></html>");
-                  JTextField paperTitle = new JTextField();
-                  paperTitle.setHorizontalAlignment(JTextField.CENTER);
-                  paperTitle.setPreferredSize(new Dimension(250,40));
-               //auther(s) 
-                  JLabel paperAutherLabel = new JLabel("<html><span style='color: black;'>Auther(s)</span><br /></html>");
-                  JTextField paperAuther = new JTextField();
-                  paperAuther.setHorizontalAlignment(JTextField.CENTER);
-                  paperAuther.setPreferredSize(new Dimension(250,40));
-               
-               //abstrct 
-                  JLabel paperAbstrctLabel = new JLabel("<html><span style='color: black;'>Abstrct</span><br /></html>");
-                  JTextArea paperAbstrct = new JTextArea();
-                  paperAbstrct.setSize(250,100);
-                  paperAbstrct.setLineWrap(true);
-                  JScrollPane abstrctScrollPane = new JScrollPane(paperAbstrct);
-               
-               //citations 
-                  JLabel papercitationLabel = new JLabel("<html><span style='color: black;'>Citations</span><br /></html>");
-                  JTextField paperCitations = new JTextField();
-                  paperCitations.setHorizontalAlignment(JTextField.CENTER);
-                  paperCitations.setPreferredSize(new Dimension(250,40));
-                             
-               //keywords 
-                  JLabel paperKeywordLabel = new JLabel("<html><span style='color: black;'>Keywords</span><br /></html>");
-                  JTextField paperKeywords = new JTextField();
-                  paperKeywords.setHorizontalAlignment(JTextField.CENTER);
-                  paperKeywords.setPreferredSize(new Dimension(250,40));   
-               
-               
-                  uploadHeader.add(paperTitle);
-                  upload.add(title);
-                  upload.add(paperAuther);
-                  upload.add(paperKeywordLabel);//label
-                  upload.add(paperKeywords);
-                  upload.add(paperAbstrctLabel);//lavel
-                  upload.add(abstrctScrollPane);
-                  upload.add(papercitationLabel);//label
-                  upload.add(paperCitations); 
-               
-               
-                  JButton submitButton = new JButton("Submit");
-                  JButton cancelBut = new JButton("Cancel");
-               // uploadButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-               
-               
-                  upload.add(cancelBut);
-                  upload.add(submitButton);
-                  uploadFrame.add(uploadHeader);
-                  uploadFrame.add(upload);
-               
-                  uploadFrame.setLocationRelativeTo(frame);
-                  uploadFrame.setVisible(true); 
-                  uploadFrame.setResizable(false);
-               }
+               upload(frame);
             
             }
          });
@@ -307,111 +205,7 @@ public class PLGUI {
                      new ActionListener()
                      {
                         public void actionPerformed(ActionEvent e){
-                           System.out.println("editPaper Prompt");
-                           FileNameExtensionFilter filter = new FileNameExtensionFilter("PDF files only", "pdf");
-                           JFileChooser fileChooser = new JFileChooser();
-                           fileChooser.setFileFilter(filter);
-                           boolean fileUploaded = false;
-                        
-                           int result = fileChooser.showOpenDialog(null);
-                           switch (result) {
-                              case JFileChooser.APPROVE_OPTION:
-                                 System.out.println("Approve (Open or Save) was clicked");
-                                 fileUploaded = true;
-                                 break;
-                              case JFileChooser.CANCEL_OPTION:
-                                 System.out.println("Cancel or the close-dialog icon was clicked");
-                                 fileUploaded = false;
-                                 break;
-                              case JFileChooser.ERROR_OPTION:
-                                 System.out.println("Error");
-                                 break;
-                           }
-                        
-                        
-                           int returnValue = fileChooser.showOpenDialog(null);
-                           if (returnValue == JFileChooser.APPROVE_OPTION) {
-                              File selectedFile = fileChooser.getSelectedFile();
-                           
-                           
-                              System.out.println(selectedFile);
-                           
-                           
-                           }
-                        
-                           if(fileUploaded){
-                              JFrame uploadFrame = new JFrame("Upload a research project");
-                              JPanel panel = new JPanel();
-                              uploadFrame.add(panel);
-                              placeComponents(panel);
-                              uploadFrame.setVisible(true);
-                              uploadFrame.setSize(300,380);
-                              uploadFrame.setLocationRelativeTo(frame);
-                           
-                              JPanel uploadHeader = new JPanel();
-                              JPanel upload = new JPanel();
-                              JLabel title = new JLabel("<html><span style='color: black;'>Research Title</span><br /></html>");
-                              title.setHorizontalAlignment(JLabel.CENTER);
-                              title.setVerticalAlignment(JLabel.CENTER);
-                           
-                           
-                           
-                           //paperTitle
-                           //JLabel paperTitleLabel = new JLabel("<html><span style='color: black;'>Research Title</span><br /></html>");
-                              JTextField paperTitle = new JTextField();
-                              paperTitle.setHorizontalAlignment(JTextField.CENTER);
-                              paperTitle.setPreferredSize(new Dimension(250,40));
-                           //auther(s) 
-                              JLabel paperAutherLabel = new JLabel("<html><span style='color: black;'>Auther(s)</span><br /></html>");
-                              JTextField paperAuther = new JTextField();
-                              paperAuther.setHorizontalAlignment(JTextField.CENTER);
-                              paperAuther.setPreferredSize(new Dimension(250,40));
-                           
-                           //abstrct 
-                              JLabel paperAbstrctLabel = new JLabel("<html><span style='color: black;'>Abstrct</span><br /></html>");
-                              JTextArea paperAbstrct = new JTextArea();
-                              paperAbstrct.setSize(250,100);
-                              paperAbstrct.setLineWrap(true);
-                              JScrollPane abstrctScrollPane = new JScrollPane(paperAbstrct);
-                           
-                           //citations 
-                              JLabel papercitationLabel = new JLabel("<html><span style='color: black;'>Citations</span><br /></html>");
-                              JTextField paperCitations = new JTextField();
-                              paperCitations.setHorizontalAlignment(JTextField.CENTER);
-                              paperCitations.setPreferredSize(new Dimension(250,40));
-                             
-                           //keywords 
-                              JLabel paperKeywordLabel = new JLabel("<html><span style='color: black;'>Keywords</span><br /></html>");
-                              JTextField paperKeywords = new JTextField();
-                              paperKeywords.setHorizontalAlignment(JTextField.CENTER);
-                              paperKeywords.setPreferredSize(new Dimension(250,40));   
-                           
-                           
-                              uploadHeader.add(paperTitle);
-                              upload.add(title);
-                              upload.add(paperAuther);
-                              upload.add(paperKeywordLabel);//label
-                              upload.add(paperKeywords);
-                              upload.add(paperAbstrctLabel);//lavel
-                              upload.add(abstrctScrollPane);
-                              upload.add(papercitationLabel);//label
-                              upload.add(paperCitations); 
-                           
-                           
-                              JButton submitButton = new JButton("Submit");
-                              JButton cancelBut = new JButton("Cancel");
-                           // uploadButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-                           
-                           
-                              upload.add(cancelBut);
-                              upload.add(submitButton);
-                              uploadFrame.add(uploadHeader);
-                              uploadFrame.add(upload);
-                           
-                              uploadFrame.setLocationRelativeTo(frame);
-                              uploadFrame.setVisible(true); 
-                              uploadFrame.setResizable(false);
-                           }
+                           upload(frame);
                         
                         }
                      });
@@ -502,6 +296,116 @@ public class PLGUI {
    
    }
      
+  
+   public static void upload(JFrame frame){
+   
+      System.out.println("editPaper Prompt");
+      FileNameExtensionFilter filter = new FileNameExtensionFilter("PDF files only", "pdf");
+      JFileChooser fileChooser = new JFileChooser();
+      fileChooser.setFileFilter(filter);
+      boolean fileUploaded = false;
+                        
+      int result = fileChooser.showOpenDialog(null);
+      switch (result) {
+         case JFileChooser.APPROVE_OPTION:
+            System.out.println("Approve (Open or Save) was clicked");
+            fileUploaded = true;
+            break;
+         case JFileChooser.CANCEL_OPTION:
+            System.out.println("Cancel or the close-dialog icon was clicked");
+            fileUploaded = false;
+            break;
+         case JFileChooser.ERROR_OPTION:
+            System.out.println("Error");
+            break;
+      }
+                        
+                        
+      int returnValue = fileChooser.showOpenDialog(null);
+      if (returnValue == JFileChooser.APPROVE_OPTION) {
+         File selectedFile = fileChooser.getSelectedFile();
+                           
+                           
+         System.out.println(selectedFile);
+                           
+                           
+      }
+                        
+      if(fileUploaded){
+         JFrame uploadFrame = new JFrame("Upload a research project");
+         JPanel panel = new JPanel();
+         uploadFrame.add(panel);
+         placeComponents(panel);
+         uploadFrame.setVisible(true);
+         uploadFrame.setSize(300,380);
+         uploadFrame.setLocationRelativeTo(frame);
+                           
+         JPanel uploadHeader = new JPanel();
+         JPanel upload = new JPanel();
+         JLabel title = new JLabel("<html><span style='color: black;'>Research Title</span><br /></html>");
+         title.setHorizontalAlignment(JLabel.CENTER);
+         title.setVerticalAlignment(JLabel.CENTER);
+                           
+                           
+                           
+                           //paperTitle
+                           //JLabel paperTitleLabel = new JLabel("<html><span style='color: black;'>Research Title</span><br /></html>");
+         JTextField paperTitle = new JTextField();
+         paperTitle.setHorizontalAlignment(JTextField.CENTER);
+         paperTitle.setPreferredSize(new Dimension(250,40));
+                           //auther(s) 
+         JLabel paperAutherLabel = new JLabel("<html><span style='color: black;'>Auther(s)</span><br /></html>");
+         JTextField paperAuther = new JTextField();
+         paperAuther.setHorizontalAlignment(JTextField.CENTER);
+         paperAuther.setPreferredSize(new Dimension(250,40));
+                           
+                           //abstrct 
+         JLabel paperAbstrctLabel = new JLabel("<html><span style='color: black;'>Abstrct</span><br /></html>");
+         JTextArea paperAbstrct = new JTextArea();
+         paperAbstrct.setSize(250,100);
+         paperAbstrct.setLineWrap(true);
+         JScrollPane abstrctScrollPane = new JScrollPane(paperAbstrct);
+                           
+                           //citations 
+         JLabel papercitationLabel = new JLabel("<html><span style='color: black;'>Citations</span><br /></html>");
+         JTextField paperCitations = new JTextField();
+         paperCitations.setHorizontalAlignment(JTextField.CENTER);
+         paperCitations.setPreferredSize(new Dimension(250,40));
+                             
+                           //keywords 
+         JLabel paperKeywordLabel = new JLabel("<html><span style='color: black;'>Keywords</span><br /></html>");
+         JTextField paperKeywords = new JTextField();
+         paperKeywords.setHorizontalAlignment(JTextField.CENTER);
+         paperKeywords.setPreferredSize(new Dimension(250,40));   
+                           
+                           
+         uploadHeader.add(paperTitle);
+         upload.add(title);
+         upload.add(paperAuther);
+         upload.add(paperKeywordLabel);//label
+         upload.add(paperKeywords);
+         upload.add(paperAbstrctLabel);//lavel
+         upload.add(abstrctScrollPane);
+         upload.add(papercitationLabel);//label
+         upload.add(paperCitations); 
+                           
+                           
+         JButton submitButton = new JButton("Submit");
+         JButton cancelBut = new JButton("Cancel");
+                           // uploadButtonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+                           
+                           
+         upload.add(cancelBut);
+         upload.add(submitButton);
+         uploadFrame.add(uploadHeader);
+         uploadFrame.add(upload);
+                           
+         uploadFrame.setLocationRelativeTo(frame);
+         uploadFrame.setVisible(true); 
+         uploadFrame.setResizable(false);
+      }
+   
+   }
      
      
 }//end of class
