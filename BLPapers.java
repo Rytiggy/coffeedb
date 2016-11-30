@@ -101,11 +101,11 @@ public class BLPapers {
          dataLayer.setPaperID(paperID);
     }
 
-    public void setPDF(byte[] pdf) {
+    public void setPDF(String pdf) {
         dataLayer.setPdfData(pdf);
     }
 
-    public byte[] getPDF() {
+    public String getPDF() {
         return dataLayer.getPdfData();
     }
 
