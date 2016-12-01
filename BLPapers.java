@@ -1,4 +1,3 @@
-import java.sql.SQLException;
 import java.util.ArrayList;
 /*
 * CoffeeDB
@@ -37,7 +36,7 @@ public class BLPapers {
       return dataLayer.fetchAllPapers();
    }
 
-    public ArrayList<ArrayList<String>> fetchPaper(String _ID) throws DLException {
+    public DLPapers fetchPaper(String _ID) throws DLException {
         return dataLayer.fetchPaper();
     }
    
