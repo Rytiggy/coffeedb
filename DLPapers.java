@@ -11,7 +11,7 @@ public class DLPapers {
    private String keyword;
    private MySQLDatabase msqlDB;
 
-   private byte[] pdfData;
+   private String pdfData;
     
    // Default constructor used when paper ID is unknown
    public DLPapers() {
@@ -64,7 +64,7 @@ public class DLPapers {
       String sql = "INSERT INTO papers (title, abstract, citation, author, pdf)" +
                 " VALUES (?, ?, ?, ?, ?);";
    
-      if(msqlDB.setDataPDF(sql, list)) {
+      if(msqlDB.setData(sql, list)) {
          succ = true;
       }
    
@@ -209,11 +209,11 @@ public class DLPapers {
    }
 
    // Return all papers with a particular keyword
-   public byte[] getPdfData() {
+   public String getPdfData() {
       return pdfData;
    }
 
-   public void setPdfData(byte[] pdfData) {
+   public void setPdfData(String pdfData) {
       this.pdfData = pdfData;
    }
 

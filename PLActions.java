@@ -82,14 +82,18 @@ public class PLActions {
       // Reads in text from file and then inserts the paper
       // whenever a faculty is "updating" a paper, they will just be re-writing over the old one
 
-      String url = null;
+      String url = _url;
+      String newUrl = "papers/"+_title+".pdf";
       File pdfFile = new File(url);
       byte[] pdfData = new byte[(int) pdfFile.length()];
       DataInputStream dis = null;
+      DataOutputStream dos = null;
 
       try {
          dis = new DataInputStream(new FileInputStream(pdfFile));
          dis.readFully(pdfData);  // read from file into byte[] array
+         dos = new DataOutputStream(new FileOutputStream(newUrl));
+         dos.write(pdfData);
          dis.close();
       } catch (FileNotFoundException fnfe) {
          fnfe.printStackTrace();
@@ -101,10 +105,19 @@ public class PLActions {
       paper.setCitation(_citation);
       paper.setPaperAbstract(_abstract);
       paper.setTitle(_title);
-      paper.setPDF(pdfData);
+      paper.setPDF(newUrl);
       paper.setAuthor(_author);
 
       paper.postPaper();
+   }
+
+   public static void main(String[] args) {
+      PLActions plActions = new PLActions();
+      try {
+         plActions.uploadPaper("Hej", "Hej", "Hej","papers/jugge.pdf","Hej");
+      } catch (DLException e) {
+         e.printStackTrace();
+      }
    }
    
    

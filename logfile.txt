@@ -1,0 +1,6 @@
+
+11/30/2016 4:59:23 AM: 
+Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+SQLState : 08001
+SQLErrorCode : 0
+Error Occurred : Connect Method
