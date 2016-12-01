@@ -19,6 +19,9 @@ public class PLGUI {
   
  
    public static void main(String[] args){
+      PLActions action = new PLActions();       
+   
+   
       JFrame frame = new JFrame("Faculty Research Assistant");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
    
@@ -71,11 +74,12 @@ public class PLGUI {
       keywords.setHorizontalAlignment(JTextField.LEFT);
       result.add(keywords);
       mainPanel.add(result);
-      Object rowData[][] ={ { "The Stars and how they  shine ", "Bob hattington", "Finalized" },{ "A Paper about science", "Ryan Mason", "In Progress" } };
-      Object columnNames[] ={ "Title", "PI", "Status" };
-      //JTable table = new JTable(rowData, columnNames);
+      Object rowData[][] ={ };
+      Object columnNames[] ={ "ID","Title", "PI" };
+      TableModel tableModel = new DefaultTableModel(rowData, columnNames);
+      
       JTable table = 
-         new JTable(rowData, columnNames) {
+         new JTable(tableModel) {
             private static final long serialVersionUID = 1L;
             public boolean isCellEditable(int row, int column) {                
                return false;               
@@ -92,6 +96,7 @@ public class PLGUI {
                return "Double Click to view more";
             }
          }; 
+   
          
          
         
@@ -131,15 +136,42 @@ public class PLGUI {
               
       
       
-      
+   
                
       searchButton.addActionListener(
          new ActionListener()
          {
             public void actionPerformed(ActionEvent e){
                String searchTerms = searchBox.getText();
-               System.out.println(searchTerms);
+               ArrayList<BLPapers> papers = null;
+            
+               
+               DefaultTableModel model = (DefaultTableModel) table.getModel();
+                  
+               int rowCount = model.getRowCount();
+               System.out.println(rowCount);
+               //Remove rows one by one from the end of the table
+               for (int i = rowCount - 1; i >= 0; i--) {
+                  model.removeRow(i);
+               }
+               
+               try{
+                  papers = action.search(searchTerms);
+               }
+               catch(DLException dle){
+                  System.out.println(dle);
+               }
+               System.out.println(papers);
+               for (BLPapers blPaper : papers) {
+                  System.out.println(blPaper.getPaperID());
+                  System.out.println(blPaper.getPaperAbstract());
+                  System.out.println(blPaper.getTitle());
+                  System.out.println(blPaper.getAuthor());
+                  model.addRow(new Object[]{blPaper.getPaperID(),blPaper.getTitle(),blPaper.getAuthor()});  
+                  
+               }
                keywords.setText("Finding papers that match: " + searchTerms);
+               
             }
          });
    
@@ -150,7 +182,7 @@ public class PLGUI {
          {
             public void actionPerformed(ActionEvent e){
                System.out.println("Login Prompt");
-                       //login stuff
+                //login stuff
                JFrame loginFrame = new JFrame("Login");
             
                JPanel panel = new JPanel();
@@ -172,19 +204,24 @@ public class PLGUI {
                   JTable target = (JTable)e.getSource();
                   int row = target.getSelectedRow();
                   int column = target.getSelectedColumn();
-                  Object docTitle = (Object) table.getModel().getValueAt(row, 0);
-               
+                  Object paperID = (Object) table.getModel().getValueAt(row, 0);
+                  BLPapers paper = null;
+                  try{
+                      paper = new BLPapers(paperID.toString());              
+                     }catch(DLException dle){
+                     
+                     }                     
                // do some action if appropriate column
                
                
                   System.out.println("Table Clicked " + row + " " + column + " " + target);
                // display/center the jdialog when the button is pressed
-                  JDialog d = new JDialog(frame, docTitle.toString() , true);
+                  JDialog d = new JDialog(frame, "Preview" , true);
                   d.setLocationRelativeTo(frame);
                //    
                   JPanel result = new JPanel();
-                  JLabel p1 = new JLabel("<html><span style='color: black;'>Paper "+row+" found </span></html>");
-                  JLabel p2 = new JLabel("<html><span style='color: black;'>Show data about paper here</span></html>");
+                  JLabel p1 = new JLabel("<html><span style='color: black;'>"+paper+"</span></html>");
+                  JLabel p2 = new JLabel("<html><span style='color: black;'>"+paper.getPaperAbstract()+"</span></html>");
                   
                   JButton editPaper = new JButton("Edit");   
                   JButton deletePaper = new JButton("Delete"); 
