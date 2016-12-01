@@ -1,7 +1,11 @@
 import java.util.*;
 import java.io.*;
 import java.text.*;
-
+/*
+* CoffeeDB
+* Gustav, Aaron, Ryan, and Jeremy
+* DLException
+*/
 
 public class DLException extends Exception{
    private Exception e;

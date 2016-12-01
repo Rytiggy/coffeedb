@@ -3,6 +3,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/*
+* CoffeeDB
+* Gustav, Aaron, Ryan, and Jeremy
+* PLActions
+*/
+
 // Functions of the GUI
 public class PLActions {
    

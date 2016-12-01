@@ -1,6 +1,11 @@
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+/*
+* CoffeeDB
+* Gustav, Aaron, Ryan, and Jeremy
+* DLPapers
+*/
 public class DLPapers {
    private String title;
    private String paperAbstract;
