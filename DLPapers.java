@@ -117,7 +117,7 @@ public class DLPapers {
    }
    
    // Return a paper's attributes
-   public ArrayList<ArrayList<String>> fetchPaper() throws DLException {
+  /* public ArrayList<ArrayList<String>> fetchPaper() throws DLException {
       ArrayList<ArrayList<String>> paperAttributes = new ArrayList();
       ArrayList<String> list = new ArrayList<String>();
 
@@ -130,7 +130,33 @@ public class DLPapers {
       msqlDB.close();
 
       return paperAttributes;
+   }*/
+
+   /*public DLPapers fetchPaper() throws DLException {
+      ArrayList<String> list = new ArrayList<String>();
+      ArrayList<ArrayList<String>> titleResults = new ArrayList(); //
+      DLPapers matchedPaper = null;
+
+      msqlDB.connect();
+
+      list.add(this.paperID);
+      String sql = "SELECT * FROM papers WHERE ID =?;";
+      titleResults = msqlDB.getData(sql, list);
+
+         for (int j = 1; j < titleResults.size(); j++) {
+            // Create new paper for each query result
+            matchedPaper = new DLPapers(titleResults.get(j).get(0));
+         }
+
+      msqlDB.close();
+
+      return matchedPaper;
+   }*/
+
+   public DLPapers fetchPaper() throws DLException {
+      return this;
    }
+
    
    // Fetch and set this paper's attributes
    public void fetchPaperAttributes() throws DLException {

@@ -1,7 +1,5 @@
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 // Functions of the GUI
 public class PLActions {
@@ -62,19 +60,9 @@ public class PLActions {
    }
    
    // View Details 
-   public String[] viewDetails(String _paperID, String _url) throws DLException {
-      ArrayList<ArrayList<String>> arr = new ArrayList<>();
-      String[] paperDetails = new String[6];
-
-      // Will return the selected paper's information to the gui
-
-      BLPapers blPapers = new BLPapers();
-      arr = blPapers.fetchPaper(blPapers.getPaperID());
-      for(int i = 0; i<arr.get(i).size(); i++) {
-         paperDetails[i] = arr.get(1).get(i);
-      }
-
-      return paperDetails;
+   public BLPapers viewDetails(String _paperID) throws DLException {
+      BLPapers blPapers = new BLPapers(_paperID);
+      return blPapers;
    }
    
    // Upload
