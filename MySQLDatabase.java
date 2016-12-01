@@ -2,6 +2,11 @@ import java.sql.*;
 import java.util.*;
 import java.util.HashMap;
 
+/*
+* CoffeeDB
+* Gustav, Aaron, Ryan, and Jeremy
+* MySQLDatabase
+*/
 public class MySQLDatabase {
    //global var
    public static String user, password, driver,uri;

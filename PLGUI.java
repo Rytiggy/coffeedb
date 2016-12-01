@@ -7,6 +7,11 @@ import javax.swing.*;
 import java.util.*;
 import java.io.*;
 import javax.swing.filechooser.*;
+/*
+* CoffeeDB
+* Gustav, Aaron, Ryan, and Jeremy
+* PLGUI
+*/
 
 
 public class PLGUI {
