@@ -16,12 +16,11 @@ import javax.swing.filechooser.*;
 
 public class PLGUI {
   
-  
  
    public static void main(String[] args){
+   
       PLActions action = new PLActions();       
-   
-   
+      
       JFrame frame = new JFrame("Faculty Research Assistant");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
    
@@ -75,7 +74,7 @@ public class PLGUI {
       result.add(keywords);
       mainPanel.add(result);
       Object rowData[][] ={ };
-      Object columnNames[] ={ "ID","Title", "PI" };
+      Object columnNames[] ={ "ID","Title", "PI","Email" };
       TableModel tableModel = new DefaultTableModel(rowData, columnNames);
       
       JTable table = 
@@ -127,6 +126,8 @@ public class PLGUI {
                System.out.println("Upload Prompt");
                
                upload(frame);
+               
+               //action.uploadPaper()
             
             }
          });
@@ -207,10 +208,11 @@ public class PLGUI {
                   Object paperID = (Object) table.getModel().getValueAt(row, 0);
                   BLPapers paper = null;
                   try{
-                      paper = new BLPapers(paperID.toString());              
-                     }catch(DLException dle){
+                     paper = new BLPapers(paperID.toString());              
+                  }
+                  catch(DLException dle){
                      
-                     }                     
+                  }                     
                // do some action if appropriate column
                
                
@@ -340,7 +342,7 @@ public class PLGUI {
      
   
    public static void upload(JFrame frame){
-   
+      PLActions action = new PLActions();       
       System.out.println("editPaper Prompt");
       FileNameExtensionFilter filter = new FileNameExtensionFilter("PDF files only", "pdf");
       JFileChooser fileChooser = new JFileChooser();
@@ -362,17 +364,21 @@ public class PLGUI {
             break;
       }
                         
-                        
+      String PDFurl = null;
+                
       int returnValue = fileChooser.showOpenDialog(null);
+      
       if (returnValue == JFileChooser.APPROVE_OPTION) {
          File selectedFile = fileChooser.getSelectedFile();
                            
-                           
-         System.out.println(selectedFile);
+         PDFurl = selectedFile.toString();               
+      
+      
                            
                            
       }
-                        
+      final String FinalPDFPath = PDFurl; // and now use this one in the Inner
+   
       if(fileUploaded){
          JFrame uploadFrame = new JFrame("Upload a research project");
          JPanel panel = new JPanel();
@@ -392,9 +398,9 @@ public class PLGUI {
                            
                            //paperTitle
                            //JLabel paperTitleLabel = new JLabel("<html><span style='color: black;'>Research Title</span><br /></html>");
-         JTextField paperTitle = new JTextField();
-         paperTitle.setHorizontalAlignment(JTextField.CENTER);
-         paperTitle.setPreferredSize(new Dimension(250,40));
+         JTextField paperTitleField = new JTextField();
+         paperTitleField.setHorizontalAlignment(JTextField.CENTER);
+         paperTitleField.setPreferredSize(new Dimension(250,40));
                            //auther(s) 
          JLabel paperAutherLabel = new JLabel("<html><span style='color: black;'>Auther(s)</span><br /></html>");
          JTextField paperAuther = new JTextField();
@@ -420,14 +426,18 @@ public class PLGUI {
          paperKeywords.setHorizontalAlignment(JTextField.CENTER);
          paperKeywords.setPreferredSize(new Dimension(250,40));   
                            
-                           
-         uploadHeader.add(paperTitle);
-         upload.add(title);
+         upload.add(title);      
+         upload.add(paperTitleField);
+         
+         upload.add(paperAutherLabel);
          upload.add(paperAuther);
+         
          upload.add(paperKeywordLabel);//label
          upload.add(paperKeywords);
+         
          upload.add(paperAbstrctLabel);//lavel
          upload.add(abstrctScrollPane);
+         
          upload.add(papercitationLabel);//label
          upload.add(paperCitations); 
                            
@@ -445,10 +455,37 @@ public class PLGUI {
          uploadFrame.setLocationRelativeTo(frame);
          uploadFrame.setVisible(true); 
          uploadFrame.setResizable(false);
+         
+        // System.out.print(paperCitations.getText());
+        
+        
+        
+                                
+         submitButton.addActionListener(
+            new ActionListener()
+            {
+               public void actionPerformed(ActionEvent e){
+                  paperKeywords.getText();
+                 // System.out.println(selectedFile)
+                  try{
+                     System.out.println("title: "+ paperTitleField.getText());
+                     System.out.println(paperCitations.getText());
+                     System.out.println(paperAbstrct.getText());
+                     System.out.println(FinalPDFPath);
+                     System.out.println(paperAuther.getText());
+                  
+                     action.uploadPaper(paperTitleField.getText(),paperCitations.getText(),paperAbstrct.getText(), FinalPDFPath, paperAuther.getText());
+                     uploadFrame.setVisible(false); 
+                  
+                  }
+                  catch(DLException dle){
+                  
+                  }
+               }
+            });
       }
    
    }
-     
      
 }//end of class
 
