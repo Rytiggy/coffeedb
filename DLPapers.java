@@ -1,5 +1,5 @@
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.*;
 
 /*
 * CoffeeDB
@@ -44,7 +44,7 @@ public class DLPapers {
       String sql = "SELECT * FROM papers";
       ArrayList<ArrayList<String>> papers = msqlDB.getData(sql);
       
-      /*  OLD CODE
+      /*  OLD CODE - useful to understand which are columns and which are rows in an iteration
       // Get all titles
       for (int i = 0; i < results.get(0).size(); i++) {
          papers.add(results.get(0).get(i)); // column 0, rows = i
@@ -190,15 +190,15 @@ public class DLPapers {
       ArrayList<String> list = new ArrayList<String>(); // search input used for prepared statements
       
       // SQL Search Queries
-      String keywordSQL = "SELECT * FROM paper_keywords WHERE keyword = ?";
-      String titleSQL = "SELECT * FROM papers WHERE title = ?";
+      String keywordSQL = "SELECT * FROM paper_keywords WHERE keyword LIKE '%' ? '%'";
+      String titleSQL = "SELECT * FROM papers WHERE title LIKE '%' ? '%'";
       
       msqlDB.connect();
       for (int i = 0; i < searchInput.length; i++) {
          // Clear list and add next search word
          list.clear();
          list.add(searchInput[i]);      
-         
+                 
          // Query paper titles and keywords for the search word
          titleResults = msqlDB.getData(titleSQL, list);
          keywordResults = msqlDB.getData(keywordSQL, list);         
@@ -208,6 +208,8 @@ public class DLPapers {
             for (int j = 1; j < titleResults.size(); j++) {
                // Create new paper for each query result
                DLPapers matchedPaper = new DLPapers(titleResults.get(j).get(0));
+               matchedPaper.fetchPaperAttributes();
+               
                matchedPapers.add(matchedPaper);
                
                // Connection closed from creating new paper, so re-open it              
@@ -220,6 +222,8 @@ public class DLPapers {
                DLPapers matchedPaper = new DLPapers(keywordResults.get(j).get(0));
                matchedPaper.fetchPaperAttributes();
                
+               matchedPapers.add(matchedPaper);
+               
                // Connection closed from creating new paper, so re-open it 
                msqlDB.connect();
             }
@@ -227,15 +231,15 @@ public class DLPapers {
       }
       
       // Lastly, eliminate any duplicate papers in matchedPapers
-      for (int i = 0; i < matchedPapers.size(); i++) {
-         for (int j = 0; j < matchedPapers.size(); j++) {
-            if(matchedPapers.get(i) == matchedPapers.get(j) && i != j) {
-               matchedPapers.remove(i);
+      for (int i = 0; i < matchedPapers.size(); i++) {       
+         if(i != (matchedPapers.size() - 1)) {
+            if(matchedPapers.get(i).getPaperID().equals(matchedPapers.get(i+1).getPaperID())) {
+               matchedPapers.remove(matchedPapers.get(i));
                i -= 1; 
             }
-         }
+         }  
       }
-           
+
       return matchedPapers;
    }
 
