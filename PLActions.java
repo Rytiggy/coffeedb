@@ -100,26 +100,15 @@ public class PLActions {
       paper.setPaperAbstract(_abstract);
       paper.setTitle(_title);
       paper.setPDF(newUrl);
-      paper.setAuthor(_author);
-      paper.postPaper();
-      paper.fetchPaperAttributes();
 
+      paper.postPaper();
+      System.out.println(paper.getPaperID());
+
+      paper.fetchPaperAttributes();
       paper.postKeywords(_keywords);
    }
 
    public void getPDF() {
 
    }
-
-   public static void main(String[] args) {
-      PLActions plActions = new PLActions();
-      ArrayList<String> arr = new ArrayList<>();
-      try {
-         plActions.uploadPaper("Hej", "Hej", "Hej","papers/jugge.pdf","Hej", arr);
-      } catch (DLException e) {
-         e.printStackTrace();
-      }
-   }
-   
-   
 }
