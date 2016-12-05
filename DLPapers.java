@@ -13,7 +13,8 @@ public class DLPapers {
    private String paperID;
 
    private String author;
-   private String keyword;
+
+   private String[] keywords;
    private MySQLDatabase msqlDB;
 
    private String pdfData;
@@ -59,20 +60,21 @@ public class DLPapers {
    
       msqlDB.connect();
    
-      ArrayList list = new ArrayList();
+      ArrayList<String> list = new ArrayList<String>();
       list.add(this.title);
-      list.add(this.author);
       list.add(this.paperAbstract);
       list.add(this.citation);
       list.add(this.pdfData);
    
-      String sql = "INSERT INTO papers (title, abstract, citation, author, pdf)" +
-                " VALUES (?, ?, ?, ?, ?);";
-   
-      if(msqlDB.setData(sql, list)) {
+      String sql = "INSERT INTO papers (title, abstract, citation, path)" +
+                " VALUES (?, ?, ?, ?);";
+
+      int in = msqlDB.setData2(sql, list);
+      if(in > 0) {
          succ = true;
       }
-   
+
+      this.setPaperID(Integer.toString(in));
       msqlDB.close();
    
       return succ;
@@ -201,7 +203,7 @@ public class DLPapers {
                  
          // Query paper titles and keywords for the search word
          titleResults = msqlDB.getData(titleSQL, list);
-         keywordResults = msqlDB.getData(keywordSQL, list);         
+         keywordResults = msqlDB.getData(keywordSQL, list);
          
          // If there are any query results, add the paper to the returned results
          if (titleResults.size() > 1) {
@@ -262,7 +264,7 @@ public class DLPapers {
 
    // Return a keyword
    public void fetchKeyword() throws DLException {
-         ArrayList<ArrayList<String>> arr = new ArrayList();
+        /* ArrayList<ArrayList<String>> arr = new ArrayList();
          ArrayList<String> list = new ArrayList<String>();
 
          msqlDB.connect();
@@ -270,7 +272,7 @@ public class DLPapers {
          String sql = "SELECT * FROM paper_keywords WHERE keyword = ?;";
          arr = msqlDB.getData(sql, list);         
          
-         msqlDB.close();
+         msqlDB.close();*/
    }
 
    // Return all keywords from DB
@@ -285,14 +287,18 @@ public class DLPapers {
    }
 
    // Create a new keyword
-   public void postKeyword(String _keyword) throws DLException {
-         ArrayList list = new ArrayList();
-
+   public void postKeywords(ArrayList<String> _keyword) throws DLException {
          msqlDB.connect();
-         list.add(_keyword);
-         String sql = "INSERT INTO paper_keywords (keyword)" + "VALUES (?)";
-         msqlDB.setData(sql, list);
-         msqlDB.close();
+
+         for (int i = 0; i < _keyword.size(); i++) {
+            ArrayList<String> arr = new ArrayList<>();
+            arr.add(this.getPaperID());
+            arr.add(_keyword.get(i));
+            String sql = "INSERT INTO paper_keywords (id, keyword) VALUES (?, ?);";
+            msqlDB.setData(sql, arr);
+         }
+
+      msqlDB.close();
    }
 
    // Delete all paper_keywords for a given keyword
@@ -314,7 +320,7 @@ public class DLPapers {
          msqlDB.connect();
          list.add(_keyword);
          String sql = "UPDATE keyword_papers SET keyword = ? WHERE keyword = ?";
-         list.add(this.keyword);
+         list.add(this.keywords);
          msqlDB.setData(sql, list);
          msqlDB.close();
    }
@@ -350,6 +356,14 @@ public class DLPapers {
 
    public void setPaperID(String paperID) {
       this.paperID = paperID;
+   }
+
+   public String[] getKeywords() {
+      return keywords;
+   }
+
+   public void setKeywords(String[] keywords) {
+      this.keywords = keywords;
    }
 
 }

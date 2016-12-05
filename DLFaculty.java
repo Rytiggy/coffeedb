@@ -10,7 +10,7 @@ public class DLFaculty {
    
    // Constructor
    DLFaculty(String myEmail, String myPassword) {
-      database = new MySQLDatabase("jdbc:mysql://localhost/facresearchdb?autoReconnect=true&useSSL=false","root", "student");
+      database = new MySQLDatabase();
       // Need to authenticate user here. If = true, is good
       email = myEmail;
       password = myPassword;
@@ -37,7 +37,7 @@ public class DLFaculty {
    }
    
    // Populate faculty attributes
-   public void fetch() {
+   public void fetch() throws DLException {
       database.connect();
       
       String fetchSQL = "SELECT * FROM faculty WHERE email = ?"; // this assumes user has been authenticated in constructor

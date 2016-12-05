@@ -60,8 +60,8 @@ public class BLPapers {
        dataLayer.fetchKeyword();
    }
 
-   public void postKeyword(String _keyword) throws DLException {
-      dataLayer.postKeyword(_keyword);
+   public void postKeywords(ArrayList<String> _keywords) throws DLException {
+      dataLayer.postKeywords(_keywords);
    }
 
    public void deleteKeyword(String _keyword) throws DLException {

@@ -72,7 +72,7 @@ public class PLActions {
    }
    
    // Upload
-   public void uploadPaper(String _title, String _citation, String _abstract, String _url, String _author) throws DLException {
+   public void uploadPaper(String _title, String _citation, String _abstract, String _url, String _author, ArrayList<String> _keywords) throws DLException {
       // Reads in text from file and then inserts the paper
       // whenever a faculty is "updating" a paper, they will just be re-writing over the old one
 
@@ -100,19 +100,15 @@ public class PLActions {
       paper.setPaperAbstract(_abstract);
       paper.setTitle(_title);
       paper.setPDF(newUrl);
-      paper.setAuthor(_author);
 
       paper.postPaper();
+      System.out.println(paper.getPaperID());
+
+      paper.fetchPaperAttributes();
+      paper.postKeywords(_keywords);
    }
 
-   public static void main(String[] args) {
-      PLActions plActions = new PLActions();
-      try {
-         plActions.uploadPaper("Hej", "Hej", "Hej","papers/jugge.pdf","Hej");
-      } catch (DLException e) {
-         e.printStackTrace();
-      }
+   public void getPDF() {
+
    }
-   
-   
 }
