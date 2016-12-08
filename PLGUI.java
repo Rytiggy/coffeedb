@@ -7,11 +7,6 @@ import javax.swing.*;
 import java.util.*;
 import java.io.*;
 import javax.swing.filechooser.*;
-
-import java.awt.Desktop;  
-import java.io.IOException;  
-import java.net.URI;  
-import java.net.URISyntaxException;  
 /*
 * CoffeeDB
 * Gustav, Aaron, Ryan, and Jeremy
@@ -173,7 +168,7 @@ public class PLGUI {
                   System.out.println(blPaper.getPaperAbstract());
                   System.out.println(blPaper.getTitle());
                   System.out.println(blPaper.getAuthor());
-                  model.addRow(new Object[]{blPaper.getPaperID(),blPaper.getTitle(),blPaper.getAuthor(), "Send Email"});  
+                  model.addRow(new Object[]{blPaper.getPaperID(),blPaper.getTitle(),blPaper.getAuthor()});  
                   
                }
                keywords.setText("Finding papers that match: " + searchTerms);
@@ -210,7 +205,6 @@ public class PLGUI {
                   JTable target = (JTable)e.getSource();
                   int row = target.getSelectedRow();
                   int column = target.getSelectedColumn();
-                  
                   Object paperID = (Object) table.getModel().getValueAt(row, 0);
                   BLPapers paper = null;
                   try{
@@ -218,217 +212,62 @@ public class PLGUI {
                   }
                   catch(DLException dle){
                      
-                  } 
+                  }                     
+               // do some action if appropriate column
+               
+               
+                  System.out.println("Table Clicked " + row + " " + column + " " + target);
+               // display/center the jdialog when the button is pressed
+                  JDialog d = new JDialog(frame, "Preview" , true);
+                  d.setLocationRelativeTo(frame);
+               //    
+                  JPanel result = new JPanel();
+                  JLabel p1 = new JLabel("<html><span style='color: black;'>"+paper+"</span></html>");
+                  JLabel p2 = new JLabel("<html><span style='color: black;'>"+paper.getPaperAbstract()+"</span></html>");
                   
-                  if(column == 3){
-                     //JDialog d = new JDialog(frame, "Send Email" , true);
-                    
-                     JFrame d = new JFrame("Send Email");
-                     JPanel result = new JPanel();
-                  
-                     
-                     
-                     
-                     
-                  //    
-                     //JLabel p1 = new JLabel("<html><span style='color: black;'>"+paper+"</span></html>");
-                     //JLabel p2 = new JLabel("<html><span style='color: black;'>"+paper.getPaperAbstract()+"</span></html>");
-                  
-                     JLabel sendToLabel = new JLabel("<html><span style='color: black;'>\u0020 to:\u0020\u0020\u0020\u0020 </span><br /></html>");
-                     JTextField sendTo = new JTextField();
-                     sendTo.setHorizontalAlignment(JTextField.CENTER);
-                     sendTo.setPreferredSize(new Dimension(250,40));
+                  JButton editPaper = new JButton("Edit");   
+                  JButton deletePaper = new JButton("Delete"); 
+                   
+                   
+                  deletePaper.addActionListener(
+                     new ActionListener()
+                     {
+                        public void actionPerformed(ActionEvent e){
+                           System.out.println("Delete Prompt");
+                           int response;
                         
-                     JLabel sendersEmailLabel = new JLabel("<html><span style='color: black;'>From:</span><br /></html>");
-                     JTextField sendersEmail = new JTextField();
-                     sendersEmail.setHorizontalAlignment(JTextField.CENTER);
-                     sendersEmail.setPreferredSize(new Dimension(250,40));
-                           
-                     JLabel emailBodyLabel = new JLabel("<html><span style='color: black;'>Body: </span><br /></html>");
-                     JTextArea emailBody = new JTextArea(5,25);
-                     emailBody.setSize(250,100);
-                     emailBody.setLineWrap(true);
-                     JScrollPane abstrctScrollPane = new JScrollPane(emailBody);
+                           response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this file?");
+                        
+                        
+                        }
+                     });
                   
+               
+               
                   
-                  
-                     result.add(sendToLabel);//label
-                     result.add(sendTo);
-                     sendTo.setText("AnEmail@email.com");
-                  
-                     result.add(sendersEmailLabel);//lavel
-                     result.add(sendersEmail);
-                  
-                     result.add(emailBodyLabel);//label
-                     result.add(emailBody); 
+                  editPaper.addActionListener(
+                     new ActionListener()
+                     {
+                        public void actionPerformed(ActionEvent e){
+                           upload(frame);
+                        
+                        }
+                     });
                      
-                     emailBody.setText("Hello, \n \n I am writing to enquire about your research paper. I would like to collaborate on it.");
+               
+               
+               
+                  keywords.setHorizontalAlignment(JTextField.LEFT);
+               
+                  result.add(p1);
+                  result.add(p2);
+                  result.add(editPaper);
+                  result.add(deletePaper);
+                  d.add(result);
+                  d.pack();
+               
+                  d.setVisible(true);
                   
-                  
-                  
-                     JButton sendEmail = new JButton("Send");   
-                     JButton cancelEmail = new JButton("Cancel"); 
-                   
-                     result.add(cancelEmail);
-                     result.add(sendEmail);
-                     d.add(result);
-                     d.pack();
-                     d.setSize(310,270);
-                     d.setLocationRelativeTo(frame);
-                  
-                     d.setVisible(true);
-                  
-                  
-                     sendEmail.addActionListener(
-                        new ActionListener()
-                        {
-                           public void actionPerformed(ActionEvent e){
-                                                         
-                              openEmail(sendTo.getText(), sendersEmail.getText() ,emailBody.getText());
-                           }
-                        });
-                  
-                     cancelEmail.addActionListener(
-                        new ActionListener()
-                        {
-                           public void actionPerformed(ActionEvent e){
-                              System.out.println("cancle Prompt");
-                                                       
-                              int response = JOptionPane.showConfirmDialog(null, "Are you sure you want cancel your email?");
-                           
-                           
-                           }
-                        });
-                     
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  
-                  }
-                  else{
-                  
-                    
-                  // do some action if appropriate column
-                  
-                  
-                  
-                  
-                  
-                     System.out.println("Table Clicked " + row + " " + column + " " + target);
-                  // display/center the jdialog when the button is pressed
-                     //JDialog d = new JDialog(frame, "Preview" , true);
-                     JFrame d = new JFrame("Preview");
-                     
-                     
-                  //    
-                     JPanel result = new JPanel();
-                    
-                     JLabel p1 = new JLabel("<html><span style='color: black;'>Title: "+paper.getTitle()+"</span></html>");
-                     p1.setPreferredSize(new Dimension(440, 40));
-                    
-                     JLabel paperAbstractLabel = new JLabel("<html><span style='color: black;'>Paper Abstract</span></html>");
-                     JTextArea p2 = new JTextArea();
-                     p2.setText(paper.getPaperAbstract());
-                     p2.setWrapStyleWord(true);
-                     p2.setLineWrap(true);
-                     p2.setOpaque(true);
-                     p2.setEditable(false);
-                     p2.setFocusable(false);
-                     p2.setBackground(UIManager.getColor("Label.background"));
-                     p2.setFont(UIManager.getFont("Label.font"));
-                     p2.setBorder(UIManager.getBorder("Label.border"));
-                     JScrollPane abstractScroll = new JScrollPane(p2, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                     abstractScroll.setMinimumSize(new Dimension(440, 100));
-                     abstractScroll.setPreferredSize(new Dimension(440, 100));
-                  
-                     JLabel paperCitationLabel = new JLabel("<html><span style='color: black;'>Paper Citation</span></html>");
-                     JTextArea p3 = new JTextArea();
-                     p3.setText(paper.getCitation());
-                     p3.setWrapStyleWord(true);
-                     p3.setLineWrap(true);
-                     p3.setOpaque(true);
-                     p3.setEditable(false);
-                     p3.setFocusable(false);
-                     p3.setBackground(UIManager.getColor("Label.background"));
-                     p3.setFont(UIManager.getFont("Label.font"));
-                     p3.setBorder(UIManager.getBorder("Label.border"));
-                     JScrollPane citationScroll = new JScrollPane(p3, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-                     citationScroll.setMinimumSize(new Dimension(440, 50));
-                     citationScroll.setPreferredSize(new Dimension(440, 50));
-                  
-                  
-                  
-                     JButton editPaper = new JButton("Edit");   
-                     JButton deletePaper = new JButton("Delete");
-                     JButton downloadPaper = new JButton("Download"); 
-                  
-                   
-                   
-                     deletePaper.addActionListener(
-                        new ActionListener()
-                        {
-                           public void actionPerformed(ActionEvent e){
-                              System.out.println("Delete Prompt");
-                              int response;
-                           
-                              response = JOptionPane.showConfirmDialog(null, "Are you sure you want to delete this file?");
-                           
-                           
-                           }
-                        });
-                  
-                  
-                  
-                  
-                     editPaper.addActionListener(
-                        new ActionListener()
-                        {
-                           public void actionPerformed(ActionEvent e){
-                              upload(frame);
-                           
-                           }
-                        });
-                     
-                     
-                     downloadPaper.addActionListener(
-                        new ActionListener()
-                        {
-                           public void actionPerformed(ActionEvent e){
-                              System.out.println("Download paper");
-                           
-                           }
-                        });
-                  
-                  
-                  
-                     keywords.setHorizontalAlignment(JTextField.LEFT);
-                     result.add(paperAbstractLabel);
-                  
-                     result.add(p1);
-                    
-                    
-                     result.add(paperAbstractLabel);
-                     result.add(abstractScroll);
-                     result.add(Box.createVerticalStrut(20));
-                    
-                     result.add(paperCitationLabel);
-                     result.add(citationScroll);
-                  
-                     result.add(editPaper);
-                     result.add(deletePaper);
-                     result.add(downloadPaper);
-                  
-                     d.add(result);
-                     //d.pack();
-                     d.setSize(500,400);
-                     d.setLocationRelativeTo(frame);
-                  
-                     d.setVisible(true);
-                  }
                   
                   
                   
@@ -495,18 +334,6 @@ public class PLGUI {
                loginError.setText("<html><div style='color:red'>Error: Username or Password is wrong </html>");
             
             
-               LoginPrompt.addActionListener(
-                  new ActionListener()
-                  {
-                     public void actionPerformed(ActionEvent e){
-                        System.out.println("Validate Login");
-                       //login stuff
-                        loginError.setText("<html><div style='color:red'>Error: Username or Password is wrong </html>");
-                     
-                     
-                     
-                     }
-                  });
             
             }
          });
@@ -554,19 +381,11 @@ public class PLGUI {
    
       if(fileUploaded){
          JFrame uploadFrame = new JFrame("Upload a research project");
-         
-         BLPapers papers = new BLPapers();
-         
-         try{
-            System.out.println(papers.fetchAllKeywords());
-         }
-         catch(DLException e){
-         }
          JPanel panel = new JPanel();
          uploadFrame.add(panel);
          placeComponents(panel);
          uploadFrame.setVisible(true);
-         uploadFrame.setSize(300,430);
+         uploadFrame.setSize(300,380);
          uploadFrame.setLocationRelativeTo(frame);
                            
          JPanel uploadHeader = new JPanel();
@@ -590,7 +409,7 @@ public class PLGUI {
                            
                            //abstrct 
          JLabel paperAbstrctLabel = new JLabel("<html><span style='color: black;'>Abstrct</span><br /></html>");
-         JTextArea paperAbstrct = new JTextArea(5,25);
+         JTextArea paperAbstrct = new JTextArea();
          paperAbstrct.setSize(250,100);
          paperAbstrct.setLineWrap(true);
          JScrollPane abstrctScrollPane = new JScrollPane(paperAbstrct);
@@ -605,42 +424,7 @@ public class PLGUI {
          JLabel paperKeywordLabel = new JLabel("<html><span style='color: black;'>Keywords</span><br /></html>");
          JTextField paperKeywords = new JTextField();
          paperKeywords.setHorizontalAlignment(JTextField.CENTER);
-         paperKeywords.setPreferredSize(new Dimension(250,40)); 
-         paperKeywords.setForeground(Color.GRAY);
-         paperKeywords.setText("Seperate by space"); 
-      
-      
-         paperKeywords.addKeyListener( 
-            new KeyListener() {
-               @Override
-               public void keyTyped(KeyEvent arg0) {
-                  if(paperKeywords.getText().equals("Seperate by space")){
-                     System.out.println("Space was entered! clearing the  text field");
-                     paperKeywords.setText("");
-                     paperKeywords.setForeground(Color.BLACK);
-                     
-                     //arg0.consume();
-                  }
-               
-               }
-               
-               @Override
-               public void keyReleased(KeyEvent arg0) {
-               // TODO Auto-generated method stub
-               
-               }
-            
-               @Override
-               public void keyPressed(KeyEvent arg0) {
-               // TODO Auto-generated method stub
-                  //
-               
-               
-               }
-            
-            });
-      
-      
+         paperKeywords.setPreferredSize(new Dimension(250,40));   
                            
          upload.add(title);      
          upload.add(paperTitleField);
@@ -689,12 +473,7 @@ public class PLGUI {
                      System.out.println(paperAbstrct.getText());
                      System.out.println(FinalPDFPath);
                      System.out.println(paperAuther.getText());
-                     System.out.println( paperKeywords.getText());
-                     ArrayList<String> keywords = new  ArrayList<String>();
-                     keywords.addAll(Arrays.asList(paperKeywords.getText().split(" ")));
-                     System.out.print(keywords);
                   
-                     //title string, citation string, abstrat string, PAper url, String AUther ,arraylist<String> Keywords, userObject
                      action.uploadPaper(paperTitleField.getText(),paperCitations.getText(),paperAbstrct.getText(), FinalPDFPath, paperAuther.getText());
                      uploadFrame.setVisible(false); 
                   
@@ -704,37 +483,10 @@ public class PLGUI {
                   }
                }
             });
-         cancelBut.addActionListener(
-            new ActionListener()
-            {
-               public void actionPerformed(ActionEvent e){
-                  uploadFrame.setVisible(false); 
-               }
-            });
       }
    
    }
-   
-   
-   
-   public static void openEmail(String sendTo, String from, String message){
-      Desktop desktop;
-      String NewMessage ="Hello,%20I%20am%20writing%20to%20enquire%20about%20your%20research%20paper.%20I%20would%20like%20to%20collaborate%20on%20it.";
-      
-      if (Desktop.isDesktopSupported() 
-      && (desktop = Desktop.getDesktop()).isSupported(Desktop.Action.MAIL)) {
-         try{
-            URI mailto = new URI("mailto:"+sendTo+"?subject=Notification%20of%20Facility%20research%20request&body="+NewMessage);
-            desktop.mail(mailto);
-         }
-         catch(URISyntaxException | IOException dle){
-         }
-      } 
-      else {
-      // TODO fallback to some Runtime.exec(..) voodoo?
-         throw new RuntimeException("desktop doesn't support mailto; mail is dead anyway ;)");
-      }
-   }
+     
 }//end of class
 
 
