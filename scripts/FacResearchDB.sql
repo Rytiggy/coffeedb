@@ -43,7 +43,6 @@ INSERT INTO `role` VALUES (1,'Faculty'), (2, 'Student'), (3, 'Administrator');
 UNLOCK TABLES;
 
 
-
 --
 -- Table structure for table `authorship`
 --
@@ -52,12 +51,12 @@ DROP TABLE IF EXISTS `authorship`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `authorship` (
-  `facultyId` int(11) NOT NULL,
+  `userId` int(11) NOT NULL,
   `paperId` int(11) NOT NULL,
-  PRIMARY KEY (`facultyId`,`paperId`),
-  KEY `fk_a_f` (`facultyId`),
+  PRIMARY KEY (`userId`,`paperId`),
+  KEY `fk_a_f` (`userId`),
   KEY `fk_a_p` (`paperId`),
-  CONSTRAINT `fk_a_f` FOREIGN KEY (`facultyId`) REFERENCES `faculty` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_a_f` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_a_p` FOREIGN KEY (`paperId`) REFERENCES `papers` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -73,13 +72,13 @@ INSERT INTO `authorship` VALUES (1,1),(1,2),(1,3),(1,5),(2,3);
 UNLOCK TABLES;
 
 --
--- Table structure for table `faculty`
+-- Table structure for table `user`
 --
 
-DROP TABLE IF EXISTS `faculty`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `faculty` (
+CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `fName` varchar(45) DEFAULT NULL,
   `lName` varchar(45) DEFAULT NULL,
@@ -90,13 +89,42 @@ CREATE TABLE `faculty` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `faculty`
+-- Dumping data for table `user`
 --
 
-LOCK TABLES `faculty` WRITE;
-/*!40000 ALTER TABLE `faculty` DISABLE KEYS */;
-INSERT INTO `faculty` VALUES (1,'Steve','Zilora','5f47859188a602594556580532e814a3','sjz@it.rit.edu'),(2,'Dan','Bogaard','f4f6172eb26581952a70d7199bfd2ddb','dsb@it.rit.edu');
-/*!40000 ALTER TABLE `faculty` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'Steve','Zilora','5f47859188a602594556580532e814a3','sjz@it.rit.edu'),(2,'Dan','Bogaard','f4f6172eb26581952a70d7199bfd2ddb','dsb@it.rit.edu'), (3, 'Jeremy', 'Hall', 'test','jhh1688@rit.edu');
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+UNLOCK TABLES;
+
+
+--
+-- Table structure for table `user_role`
+--
+
+DROP TABLE IF EXISTS `user_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_role` (
+  `userId` int(11) NOT NULL,
+  `roleId` int(11) NOT NULL,
+  PRIMARY KEY (`userId`,`roleId`),
+  KEY `fk_ur_u` (`userId`),
+  KEY `fk_ur_r` (`roleId`),
+  CONSTRAINT `fk_ur_u` FOREIGN KEY (`userId`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_ur_r` FOREIGN KEY (`roleId`) REFERENCES `role` (`roleId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `user_role`
+--
+
+LOCK TABLES `user_role` WRITE;
+/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
+INSERT INTO `user_role` VALUES (1,1),(2,1),(3,2);
+/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -133,7 +161,7 @@ DROP TABLE IF EXISTS `papers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `papers` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) DEFAULT NULL,
   `abstract` text,
   `citation` varchar(255) DEFAULT NULL,
