@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
 
@@ -110,7 +111,14 @@ public class PLActions {
       paper.createAuthorship();
    }
 
-   public void getPDF() {
-
+   public void openPDF(String _path) {
+      if (Desktop.isDesktopSupported()) {
+         try {
+            File myFile = new File(_path);
+            Desktop.getDesktop().open(myFile);
+         } catch (IOException ex) {
+            ex.printStackTrace();
+         }
+      }
    }
 }
