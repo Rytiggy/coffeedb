@@ -11,6 +11,12 @@ public class Main {
             System.out.println(blPaper.getPaperAbstract());
          }
          
+         
+         BLUser user = new BLUser();
+         user.login("jhh1688@rit.edu", "test");
+         
+         System.out.println("ID: "+ user.getUserId() + "| fName: " + user.getFName() + "| lName: " + user.getLName() +
+         "| role: " + user.getRole());
       } catch (DLException e) {
          e.printStackTrace();
       }
