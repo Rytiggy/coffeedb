@@ -66,7 +66,7 @@ public class DLPapers {
       list.add(this.citation);
       list.add(this.pdfData);
    
-      String sql = "INSERT INTO papers (title, abstract, citation, author, pdf)" +
+      String sql = "INSERT INTO papers (title, abstract, citation, author, path)" +
                 " VALUES (?, ?, ?, ?, ?);";
    
       if(msqlDB.setData(sql, list)) {
