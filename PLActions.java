@@ -100,12 +100,14 @@ public class PLActions {
       paper.setPaperAbstract(_abstract);
       paper.setTitle(_title);
       paper.setPDF(newUrl);
+      paper.setAuthor(_author);
 
       paper.postPaper();
       System.out.println(paper.getPaperID());
 
       paper.fetchPaperAttributes();
       paper.postKeywords(_keywords);
+      paper.createAuthorship();
    }
 
    public void getPDF() {

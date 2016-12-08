@@ -14,6 +14,10 @@ public class BLPapers {
    public BLPapers(String _paperID) throws DLException {
       dataLayer = new DLPapers(_paperID);
    }
+
+   public boolean createAuthorship() {
+       return dataLayer.createAuthorship();
+    }
    
    public ArrayList<BLPapers> searchPapers(String[] searchInput) throws DLException {
       ArrayList<DLPapers> dlPapers = dataLayer.searchPapers(searchInput);

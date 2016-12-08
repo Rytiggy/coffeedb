@@ -80,10 +80,20 @@ public class DLPapers {
       return succ;
    }
 
+   public boolean createAuthorship() {
+      ArrayList list = new ArrayList();
+      list.add(this.author);
+      list.add(this.paperID);
+
+      String qu = "INSERT INTO authorship (facultyId, paperId)" +
+              " VALUES (?, ?);";
+      return true;
+   }
+
    // Make changes to a paper
    public boolean putPaper() throws DLException {
       boolean succ = false;
-   
+
       msqlDB.connect();
    
       ArrayList list = new ArrayList();
