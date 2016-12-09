@@ -94,7 +94,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'Steve','Zilora','5f47859188a602594556580532e814a3','sjz@it.rit.edu'),(2,'Dan','Bogaard','f4f6172eb26581952a70d7199bfd2ddb','dsb@it.rit.edu'), (3, 'Jeremy', 'Hall', 'test','jhh1688@rit.edu');
+INSERT INTO `user` VALUES (1,'Steve','Zilora','5f47859188a602594556580532e814a3','sjz@it.rit.edu'),(2,'Dan','Bogaard','f4f6172eb26581952a70d7199bfd2ddb','dsb@it.rit.edu'), (3, 'Jeremy', 'Hall', 'a94a8fe5ccb19ba61c4c0873d391e987982fbbd3','jhh1688@rit.edu'), (4, 'admin', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', null), (5, 'student', 'student', '204036a1ef6e7360e536300ea78c6aeb4a9333dd', null), (6, 'professor','professor','68d5fef94c7754840730274cf4959183b4e4ec35', 'Michael.Floeser@rit.edu');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
