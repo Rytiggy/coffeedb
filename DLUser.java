@@ -5,9 +5,12 @@ import java.util.*;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-/*
+/**
 * CoffeeDB
-* Gustav, Aaron, Ryan, and Jeremy
+* @author Gustav
+* @author Aaron
+* @author Ryan
+* @author Jeremy
 * DLUser
 */
 
@@ -27,7 +30,15 @@ public class DLUser {
       role = null;
    }
    
-   // Verify user credentials
+// Verify user credentials
+   /**
+    * 
+    * @param myEmail
+    * @param myPassword
+    * @return isValidLogin
+    * @throws DLException
+    *
+    */
    public boolean login(String myEmail, String myPassword) throws DLException {
       boolean isValidLogin = false;      
       String encryptedPassword = encryptPassword(myPassword);
@@ -55,7 +66,15 @@ public class DLUser {
       return isValidLogin;
    }
    
-   // Set this user's role   
+   // Set this user's role
+   /**
+    * 
+    * @param 
+    * @param
+    * @return
+    * @throws
+    *
+    */   
    public void getUserRole() throws DLException {
       // Has the user been validated?
       if (email != null && password != null) {
@@ -77,6 +96,13 @@ public class DLUser {
    }
    
    // Encrypt a password using ____
+   /**
+    * 
+    * @param 
+    * @return
+    * @throws
+    *
+    */   
    public String encryptPassword(String myPassword) {
       String encryptedPassword = null;
       StringBuffer sb = new StringBuffer();
@@ -102,21 +128,57 @@ public class DLUser {
    }
    
    // Getters
+   /**
+    * 
+    * @param 
+    * @param
+    * @return userId
+    *
+    */   
    public int getUserId() {
       return userId;
    }
+   /**
+    * 
+    * @param 
+    * @param
+    * @return fName
+    *
+    */   
    public String getFName() {
       return fName;
    }
+   /**
+    * 
+    * @param 
+    * @param
+    * @return lName
+    *
+    */      
    public String getLName() {
       return lName;
    }
+   /**
+    * 
+    * @return password
+    *
+    */   
    public String getPassword() {
       return password;
    }
+   /**
+    * 
+    * @return email
+    *
+    */      
    public String getEmail() {
       return email;
    }
+   /**
+    * 
+    * @return role
+    *
+    */      
    public String getRole() {
       return role;
    }
