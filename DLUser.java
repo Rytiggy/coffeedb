@@ -127,6 +127,57 @@ public class DLUser {
       }
       return encryptedPassword;
    }
+
+   public boolean checkUser(String _email) throws DLException {
+      boolean exists = false;
+
+      database.connect();
+
+      String getUserDataSQL = "SELECT Id, fName, lName, email FROM user WHERE email = ?;";
+      ArrayList<String> myAttributes = new ArrayList<String>();
+      myAttributes.add(_email);
+
+      try {
+         ArrayList<ArrayList<String>> userData = database.getData(getUserDataSQL, myAttributes);
+         userId = Integer.valueOf(userData.get(1).get(0));
+         fName = userData.get(1).get(1);
+         lName = userData.get(1).get(2);
+         email = userData.get(1).get(3);
+         exists = true;
+      } catch(IndexOutOfBoundsException ioobe) {
+      }
+
+      database.close();
+      return exists;
+   }
+
+   public boolean createGuestUser(String _fName, String _lName, String _email) throws DLException {
+      boolean succ = false;
+
+      System.out.print("I GOT HERE");
+
+      database.connect();
+
+      String sql = "INSERT INTO user (fName, lName, email)" +
+              " VALUES (?, ?, ?);";
+      ArrayList<String> myAttributes = new ArrayList<String>();
+      myAttributes.add(_fName);
+      myAttributes.add(_lName);
+      myAttributes.add(_email);
+
+      int in = database.setData2(sql, myAttributes);
+      if(in > 0) {
+         succ = true;
+         System.out.print("In the DB now");
+      }
+
+      this.userId = in;
+      checkUser(_email);
+
+      database.close();
+
+      return succ;
+   }
    
    // Getters
    /**

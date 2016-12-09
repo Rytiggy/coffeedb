@@ -1,3 +1,5 @@
+import com.google.gson.Gson;
+
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -13,7 +15,6 @@ public class PLActions {
    
    // Default Constructor
    public PLActions() {
-   
    }
    
    // Search FacResearchDB for papers given user input
@@ -73,11 +74,12 @@ public class PLActions {
    }
    
    // Upload
-   public void uploadPaper(String _title, String _citation, String _abstract, String _url, String _author, ArrayList<String> _keywords) throws DLException {
+   public void uploadPaper(String _title, String _citation, String _abstract, String _url, ArrayList<String> _keywords, String[][] _users) throws DLException {
       // Reads in text from file and then inserts the paper
       // whenever a faculty is "updating" a paper, they will just be re-writing over the old one
 
       String url = _url;
+      BLUser[] authors = new BLUser[_users.length];
       String newUrl = "papers/"+_title+".pdf";
       File pdfFile = new File(url);
       byte[] pdfData = new byte[(int) pdfFile.length()];
@@ -101,14 +103,33 @@ public class PLActions {
       paper.setPaperAbstract(_abstract);
       paper.setTitle(_title);
       paper.setPDF(newUrl);
-      paper.setAuthor(_author);
 
       paper.postPaper();
-      System.out.println(paper.getPaperID());
 
       paper.fetchPaperAttributes();
       paper.postKeywords(_keywords);
-      paper.createAuthorship();
+
+      // Handle auth
+      int k = 0;
+      for (int i = 0; i < _users.length; i++) {
+         BLUser user = new BLUser();
+         if(user.checkUser(_users[i][2])) {
+            authors[k] = user;
+            k++;
+         } else {
+            user.createGuestUser(_users[i][0], _users[i][1], _users[i][2]);
+            authors[k] = user;
+            k++;
+            }
+      }
+      for(int f = 0; f < authors.length; f++) {
+         System.out.println(authors[f].getLName());
+         System.out.println(authors[f].getUserId());
+         System.out.println(authors[f].getEmail());
+         System.out.println(authors[f].getFName());
+      }
+      paper.createAuthorship(authors);
+
    }
 
    public void openPDF(String _path) {

@@ -15,6 +15,20 @@ public class BLUser {
    public boolean login(String myEmail, String myPassword) throws DLException {
       return user.login(myEmail, myPassword);
    }
+
+   public boolean checkUser(String _email) throws DLException {
+      boolean exists = user.checkUser(_email);
+
+      return exists;
+   }
+
+   public boolean createGuestUser(String _fName, String _lName, String _email) throws DLException {
+      System.out.println("WHAT");
+     boolean succ = user.createGuestUser(_fName, _lName, _email);
+
+
+      return succ;
+   }
    
    // Getters
    public int getUserId() {

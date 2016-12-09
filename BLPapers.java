@@ -15,8 +15,8 @@ public class BLPapers {
       dataLayer = new DLPapers(_paperID);
    }
 
-   public boolean createAuthorship() {
-       return dataLayer.createAuthorship();
+   public boolean createAuthorship(BLUser[] _users) throws DLException {
+       return dataLayer.createAuthorship(_users);
     }
    
    public ArrayList<BLPapers> searchPapers(String[] searchInput) throws DLException {
@@ -116,11 +116,11 @@ public class BLPapers {
         return dataLayer.getPdfData();
     }
 
-    public void setAuthor(String _author) {
-        dataLayer.setAuthor(_author);
+    public void setAuthor(ArrayList<BLUser> _users) {
+        dataLayer.setAuthor(_users);
     }
 
-    public String getAuthor() {
+    public ArrayList<BLUser> getAuthor() {
         return dataLayer.getAuthor();
     }
    
