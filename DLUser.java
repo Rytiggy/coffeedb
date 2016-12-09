@@ -1,6 +1,9 @@
 import java.io.*;
 import java.sql.*;
 import java.util.*;
+//imported for security
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 /*
 * CoffeeDB
@@ -76,8 +79,24 @@ public class DLUser {
    // Encrypt a password using ____
    public String encryptPassword(String myPassword) {
       String encryptedPassword = null;
-      // Encryption code
+   
+      try{
+            // Encryption code
+         MessageDigest mDigest = MessageDigest.getInstance("SHA1");
+         byte[] result = mDigest.digest(myPassword.getBytes());
+         StringBuffer sb = new StringBuffer();
+         for (int i = 0; i < result.length; i++) {
+            sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
+         }
       
+      
+      
+      }
+      catch(NoSuchAlgorithmException nsaE){
+         System.err.println("Exception caught: " + nsaE);
+         nsaE.printStackTrace();
+      
+      }
       return encryptedPassword;
    }
    
