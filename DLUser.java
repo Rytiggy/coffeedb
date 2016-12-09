@@ -30,9 +30,8 @@ public class DLUser {
       role = null;
    }
    
-// Verify user credentials
    /**
-    * 
+    * Verify user credentials
     * @param myEmail
     * @param myPassword
     * @return isValidLogin
