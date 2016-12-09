@@ -250,7 +250,6 @@ public class MySQLDatabase {
          for (int i=0; i<values.size(); i++) {
             result.setString(i+1, values.get(i));
          }
-      
       } 
       catch (SQLException e) {
          HashMap<String, String> map = new HashMap<String, String>();
@@ -308,7 +307,7 @@ public class MySQLDatabase {
    
    public boolean setData(String sql, ArrayList<String> values) throws DLException {
       boolean results = false;
-      if(this.executeStmt(sql , values) == 1){
+      if(executeStmt(sql, values) == 1){
          results = true;
       }
       else{
@@ -319,11 +318,9 @@ public class MySQLDatabase {
    
    public int executeStmt(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement prepStatment = prepare(mySql, values);
-      
       int results = -1;      
       try { 
          results = prepStatment.executeUpdate();
-         conn.commit();
       } 
       catch (SQLException e) {
          Map<String, String> map = new HashMap<String, String>();
