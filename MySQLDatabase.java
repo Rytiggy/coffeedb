@@ -318,14 +318,11 @@ public class MySQLDatabase {
    
    public int executeStmt(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement prepStatment = prepare(mySql, values);
-      System.out.println(prepStatment);
       int results = -1;      
       try { 
          results = prepStatment.executeUpdate();
-         System.out.println(results);
       } 
       catch (SQLException e) {
-         e.printStackTrace();
          Map<String, String> map = new HashMap<String, String>();
          map.put("Error Occurred " , "ExecuteStmt Method" );
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
@@ -334,11 +331,9 @@ public class MySQLDatabase {
          //throw new DLException(e, map);
       }
       catch ( NullPointerException e) {
-         System.out.println("here");
          //throw new DLException(e);
       }          
       catch(IndexOutOfBoundsException e){
-         System.out.println("here");
          //throw new DLException(e);      
       }  
       return results;          
