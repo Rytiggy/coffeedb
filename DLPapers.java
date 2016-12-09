@@ -1,9 +1,11 @@
 import java.sql.SQLException;
 import java.util.*;
-
-/*
+/**
 * CoffeeDB
-* Gustav, Aaron, Ryan, and Jeremy
+* @author Gustav
+* @author Aaron
+* @author Ryan
+* @author Jeremy
 * DLPapers
 */
 public class DLPapers {
@@ -19,7 +21,10 @@ public class DLPapers {
 
    private String pdfData;
     
-   // Default constructor used when paper ID is unknown
+   /**
+    * Default constructor used when paper ID is unknown
+    *
+    */
    public DLPapers() {
       paperID = null;
       msqlDB = new MySQLDatabase(); //<SHOULD NOT BE NULL NULL NULL SHOULD NTO TAKE ANY ARGS 
@@ -28,7 +33,12 @@ public class DLPapers {
       citation = null;
    }
    
-   // Create a paper given an ID
+   /**
+    * Create a paper given an ID
+    * @param __paperID
+    * @throws DLException
+    *
+    */
    public DLPapers(String _paperID) throws DLException {
       this.paperID = _paperID;
       msqlDB = new MySQLDatabase();//<SHOULD NOT BE NULL NULL NULL SHOULD NTO TAKE ANY ARGS 
@@ -37,7 +47,12 @@ public class DLPapers {
       fetchPaperAttributes();
    }
    
-   // Get all existing papers in the database
+   /**
+    * Get all existing papers in the database
+    * @return papers
+    * @throws DLException
+    *
+    */
    public ArrayList<ArrayList<String>> fetchAllPapers() throws DLException {
       msqlDB.connect();
       
@@ -54,7 +69,13 @@ public class DLPapers {
       return papers;
    }
 
-   // Create a new paper
+  
+   /**
+    * Create a new paper
+    * @return succ
+    * @throws DLException
+    *
+    */
    public boolean postPaper() throws DLException {
       boolean succ = false;
    
@@ -80,6 +101,10 @@ public class DLPapers {
       return succ;
    }
 
+   /**
+    *
+    * @return true
+    */
    public boolean createAuthorship(BLUser[] _users) throws DLException {
       boolean succ = false;
 
@@ -101,7 +126,12 @@ public class DLPapers {
       return succ;
    }
 
-   // Make changes to a paper
+   /**
+    * Make changes to a paper
+    * @return succ
+    * @throws DLException
+    *
+    */
    public boolean putPaper() throws DLException {
       boolean succ = false;
 
@@ -125,7 +155,12 @@ public class DLPapers {
       return succ;
    }
 
-   // Delete a paper
+   /**
+    * Delete a paper
+    * @return succ
+    * @throws DLException
+    *
+    */
    public boolean deletePaper() throws DLException {
       boolean succ = false;
    
@@ -180,13 +215,23 @@ public class DLPapers {
 
       return matchedPaper;
    }*/
-
+   /**
+    * 
+    * @return this
+    * @throws DLException
+    *
+    */
    public DLPapers fetchPaper() throws DLException {
       return this;
    }
 
    
-   // Fetch and set this paper's attributes
+
+   /**
+    * Fetch and set this paper's attributes
+    * @throws DLException
+    *
+    */
    public void fetchPaperAttributes() throws DLException {
       ArrayList<ArrayList<String>> paperAttributes = new ArrayList();
       ArrayList<String> list = new ArrayList<String>();
@@ -205,7 +250,13 @@ public class DLPapers {
       msqlDB.close();
    }
       
-   // Search and find any papers matching user search input
+   /**
+    * Search and find any papers matching user search input
+    * @param searchInput
+    * @return matchedPapers
+    * @throws DLException
+    *
+    */
    public ArrayList<DLPapers> searchPapers(String[] searchInput) throws DLException {
       ArrayList<ArrayList<String>> keywordResults = new ArrayList(); // results based on keywords
       ArrayList<ArrayList<String>> titleResults = new ArrayList(); // results based on titles
@@ -266,21 +317,41 @@ public class DLPapers {
       return matchedPapers;
    }
 
-   // Return all papers with a particular keyword
+   /**
+    * Return all papers with a particular keyword
+    * @param searchInput
+    * @return pdfData
+    *
+    */
    public String getPdfData() {
       return pdfData;
    }
-
+   /**
+    * setPdfData
+    * @param pdfData
+    *
+    */
    public void setPdfData(String pdfData) {
       this.pdfData = pdfData;
    }
 
+   /**
+    * get author
+    * @return author
+    *
+    */
    public ArrayList<BLUser> getAuthor() {
       return users;
    }
 
+   /**
+    * Verify user credentials
+    * @param author
+    *
+    */
    public void setAuthor(ArrayList<BLUser> authors) {
       this.users = authors;
+
    }
 
    // Return a keyword
@@ -296,7 +367,12 @@ public class DLPapers {
          msqlDB.close();*/
    }
 
-   // Return all keywords from DB
+   /**
+    * Return all keywords from DB
+    * @return keywords
+    * @throws DLException
+    *
+    */
    public ArrayList<ArrayList<String>> fetchAllKeywords() throws DLException {
       ArrayList<ArrayList<String>> keywords = new ArrayList<ArrayList<String>>();
 
@@ -306,8 +382,11 @@ public class DLPapers {
 
       return keywords;
    }
-
-   // Create a new keyword
+   /**
+    * Create a new keyword
+    * @param _keyword
+    *
+    */
    public void postKeywords(ArrayList<String> _keyword) throws DLException {
          msqlDB.connect();
 
@@ -321,8 +400,12 @@ public class DLPapers {
 
       msqlDB.close();
    }
-
-   // Delete all paper_keywords for a given keyword
+   /**
+    * Delete all paper_keywords for a given keyword
+    * @param _keyword
+    * @throws DLException
+    *
+    */
    public void deleteKeyword(String _keyword) throws DLException {
 
          msqlDB.connect();
@@ -335,6 +418,12 @@ public class DLPapers {
 
    // Make changes to a keyword -- THIS NEEDS TO BE CHANGED.
    // Should also take in an id or the keyword that is getting updated
+   /**
+    * Make changes to a keyword 
+    * @param _keyword
+    * @throws DLException
+    *
+    */
    public void putKeyword(String _keyword) throws DLException {
          ArrayList list = new ArrayList();
 
@@ -347,42 +436,82 @@ public class DLPapers {
    }
    
    // Getters and setters
+   
+   /**
+    * Get Title
+    * @return title
+    *
+    */
    public String getTitle() {
       return title;
    }
-
+   /**
+    * Set Title
+    * @param title
+    *
+    */
    public void setTitle(String title) {
       this.title = title;
    }
-
+   /**
+    * get paper abstract
+    * @return paperAbstract
+    *
+    */
    public String getPaperAbstract() {
       return paperAbstract;
    }
-
+   /**
+    * set paper abstract
+    * @param paperAbstract
+    */
    public void setPaperAbstract(String paperAbstract) {
       this.paperAbstract = paperAbstract;
    }
-
+   /**
+    * get Citation
+    * @param paperAbstract
+    *
+    */
    public String getCitation() {
       return citation;
    }
-
+   /**
+    * set Citation
+    * @param citation
+    *
+    */
    public void setCitation(String citation) {
       this.citation = citation;
    }
-
+   /**
+    * getPaperID
+    * @return paperID
+    */
    public String getPaperID() {
       return paperID;
    }
-
+   /**
+    * set paper ID
+    * @param paperID
+    *
+    */
    public void setPaperID(String paperID) {
       this.paperID = paperID;
    }
-
+   /**
+    * get Keywords
+    * @return keywords
+    *
+    */
    public String[] getKeywords() {
       return keywords;
    }
-
+   /**
+    * set keywords
+    * @param keywords
+    *
+    */
    public void setKeywords(String[] keywords) {
       this.keywords = keywords;
    }

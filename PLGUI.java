@@ -695,7 +695,7 @@ public class PLGUI {
                      System.out.print(keywords);
                   
                      //title string, citation string, abstrat string, PAper url, String AUther ,arraylist<String> Keywords, userObject
-                     action.uploadPaper(paperTitleField.getText(),paperCitations.getText(),paperAbstrct.getText(), FinalPDFPath, paperAuther.getText());
+                     action.uploadPaper(paperTitleField.getText(),paperCitations.getText(),paperAbstrct.getText(), FinalPDFPath, paperAuther.getText(),keywords);
                      uploadFrame.setVisible(false); 
                   
                   }
