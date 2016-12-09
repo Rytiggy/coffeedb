@@ -56,14 +56,10 @@ public class BLPapers {
       return dataLayer.putPaper();
    }
    
-   public boolean deletePaper() throws DLException {
-      return dataLayer.deletePaper();
+   public boolean deletePaper(int myPaperId) throws DLException {
+      return dataLayer.deletePaper(myPaperId);
    }
-   
-   public void fetchKeyword() throws DLException {
-       dataLayer.fetchKeyword();
-   }
-
+     
    public void postKeywords(ArrayList<String> _keywords) throws DLException {
       dataLayer.postKeywords(_keywords);
    }

@@ -59,13 +59,7 @@ public class DLPapers {
       // Get all titles   
       String sql = "SELECT * FROM papers";
       ArrayList<ArrayList<String>> papers = msqlDB.getData(sql);
-      
-      /*  OLD CODE - useful to understand which are columns and which are rows in an iteration
-      // Get all titles
-      for (int i = 0; i < results.get(0).size(); i++) {
-         papers.add(results.get(0).get(i)); // column 0, rows = i
-      }*/
-         
+               
       return papers;
    }
 
@@ -149,16 +143,19 @@ public class DLPapers {
     * @throws DLException
     *
     */
-   public boolean deletePaper() throws DLException {
+   public boolean deletePaper(int myPaperId) throws DLException {
       boolean succ = false;
    
       msqlDB.connect();
    
-      ArrayList list = new ArrayList();
-      list.add(this.paperID);
-      String qu = "DELETE FROM papers WHERE ID=?;";
-   
-      if(msqlDB.setData(qu, list)) {
+      ArrayList<String> list = new ArrayList<String>();
+      list.add(String.valueOf(myPaperId));
+      String deleteFromAuthorshipSQL = "DELETE FROM authorship WHERE paperId=?";
+      String deleteFromKeywordsSQL = "DELETE FROM paper_keywords WHERE id=?";
+      String deleteFromPapersSQL = "DELETE FROM papers WHERE id=?";
+      
+      // First delete any instances of paper & keywords, then delete from papers
+      if((msqlDB.setData(deleteFromAuthorshipSQL, list) && msqlDB.setData(deleteFromKeywordsSQL, list)) || (msqlDB.setData(deleteFromPapersSQL, list))) {
          succ = true;
       }
    
@@ -167,42 +164,6 @@ public class DLPapers {
       return succ;
    }
    
-   // Return a paper's attributes
-  /* public ArrayList<ArrayList<String>> fetchPaper() throws DLException {
-      ArrayList<ArrayList<String>> paperAttributes = new ArrayList();
-      ArrayList<String> list = new ArrayList<String>();
-
-      msqlDB.connect();
-
-      list.add(this.paperID);
-      String sql = "SELECT * FROM papers WHERE ID =?;";
-      paperAttributes = msqlDB.getData(sql, list);
-            
-      msqlDB.close();
-
-      return paperAttributes;
-   }*/
-
-   /*public DLPapers fetchPaper() throws DLException {
-      ArrayList<String> list = new ArrayList<String>();
-      ArrayList<ArrayList<String>> titleResults = new ArrayList(); //
-      DLPapers matchedPaper = null;
-
-      msqlDB.connect();
-
-      list.add(this.paperID);
-      String sql = "SELECT * FROM papers WHERE ID =?;";
-      titleResults = msqlDB.getData(sql, list);
-
-         for (int j = 1; j < titleResults.size(); j++) {
-            // Create new paper for each query result
-            matchedPaper = new DLPapers(titleResults.get(j).get(0));
-         }
-
-      msqlDB.close();
-
-      return matchedPaper;
-   }*/
    /**
     * 
     * @return this
@@ -212,8 +173,6 @@ public class DLPapers {
    public DLPapers fetchPaper() throws DLException {
       return this;
    }
-
-   
 
    /**
     * Fetch and set this paper's attributes
@@ -337,19 +296,6 @@ public class DLPapers {
     */
    public void setAuthor(String author) {
       this.author = author;
-   }
-
-   // Return a keyword
-   public void fetchKeyword() throws DLException {
-        /* ArrayList<ArrayList<String>> arr = new ArrayList();
-         ArrayList<String> list = new ArrayList<String>();
-
-         msqlDB.connect();
-         list.add(this.keyword);
-         String sql = "SELECT * FROM paper_keywords WHERE keyword = ?;";
-         arr = msqlDB.getData(sql, list);         
-         
-         msqlDB.close();*/
    }
 
    /**
