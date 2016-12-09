@@ -48,21 +48,26 @@ public class DLUser {
       String getUserDataSQL = "SELECT * FROM user WHERE email = ? AND password = ?";
       ArrayList<String> myAttributes = new ArrayList<String>();
       myAttributes.add(myEmail);
-      myAttributes.add(myPassword); // CHANGE THIS ONCE ENCRYPTION IS IMPLEMENTED
-         
-      // Attempt to retrieve user attributes
-      ArrayList<ArrayList<String>> userData = database.getData(getUserDataSQL, myAttributes);    
-      userId = Integer.valueOf(userData.get(1).get(0));
-      fName = userData.get(1).get(1); 
-      lName = userData.get(1).get(2);
-      email = myEmail;
-      password = myPassword; // CHANGE THIS ONCE ENCRYPTION IS IMPLEMENTED
-      getUserRole();      
+      myAttributes.add(encryptedPassword); 
       
-      database.close();
-         
-      // NO DLException thrown, user attributes verified         
-      isValidLogin = true;
+      try {   
+         // Attempt to retrieve user attributes
+         ArrayList<ArrayList<String>> userData = database.getData(getUserDataSQL, myAttributes);    
+         userId = Integer.valueOf(userData.get(1).get(0));
+         fName = userData.get(1).get(1); 
+         lName = userData.get(1).get(2);
+         email = myEmail;
+         password = encryptedPassword; 
+         getUserRole();      
+      
+         database.close();
+         // No exception thrown, user attributes verified
+         isValidLogin = true;
+      }
+      catch (IndexOutOfBoundsException ioobe) {
+         // Don't need to do anything. This just means it was an invalid login
+      }   
+   
       return isValidLogin;
    }
    
@@ -94,8 +99,8 @@ public class DLUser {
          role = userData.get(1).get(0);
       }
    }
-   
-   // Encrypt a password using ____
+
+   // Encrypt a password using SHA1
    /**
     * 
     * @param 
@@ -105,26 +110,22 @@ public class DLUser {
     */   
    public String encryptPassword(String myPassword) {
       String encryptedPassword = null;
-      StringBuffer sb = new StringBuffer();
    
-      try{
-            // Encryption code
+      try {
+         // Encryption code
          MessageDigest mDigest = MessageDigest.getInstance("SHA1");
          byte[] result = mDigest.digest(myPassword.getBytes());
+         StringBuffer sb = new StringBuffer();
          for (int i = 0; i < result.length; i++) {
             sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
-         }
-      
-      
-      
+         }    
+         encryptedPassword = sb.toString();
       }
       catch(NoSuchAlgorithmException nsaE){
          System.err.println("Exception caught: " + nsaE);
-         nsaE.printStackTrace();
-      
+         nsaE.printStackTrace();    
       }
-      //return encryptedPassword;
-      return sb.toString();
+      return encryptedPassword;
    }
    
    // Getters
