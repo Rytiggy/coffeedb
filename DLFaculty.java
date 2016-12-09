@@ -1,7 +1,14 @@
 import java.io.*;
 import java.sql.*;
 import java.util.*;
-
+/**
+* CoffeeDB
+* @author Gustav
+* @author Aaron
+* @author Ryan
+* @author Jeremy
+* DLFaculty
+*/
 public class DLFaculty {
    // Table attributes
    private int facultyID;
@@ -20,23 +27,52 @@ public class DLFaculty {
    }
    
    // Getters
+   /**
+    * getFacultyID
+    * @return facultyID
+    *
+    */
+
    public int getFacultyID() {
       return facultyID;
    }
+   /**
+    * get fName
+    * @return fName
+    *
+    */
    public String getFName() {
       return fName;
    }
+   /**
+    * getLName
+    * @return facultyID
+    *
+    */
    public String getLName() {
       return lName;
    }
+   /**
+    * getPassword
+    * @return password
+    *
+    */
    public String getPassword() {
       return password;
    }
+   /**
+    * getEmail
+    * @return email
+    *
+    */
    public String getEmail() {
       return email;
    }
    
-   // Populate faculty attributes
+   /**
+    * Populate faculty attributes
+    *
+    */
    public void fetch() throws DLException {
       database.connect();
       

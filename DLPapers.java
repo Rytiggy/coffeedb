@@ -6,7 +6,7 @@ import java.util.*;
 * @author Aaron
 * @author Ryan
 * @author Jeremy
-* DLUser
+* DLPapers
 */
 public class DLPapers {
    private String title;
