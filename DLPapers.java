@@ -14,7 +14,7 @@ public class DLPapers {
    private String citation;
    private String paperID;
 
-   private String author;
+   private ArrayList<BLUser> users;
 
    private String[] keywords;
    private MySQLDatabase msqlDB;
@@ -100,18 +100,30 @@ public class DLPapers {
    
       return succ;
    }
+
    /**
-    * 
+    *
     * @return true
     */
-   public boolean createAuthorship() {
-      ArrayList list = new ArrayList();
-      list.add(this.author);
-      list.add(this.paperID);
+   public boolean createAuthorship(BLUser[] _users) throws DLException {
+      boolean succ = false;
 
-      String qu = "INSERT INTO authorship (facultyId, paperId)" +
-              " VALUES (?, ?);";
-      return true;
+      msqlDB.connect();
+
+      for(int i = 0; i < _users.length; i++) {
+         ArrayList<String> list = new ArrayList();
+         list.add(String.valueOf(_users[i].getUserId()));
+         list.add(String.valueOf(this.paperID));
+
+         String qu = "INSERT INTO authorship (userId, paperId)" +
+                 " VALUES (?, ?);";
+
+         System.out.print(msqlDB.setData(qu, list));
+      }
+
+      msqlDB.close();
+
+      return succ;
    }
 
    /**
@@ -322,21 +334,24 @@ public class DLPapers {
    public void setPdfData(String pdfData) {
       this.pdfData = pdfData;
    }
+
    /**
     * get author
     * @return author
     *
     */
-   public String getAuthor() {
-      return author;
+   public ArrayList<BLUser> getAuthor() {
+      return users;
    }
+
    /**
     * Verify user credentials
     * @param author
     *
     */
-   public void setAuthor(String author) {
-      this.author = author;
+   public void setAuthor(ArrayList<BLUser> authors) {
+      this.users = authors;
+
    }
 
    // Return a keyword
