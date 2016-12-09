@@ -79,12 +79,12 @@ public class DLUser {
    // Encrypt a password using ____
    public String encryptPassword(String myPassword) {
       String encryptedPassword = null;
+      StringBuffer sb = new StringBuffer();
    
       try{
             // Encryption code
          MessageDigest mDigest = MessageDigest.getInstance("SHA1");
          byte[] result = mDigest.digest(myPassword.getBytes());
-         StringBuffer sb = new StringBuffer();
          for (int i = 0; i < result.length; i++) {
             sb.append(Integer.toString((result[i] & 0xff) + 0x100, 16).substring(1));
          }
@@ -97,7 +97,8 @@ public class DLUser {
          nsaE.printStackTrace();
       
       }
-      return encryptedPassword;
+      //return encryptedPassword;
+      return sb.toString();
    }
    
    // Getters
