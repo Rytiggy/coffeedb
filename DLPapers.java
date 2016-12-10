@@ -14,7 +14,7 @@ public class DLPapers {
    private String citation;
    private String paperID;
 
-   private ArrayList<BLUser> users;
+   private BLUser[] users;
 
    private String[] keywords;
    private MySQLDatabase msqlDB;
@@ -35,7 +35,7 @@ public class DLPapers {
    
    /**
     * Create a paper given an ID
-    * @param __paperID
+    * @param _paperID
     * @throws DLException
     *
     */
@@ -205,7 +205,25 @@ public class DLPapers {
       title = paperAttributes.get(1).get(1);
       paperAbstract = paperAttributes.get(1).get(2);
       citation = paperAttributes.get(1).get(3);
-      
+
+      // Add users to the paper
+      ArrayList<String> arr = new ArrayList<String>();
+      arr.add(this.getPaperID());
+      String sqlUser = "SELECT user.* FROM user, authorship WHERE user.Id = authorship.userId AND authorship.paperId = ?;";
+
+      paperAttributes = new ArrayList();
+      paperAttributes = msqlDB.getData(sqlUser, arr);
+      BLUser[] users = new BLUser[paperAttributes.size()-1];
+
+      for(int i = 1; i < paperAttributes.size(); i++) {
+         BLUser temp = new BLUser();
+         temp.setfName(paperAttributes.get(i).get(1));
+         temp.setlName(paperAttributes.get(i).get(2));
+         temp.setEmail(paperAttributes.get(i).get(4));
+         users[i-1] = temp;
+         }
+
+         this.setUsers(users);
       msqlDB.close();
    }
       
@@ -278,7 +296,6 @@ public class DLPapers {
 
    /**
     * Return all papers with a particular keyword
-    * @param searchInput
     * @return pdfData
     *
     */
@@ -299,19 +316,6 @@ public class DLPapers {
     * @return author
     *
     */
-   public ArrayList<BLUser> getAuthor() {
-      return users;
-   }
-
-   /**
-    * Verify user credentials
-    * @param author
-    *
-    */
-   public void setAuthor(ArrayList<BLUser> authors) {
-      this.users = authors;
-
-   }
 
    /**
     * Return all keywords from DB
@@ -416,7 +420,6 @@ public class DLPapers {
    }
    /**
     * get Citation
-    * @param paperAbstract
     *
     */
    public String getCitation() {
@@ -453,6 +456,15 @@ public class DLPapers {
    public String[] getKeywords() {
       return keywords;
    }
+
+   public BLUser[] getUsers() {
+      return users;
+   }
+
+   public void setUsers(BLUser[] users) {
+      this.users = users;
+   }
+
    /**
     * set keywords
     * @param keywords

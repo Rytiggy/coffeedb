@@ -233,4 +233,24 @@ public class DLUser {
    public String getRole() {
       return role;
    }
+
+   public void setUserId(int userId) {
+      this.userId = userId;
+   }
+
+   public void setfName(String fName) {
+      this.fName = fName;
+   }
+
+   public void setlName(String lName) {
+      this.lName = lName;
+   }
+
+   public void setEmail(String email) {
+      this.email = email;
+   }
+
+   public void setRole(String role) {
+      this.role = role;
+   }
 }
