@@ -17,7 +17,12 @@ public class Main {
          
          System.out.println("ID: "+ user.getUserId() + "| fName: " + user.getFName() + "| lName: " + user.getLName() +
          "| role: " + user.getRole());
+         
          /*
+         BLPapers paper = new BLPapers();
+         
+         paper.updatePaper(1, "t23t", "test", "test", "test");
+         
          BLPapers paper = new BLPapers();
          System.out.println(paper.deletePaper(1));
          */

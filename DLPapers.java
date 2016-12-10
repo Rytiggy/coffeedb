@@ -94,7 +94,34 @@ public class DLPapers {
    
       return succ;
    }
-
+   
+   /**
+    * Make changes to an existing paper
+    * @return succ
+    * @throws DLException
+    *
+    */
+   public boolean updatePaper(int myPaperId, String myTitle, String myPaperAbstract, String myCitation, String myPdfPath) throws DLException {
+      boolean succ = false;
+   
+      msqlDB.connect();
+      
+      ArrayList<String> attributes = new ArrayList<String>();
+      attributes.add(myTitle);
+      attributes.add(myPaperAbstract);
+      attributes.add(myCitation);
+      attributes.add(myPdfPath);
+      attributes.add(String.valueOf(myPaperId));
+      
+      String updatePaperSQL = "UPDATE papers SET title = ?, abstract = ?, citation = ?, path = ? WHERE id = ?";
+      if(msqlDB.setData(updatePaperSQL, attributes)) {
+         succ = true;
+      }
+      
+      msqlDB.close();
+   
+      return succ;
+   }
    /**
     *
     * @return true
@@ -117,35 +144,6 @@ public class DLPapers {
 
       msqlDB.close();
 
-      return succ;
-   }
-
-   /**
-    * Make changes to a paper
-    * @return succ
-    * @throws DLException
-    *
-    */
-   public boolean putPaper() throws DLException {
-      boolean succ = false;
-
-      msqlDB.connect();
-   
-      ArrayList list = new ArrayList();
-      list.add(this.paperID);
-      list.add(this.title);
-      list.add(this.paperAbstract);
-      list.add(this.citation);
-      list.add(this.paperID);
-   
-      String qu = "UPDATE papers SET ID=?, title=?, abstract=?, citation=? WHERE EquipID=?;";
-   
-      if (msqlDB.setData(qu, list)) {
-         succ = true;
-      }
-   
-      msqlDB.close();
-   
       return succ;
    }
 
