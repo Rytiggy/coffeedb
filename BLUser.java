@@ -49,4 +49,24 @@ public class BLUser {
    public String getRole() {
       return user.getRole();
    }
+
+   public void setUserId(int userId) {
+      user.setUserId(userId);
+   }
+
+   public void setfName(String fName) {
+      user.setfName(fName);
+   }
+
+   public void setlName(String lName) {
+      user.setlName(lName);
+   }
+
+   public void setEmail(String email) {
+      user.setEmail(email);
+   }
+
+   public void setRole(String role) {
+      user.setRole(role);
+   }
 }

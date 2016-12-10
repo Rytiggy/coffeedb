@@ -112,12 +112,12 @@ public class BLPapers {
         return dataLayer.getPdfData();
     }
 
-    public void setAuthor(ArrayList<BLUser> _users) {
-        dataLayer.setAuthor(_users);
+    public BLUser[] getUsers() {
+        return dataLayer.getUsers();
     }
 
-    public ArrayList<BLUser> getAuthor() {
-        return dataLayer.getAuthor();
+    public void setUsers(BLUser[] users) {
+        dataLayer.setUsers(users);
     }
    
 }
