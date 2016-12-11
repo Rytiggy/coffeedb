@@ -52,8 +52,8 @@ public class BLPapers {
       return dataLayer.postPaper();
    }
    
-   public boolean putPaper() throws DLException {
-      return dataLayer.putPaper();
+   public boolean updatePaper(int myPaperId, String myTitle, String myPaperAbstract, String myCitation, String myPdfPath) throws DLException {
+      return dataLayer.updatePaper(myPaperId, myTitle, myPaperAbstract, myCitation, myPdfPath);
    }
    
    public boolean deletePaper(int myPaperId) throws DLException {
