@@ -23,7 +23,7 @@ public class BLUser {
    }
 
    /**
-    * check User
+    * check to see if user exists
     * @param _email
     * @return exists if user exists
     * @throws DLException

@@ -6,12 +6,15 @@ import java.util.ArrayList;
 */
 public class BLPapers {
    DLPapers dataLayer;
-  
+   /**
+    * BLPapers default constructor
+    * @throws DLException
+    */ 
    public BLPapers() {
       dataLayer = new DLPapers();
    }
    /**
-    * BLPapers 
+    * BLPapers constructor with one parameter
     * @param _paperID
     * @throws DLException
     */ 
@@ -19,7 +22,7 @@ public class BLPapers {
       dataLayer = new DLPapers(_paperID);
    }
    /**
-    * createAuthorship 
+    * create Authorship 
     * @param _users
     * @throws DLException
     * @return dataLayer.createAuthorship(_users) true / false
@@ -28,7 +31,7 @@ public class BLPapers {
        return dataLayer.createAuthorship(_users);
     }
    /**
-    * searchPapers 
+    * Uses search input to search all papers 
     * @param searchInput
     * @return blPapers
     * @throws DLException
@@ -46,14 +49,14 @@ public class BLPapers {
       return blPapers;
    }
    /**
-    * fetchPaperAttributes 
+    * fetch Paper Attributes 
     * @throws DLException
     */ 
    public void fetchPaperAttributes() throws DLException { 
       dataLayer.fetchPaperAttributes();
    }
    /**
-    * fetchAllPapers 
+    * fetch All Papers  
     * @return dataLayer.fetchAllPapers
     * @throws DLException
     */ 
@@ -61,7 +64,7 @@ public class BLPapers {
       return dataLayer.fetchAllPapers();
    }
    /**
-    * fetchPaper 
+    * fetch Paper 
     * @param _ID
     * @return  return dataLayer.fetchPaper
     * @throws DLException
@@ -70,7 +73,7 @@ public class BLPapers {
         return dataLayer.fetchPaper();
     }
    /**
-    * fetchAllKeywords 
+    * fetch All Keywords 
     * @param searchInput
     * @return blPapers
     * @throws DLException
@@ -79,7 +82,7 @@ public class BLPapers {
       return dataLayer.fetchAllKeywords();
    }
    /**
-    * postPaper 
+    * post Paper
     * @return dataLayer.postPaper true if paper was posted
     * @throws DLException
     */    
@@ -87,7 +90,7 @@ public class BLPapers {
       return dataLayer.postPaper();
    }
    /**
-    * updatePaper 
+    * update an exisiting Paper 
     * @param myPaperId
     * @param myTitle
     * @param myPaperAbstract
@@ -100,7 +103,7 @@ public class BLPapers {
       return dataLayer.updatePaper(myPaperId, myTitle, myPaperAbstract, myCitation, myPdfPath);
    }
    /**
-    * deletePaper 
+    * delete Paper 
     * @param myPaperId
     * @return dataLayer.deletePaper true if paper was successfully deleted
     * @throws DLException
@@ -109,7 +112,7 @@ public class BLPapers {
       return dataLayer.deletePaper(myPaperId);
    }
    /**
-    * postKeywords 
+    * post Keywords 
     * @param _keywords
     * @throws DLException
     */      
@@ -117,7 +120,7 @@ public class BLPapers {
       dataLayer.postKeywords(_keywords);
    }
    /**
-    * deleteKeyword 
+    * delete Keyword 
     * @param _keyword
     * @throws DLException
     */ 
@@ -125,7 +128,7 @@ public class BLPapers {
        dataLayer.deleteKeyword(_keyword);
    }
    /**
-    * putKeyword 
+    * put Keyword 
     * @param _keyword
     * @throws DLException
     */ 
@@ -133,7 +136,7 @@ public class BLPapers {
        dataLayer.putKeyword(_keyword);
    }
    /**
-    * getTitle 
+    * get Title 
     * @param searchInput
     * @return dataLayer.getTitle
     * @throws DLException
@@ -142,7 +145,7 @@ public class BLPapers {
         return dataLayer.getTitle();
     }
    /**
-    * setTitle 
+    * set Title 
     * @param title
     * @return dataLayer.setTitle
     * @throws DLException
@@ -151,22 +154,21 @@ public class BLPapers {
        dataLayer.setTitle(title);
     }
    /**
-    * getPaperAbstract 
+    * get Paper Abstract 
     * @return dataLayer.getPaperAbstract
     */ 
     public String getPaperAbstract() {
       return dataLayer.getPaperAbstract();
     }
    /**
-    * searchPapers 
-    * @param searchInput
-    * @return blPapers
+    * search Paper Abstract
+    * @param paperAbstract
     */ 
     public void setPaperAbstract(String paperAbstract) {
        dataLayer.setPaperAbstract(paperAbstract);
     }
    /**
-    * getCitation 
+    * get Citation 
     * @param searchInput
     * @return dataLayer.getCitation
     */ 
@@ -174,14 +176,14 @@ public class BLPapers {
       return dataLayer.getCitation();
     }
    /**
-    * setCitation 
+    * set Citation 
     * @param citation
     */ 
     public void setCitation(String citation) {
        dataLayer.setCitation(citation);
     }
    /**
-    * getPaperID 
+    * get Paper ID 
     * @param searchInput
     * @return dataLayer.getPaperID
     */ 
@@ -203,21 +205,21 @@ public class BLPapers {
         dataLayer.setPdfData(pdf);
     }
    /**
-    * getPDF 
+    * get PDF 
     * @return dataLayer.getPdfData
     */ 
     public String getPDF() {
         return dataLayer.getPdfData();
     }
    /**
-    * getUsers 
+    * get Users 
     * @return dataLayer.getUsers
     */ 
     public BLUser[] getUsers() {
         return dataLayer.getUsers();
     }
    /**
-    * setUsers
+    * set Users
     * @param users
     */
     public void setUsers(BLUser[] users) {

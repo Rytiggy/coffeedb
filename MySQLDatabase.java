@@ -25,7 +25,7 @@ public class MySQLDatabase {
   
    /**
     * Attempts to connect to the Mysql database with input provided 
-    * @return result true if db opens connection successfully
+    * @return result true/false depending on 
     * @throws DLException 
     */         
    public static boolean connect() throws DLException{
@@ -47,7 +47,7 @@ public class MySQLDatabase {
 
    /**
     * Attempts to close the Mysql database with input provided 
-    * @return result true if db closes successfully
+    * @return result true / false if db closes successfully
     * @throws DLException 
     */ 
    public static boolean close() throws DLException {
@@ -77,10 +77,10 @@ public class MySQLDatabase {
    // column names should be included in the returned data the	returned structure.  
    
    /**
-    * getData 
-    * @param mySql
-    * @param addColumnNames
-    * @return results
+    * Returns the data 
+    * @param mySql SQL query
+    * @param addColumnNames boolean
+    * @return results ArrayList
     * @throws DLException 
     */ 
    public ArrayList<ArrayList<String>> getData(String mySql , boolean addColumnNames) throws DLException {
@@ -132,9 +132,9 @@ public class MySQLDatabase {
    
    }
    /**
-    * getData 
-    * @param mySql
-    * @return getData
+    * get Data method that returns the data
+    * @param mySql SQL query
+    * @return getData 
     * @throws DLException 
     */ 
    public ArrayList<ArrayList<String>> getData(String mySql) throws DLException {
@@ -148,8 +148,9 @@ public class MySQLDatabase {
    }
    
    /**
-    * setData 
+    * sets the Data 
     * @param table
+    * @return results true if set data was successful / false if error occured 
     * @throws DLException 
     */ 
    public boolean setData(String sql) throws DLException {
@@ -181,7 +182,7 @@ public class MySQLDatabase {
       return results;
    }
     /**
-    * descTable 
+    * method that describe the Table 
     * @param table
     * @throws DLException 
     */ 
@@ -190,7 +191,7 @@ public class MySQLDatabase {
    }
    
     /**
-    * descTable 
+    * method that desccribes the Table 
     * @param table
     * @param headers
     * @throws DLException 
@@ -224,7 +225,7 @@ public class MySQLDatabase {
    }
    
     /**
-    * displayData 
+    * display Data 
     * @param table
     * @throws DLException 
     */ 
@@ -232,7 +233,7 @@ public class MySQLDatabase {
       displayData(table, "*");
    }
    /**
-    * displayData 
+    * display Data 
     * @param table
     * @param headers
     * @throws DLException
@@ -292,10 +293,10 @@ public class MySQLDatabase {
       }     
    }
    /**
-    * prepare 
-    * @param mySql
-    * @param values
-    * @return result
+    * prepare statement 
+    * @param mySql SQL query
+    * @param values ArrayList of values
+    * @return result PreparedStatement for database
     * @throws DLException
     */   
    public PreparedStatement prepare(String mySql, ArrayList<String> values) throws DLException {
@@ -316,10 +317,10 @@ public class MySQLDatabase {
    
    }
    /**
-    * getData 
-    * @param mySql
-    * @param values
-    * @return results
+    * Method getData returns the data
+    * @param mySql SQL query
+    * @param values ArrayList of values
+    * @return results ArrayList
     * @throws DLException
     */   
    public ArrayList<ArrayList<String>> getData(String mySql, ArrayList<String> values) throws DLException {
@@ -366,10 +367,10 @@ public class MySQLDatabase {
    
    }
    /**
-    * setData 
-    * @param sql
-    * @param values
-    * @return results true if set data was successful
+    * sets the Data 
+    * @param sql SQL query
+    * @param values ArrayList of values
+    * @return results true/false depending on success or failure of execution
     * @throws DLException
     */   
    public boolean setData(String sql, ArrayList<String> values) throws DLException {
@@ -383,10 +384,10 @@ public class MySQLDatabase {
       return results;                 
    }   
    /**
-    * executeStmt 
-    * @param mySql
-    * @param values
-    * @return results
+    * execute Stmt 
+    * @param mySql SQL query
+    * @param values ArrayList of values
+    * @return results ResultSet
     * @throws DLException
     */    
    public int executeStmt(String mySql, ArrayList<String> values) throws DLException {
@@ -412,9 +413,9 @@ public class MySQLDatabase {
       return results;          
    }
    /**
-    * setData2 
-    * @param sql
-    * @param values
+    * second method that sets the data 
+    * @param sql SQL query
+    * @param values ArrayList of values
     * @return -1
     * @throws DLException
     */ 
@@ -426,10 +427,10 @@ public class MySQLDatabase {
       return -1;
    }
    /**
-    * executeStmt2 
-    * @param mySql
-    * @param values
-    * @return id
+    * execute Stmt2 
+    * @param mySql SQL query
+    * @param values ArrayList of values
+    * @return id ResultSet
     * @throws DLException
     */ 
    public int executeStmt2(String mySql, ArrayList<String> values) throws DLException {
@@ -463,9 +464,10 @@ public class MySQLDatabase {
    }
    /**
     * prepare2 PreparedStatement 
-    * @param mySql
-    * @param values
-    * @return result
+    * @param mySql SQL query
+    * @param values  ArrayList of values
+    * @return result PreparedStatement for database
+
     * @throws DLException
     */    
    public PreparedStatement prepare2(String mySql, ArrayList<String> values) throws DLException {
@@ -487,7 +489,7 @@ public class MySQLDatabase {
    
 
    /**
-    * startTrans 
+    * Start transaction method 
     * @throws DLException
     */    
    public void startTrans() throws DLException {
@@ -504,7 +506,7 @@ public class MySQLDatabase {
    }
    
    /**
-    * end Trans 
+    * end Transaction method 
     * @throws DLException
     */    
    public void endTrans() throws DLException {
@@ -521,7 +523,7 @@ public class MySQLDatabase {
       }
    }
    /**
-    * rollbackTrans 
+    * roll back Transaction method if intermediate values indicate a need to abort or exception/error thrown.
     * @throws DLException
     */ 
    public void rollbackTrans() throws DLException {
