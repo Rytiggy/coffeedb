@@ -1,6 +1,22 @@
 import java.util.ArrayList;
-
+/**
+* CoffeeDB
+* @author Gustav
+* @author Aaron
+* @author Ryan
+* @author Jeremy
+* Main
+*/
 public class Main {
+
+   /**
+   * This is the main method which makes use the following classes:BLPapers, BLUser, DLException, DLPaperKeywords, DLPapers, DLUser
+   * MySQLDatabase,PLActions, and PLGUI.
+   * @param args Unused.
+   * @return Nothing.
+   * @throws DLException if a system exception occurred
+   * @see IOException
+   */
    public static void main(String [] Args) {
       try {
          PLActions test = new PLActions();

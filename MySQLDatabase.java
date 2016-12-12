@@ -12,16 +12,22 @@ public class MySQLDatabase {
    public static String user, password, driver,uri;
    public static Connection conn = null;
 
-   //set up the database connections 
-   // hostname, Username, password.
+   /**
+    * MySQLDatabase set up the database connections & hostname, Username, password.
+    * 
+    */ 
    public MySQLDatabase(){
       uri= "jdbc:mysql://localhost/facresearchdb?autoReconnect=true&useSSL=false";
       String driver="com.mysql.jdbc.Driver";
       user = "root";
       password = "student";
    }
-   
-   //Attempts to connect to the Mysql database with input provided         
+  
+   /**
+    * Attempts to connect to the Mysql database with input provided 
+    * @return result true if db opens connection successfully
+    * @throws DLException 
+    */         
    public static boolean connect() throws DLException{
       boolean result;        
       try{
@@ -38,8 +44,12 @@ public class MySQLDatabase {
       }
       return result;
    }
-   
-   //Attempts to close the Mysql database with input provided
+
+   /**
+    * Attempts to close the Mysql database with input provided 
+    * @return result true if db closes successfully
+    * @throws DLException 
+    */ 
    public static boolean close() throws DLException {
       boolean result;                
       try{
@@ -65,6 +75,14 @@ public class MySQLDatabase {
    //Add another method named getData that accepts an SQLstring and returns a 2-d ArrayList/List 
    //just like your existing getDatamethod, but also accepts a boolean value to indicate whether
    // column names should be included in the returned data the	returned structure.  
+   
+   /**
+    * getData 
+    * @param mySql
+    * @param addColumnNames
+    * @return results
+    * @throws DLException 
+    */ 
    public ArrayList<ArrayList<String>> getData(String mySql , boolean addColumnNames) throws DLException {
       ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
             
@@ -113,16 +131,27 @@ public class MySQLDatabase {
    
    
    }
+   /**
+    * getData 
+    * @param mySql
+    * @return getData
+    * @throws DLException 
+    */ 
    public ArrayList<ArrayList<String>> getData(String mySql) throws DLException {
       try {
          return getData(mySql , false);
-      } catch (DLException e) {
+      } 
+      catch (DLException e) {
          throw new DLException(e);
       }
-
+   
    }
    
-   
+   /**
+    * setData 
+    * @param table
+    * @throws DLException 
+    */ 
    public boolean setData(String sql) throws DLException {
       boolean results = false;
       try {
@@ -151,11 +180,21 @@ public class MySQLDatabase {
    
       return results;
    }
-   
+    /**
+    * descTable 
+    * @param table
+    * @throws DLException 
+    */ 
    public void descTable(String table) throws DLException {
       descTable(table, "*");
    }
    
+    /**
+    * descTable 
+    * @param table
+    * @param headers
+    * @throws DLException 
+    */ 
    public void descTable(String table, String headers ) throws DLException {
       String SQLString = "SELECT "+headers+" FROM " + table;  
       
@@ -184,10 +223,20 @@ public class MySQLDatabase {
       }                            
    }
    
-   
+    /**
+    * displayData 
+    * @param table
+    * @throws DLException 
+    */ 
    public void displayData(String table ) throws DLException {
       displayData(table, "*");
    }
+   /**
+    * displayData 
+    * @param table
+    * @param headers
+    * @throws DLException
+    */ 
    public void displayData(String table,String headers ) throws DLException {
       ArrayList<ArrayList<String>> results = new ArrayList<ArrayList<String>>();
    
@@ -242,7 +291,13 @@ public class MySQLDatabase {
          throw new DLException(e);
       }     
    }
-
+   /**
+    * prepare 
+    * @param mySql
+    * @param values
+    * @return result
+    * @throws DLException
+    */   
    public PreparedStatement prepare(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement result = null;
       try {
@@ -258,12 +313,18 @@ public class MySQLDatabase {
          //throw new DLException(e, map);
       }
       return result;
-
-   }
    
+   }
+   /**
+    * getData 
+    * @param mySql
+    * @param values
+    * @return results
+    * @throws DLException
+    */   
    public ArrayList<ArrayList<String>> getData(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement prepStatment = prepare(mySql, values);
-
+   
       ArrayList<ArrayList<String>> results = null;
       try {
          results = new ArrayList<ArrayList<String>>();
@@ -271,28 +332,28 @@ public class MySQLDatabase {
          ResultSet resultSet = prepStatment.executeQuery();
          ResultSetMetaData resultSetMetadata = resultSet.getMetaData();
          int numOfCols = resultSetMetadata.getColumnCount();
-
+      
          ArrayList<String> ColumnNames = new ArrayList<String>();
          for (int i=1; i<=numOfCols; i++) {
             ColumnNames.add(resultSetMetadata.getColumnName(i));
          }
          results.add(ColumnNames);
-
+      
          while (resultSet.next()) {
             ArrayList<String> rowData = new ArrayList<String>();
             for (int i=1; i<=numOfCols; i++) {
                rowData.add(resultSet.getString(i));
             }
-
+         
             results.add(rowData);
-            }
+         }
       }
       catch (SQLException e) {
          Map<String, String> map = new HashMap<String, String>();
          map.put("Error Occurred " , "getData Method" );
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
          map.put("SQLState" , e.getSQLState());
-
+      
          //throw new DLException(e, map);
       }
       catch ( NullPointerException e) {
@@ -302,9 +363,15 @@ public class MySQLDatabase {
          //throw new DLException(e);    
       }
       return results;
-
-}
    
+   }
+   /**
+    * setData 
+    * @param sql
+    * @param values
+    * @return results true if set data was successful
+    * @throws DLException
+    */   
    public boolean setData(String sql, ArrayList<String> values) throws DLException {
       boolean results = false;
       if(executeStmt(sql, values) == 1){
@@ -315,7 +382,13 @@ public class MySQLDatabase {
       }
       return results;                 
    }   
-   
+   /**
+    * executeStmt 
+    * @param mySql
+    * @param values
+    * @return results
+    * @throws DLException
+    */    
    public int executeStmt(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement prepStatment = prepare(mySql, values);
       int results = -1;      
@@ -338,7 +411,13 @@ public class MySQLDatabase {
       }  
       return results;          
    }
-
+   /**
+    * setData2 
+    * @param sql
+    * @param values
+    * @return -1
+    * @throws DLException
+    */ 
    public int setData2(String sql, ArrayList<String> values) throws DLException {
       int results = this.executeStmt2(sql , values);
       if(results > 0){
@@ -346,17 +425,23 @@ public class MySQLDatabase {
       }
       return -1;
    }
-
+   /**
+    * executeStmt2 
+    * @param mySql
+    * @param values
+    * @return id
+    * @throws DLException
+    */ 
    public int executeStmt2(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement prepStatment = prepare2(mySql, values);
       int id = -1;
-
+   
       try {
          prepStatment.executeUpdate();
          ResultSet rs = prepStatment.getGeneratedKeys();
          if (rs.next()){
             id = rs.getInt(1);
-
+         
          }
          conn.commit();
       }
@@ -365,7 +450,7 @@ public class MySQLDatabase {
          map.put("Error Occurred " , "ExecuteStmt Method" );
          map.put("SQLErrorCode" , Integer.toString(e.getErrorCode()));
          map.put("SQLState" , e.getSQLState());
-
+      
          //throw new DLException(e, map);
       }
       catch ( NullPointerException e) {
@@ -376,7 +461,13 @@ public class MySQLDatabase {
       }
       return id;
    }
-
+   /**
+    * prepare2 PreparedStatement 
+    * @param mySql
+    * @param values
+    * @return result
+    * @throws DLException
+    */    
    public PreparedStatement prepare2(String mySql, ArrayList<String> values) throws DLException {
       PreparedStatement result = null;
       try {
@@ -395,7 +486,10 @@ public class MySQLDatabase {
    }
    
 
-   
+   /**
+    * startTrans 
+    * @throws DLException
+    */    
    public void startTrans() throws DLException {
       try {
          conn.setAutoCommit(false);
@@ -409,7 +503,10 @@ public class MySQLDatabase {
       }
    }
    
-   
+   /**
+    * end Trans 
+    * @throws DLException
+    */    
    public void endTrans() throws DLException {
       try {
          conn.commit();
@@ -423,7 +520,10 @@ public class MySQLDatabase {
          throw new DLException(sqle, map);
       }
    }
-   
+   /**
+    * rollbackTrans 
+    * @throws DLException
+    */ 
    public void rollbackTrans() throws DLException {
       try {
          conn.rollback();
