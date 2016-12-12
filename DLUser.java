@@ -151,7 +151,7 @@ public class DLUser {
     * @param _fName
     * @param _lName
     * @param _email 
-    * @return succ if the guest user is added to the DB
+    * @return succ true if the guest user is added to the DB
     * @throws DLException
     */ 
    public boolean createGuestUser(String _fName, String _lName, String _email) throws DLException {
