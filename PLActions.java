@@ -20,8 +20,8 @@ public class PLActions {
    
    /**
     * Search FacResearchDB for papers given user input
-    * @param searchInput
-    * @return matchedPapers
+    * @param searchInput 
+    * @return matchedPapers ArrayList
     * @throws DLException
     */  
    public ArrayList<BLPapers> search(String searchInput) throws DLException {
