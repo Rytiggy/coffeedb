@@ -132,7 +132,7 @@ public class MySQLDatabase {
    
    }
    /**
-    * getData 
+    * get Data 
     * @param mySql
     * @return getData
     * @throws DLException 
@@ -148,8 +148,9 @@ public class MySQLDatabase {
    }
    
    /**
-    * setData 
+    * set Data 
     * @param table
+    * @return results true if set data was successful / false if error occured 
     * @throws DLException 
     */ 
    public boolean setData(String sql) throws DLException {
@@ -181,7 +182,7 @@ public class MySQLDatabase {
       return results;
    }
     /**
-    * descTable 
+    * desc Table 
     * @param table
     * @throws DLException 
     */ 
@@ -190,7 +191,7 @@ public class MySQLDatabase {
    }
    
     /**
-    * descTable 
+    * desc Table 
     * @param table
     * @param headers
     * @throws DLException 
@@ -224,7 +225,7 @@ public class MySQLDatabase {
    }
    
     /**
-    * displayData 
+    * display Data 
     * @param table
     * @throws DLException 
     */ 
@@ -232,7 +233,7 @@ public class MySQLDatabase {
       displayData(table, "*");
    }
    /**
-    * displayData 
+    * display Data 
     * @param table
     * @param headers
     * @throws DLException
@@ -316,7 +317,7 @@ public class MySQLDatabase {
    
    }
    /**
-    * getData 
+    * get Data 
     * @param mySql
     * @param values
     * @return results
@@ -366,7 +367,7 @@ public class MySQLDatabase {
    
    }
    /**
-    * setData 
+    * set Data 
     * @param sql
     * @param values
     * @return results true if set data was successful
@@ -383,7 +384,7 @@ public class MySQLDatabase {
       return results;                 
    }   
    /**
-    * executeStmt 
+    * execute Stmt 
     * @param mySql
     * @param values
     * @return results
@@ -412,7 +413,7 @@ public class MySQLDatabase {
       return results;          
    }
    /**
-    * setData2 
+    * set Data2 
     * @param sql
     * @param values
     * @return -1
@@ -426,7 +427,7 @@ public class MySQLDatabase {
       return -1;
    }
    /**
-    * executeStmt2 
+    * execute Stmt2 
     * @param mySql
     * @param values
     * @return id
@@ -487,7 +488,7 @@ public class MySQLDatabase {
    
 
    /**
-    * startTrans 
+    * start Trans 
     * @throws DLException
     */    
    public void startTrans() throws DLException {

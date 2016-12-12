@@ -21,7 +21,7 @@ public class PLActions {
    /**
     * Search FacResearchDB for papers given user input
     * @param searchInput
-    * @returns matchedPapers
+    * @return matchedPapers
     * @throws DLException
     */  
    public ArrayList<BLPapers> search(String searchInput) throws DLException {
@@ -79,7 +79,7 @@ public class PLActions {
    /**
     * view details
     * @param _paperID
-    * @returns blPapers
+    * @return blPapers
     * @throws DLException
     */  
    public BLPapers viewDetails(String _paperID) throws DLException {
