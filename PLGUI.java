@@ -11,7 +11,8 @@ import javax.swing.filechooser.*;
 import java.awt.Desktop;  
 import java.io.IOException;  
 import java.net.URI;  
-import java.net.URISyntaxException;  
+import java.net.URISyntaxException; 
+import java.util.concurrent.TimeUnit;
 /*
 * CoffeeDB
 * Gustav, Aaron, Ryan, and Jeremy
@@ -20,11 +21,22 @@ import java.net.URISyntaxException;
 
 
 public class PLGUI {
+//global user var
+   static BLUser user;    
+   
+   static JFrame loginFrame = new JFrame("Login");
   
+   //Navigation
+   static JPanel navControl = new JPanel();
+   static JButton uploadButton = new JButton("Upload");
+   static JButton loginButton = new JButton("Login");
+   static JLabel userEmailLabel = new JLabel("N/A");
+
+
  
    public static void main(String[] args){
    
-      PLActions action = new PLActions();       
+      PLActions action = new PLActions();  
       
       JFrame frame = new JFrame("Faculty Research Assistant");
       frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,14 +48,17 @@ public class PLGUI {
      
      
       //NAV
-      JPanel navControl = new JPanel();
-      JButton uploadButton = new JButton("Upload");
-      JButton loginButton = new JButton("Login");
+   
       navControl.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
       navControl.add(uploadButton);
+      
       navControl.add(loginButton);
+      navControl.add(userEmailLabel);
       mainPanel.add(navControl);
       navControl.setBackground(Color.gray);
+      
+      
+      System.out.println( checkLoginStatus());
    
    
       JPanel title = new JPanel();
@@ -79,7 +94,7 @@ public class PLGUI {
       result.add(keywords);
       mainPanel.add(result);
       Object rowData[][] ={ };
-      Object columnNames[] ={ "ID","Title", "PI","Email" };
+      Object columnNames[] ={"Title", "PI","Email" };
       TableModel tableModel = new DefaultTableModel(rowData, columnNames);
       
       JTable table = 
@@ -173,7 +188,7 @@ public class PLGUI {
                   System.out.println(blPaper.getPaperAbstract());
                   System.out.println(blPaper.getTitle());
                   System.out.println(blPaper.getAuthor());
-                  model.addRow(new Object[]{blPaper.getPaperID(),blPaper.getTitle(),blPaper.getAuthor(), "Send Email"});  
+                  model.addRow(new Object[]{blPaper.getTitle(),blPaper.getAuthor(), "Send Email"});  
                   
                }
                keywords.setText("Finding papers that match: " + searchTerms);
@@ -182,14 +197,14 @@ public class PLGUI {
          });
    
       
-                        
+           
       loginButton.addActionListener(
          new ActionListener()
          {
             public void actionPerformed(ActionEvent e){
+            
                System.out.println("Login Prompt");
                 //login stuff
-               JFrame loginFrame = new JFrame("Login");
             
                JPanel panel = new JPanel();
                loginFrame.add(panel);
@@ -454,10 +469,10 @@ public class PLGUI {
    }//end of run
      
    private static void placeComponents(JPanel panel) {
-   
+      user = new BLUser();
       panel.setLayout(null);
    
-      JLabel userLabel = new JLabel("User");
+      JLabel userLabel = new JLabel("Email");
       userLabel.setBounds(10, 10, 80, 25);
       panel.add(userLabel);
    
@@ -492,24 +507,46 @@ public class PLGUI {
             public void actionPerformed(ActionEvent e){
                System.out.println("Validate Login");
                        //login stuff
-               loginError.setText("<html><div style='color:red'>Error: Username or Password is wrong </html>");
             
+                       
+               try{
+               
+                  if(user.login(userText.getText(), passwordText.getText())){
+                     System.out.println("ID: "+ user.getUserId() + "| fName: " + user.getFName() + "| lName: " + user.getLName() +
+                        "| role: " + user.getRole());
+                     loginError.setText("<html><div style='color:green'>Successful Login!</html>");
+                     loginFrame.setVisible(false);
+                     System.out.println(checkLoginStatus());
+                  
+                  
+                  }
+                  else{
+                     loginError.setText("<html><div style='color:red'>Error: Username or Password is wrong! </html>");
+                  
+                  
+                  }
+               }
+               catch(DLException dle){
+               
+               }        
+                       
             
-               LoginPrompt.addActionListener(
+            }
+         });
+         
+         
+                     
+      cancleLoginPromp.addActionListener(
                   new ActionListener()
                   {
                      public void actionPerformed(ActionEvent e){
                         System.out.println("Validate Login");
                        //login stuff
-                        loginError.setText("<html><div style='color:red'>Error: Username or Password is wrong </html>");
-                     
                      
                      
                      }
                   });
             
-            }
-         });
    
    }
      
@@ -735,6 +772,38 @@ public class PLGUI {
          throw new RuntimeException("desktop doesn't support mailto; mail is dead anyway ;)");
       }
    }
+   
+   public static boolean checkLoginStatus(){
+      try{     
+         if(user.getUserId() != -1){ //if the user is logged in
+            System.out.println("heyyy your login  ROLE:"  + user.getRole());
+            loginButton.setVisible(false);
+            userEmailLabel.setText(user.getEmail());
+            userEmailLabel.setVisible(true);
+         
+         
+            if(user.getRole().equals("Faculty")){//if the user has the role faculty
+               uploadButton.setVisible(true);
+            
+            }
+         
+         }
+      }
+      catch(NullPointerException npe){
+         //npe.printStackTrace();
+         System.out.println("heyyy your not login ");
+         uploadButton.setVisible(false);
+         userEmailLabel.setVisible(false);
+         
+      
+      
+      }
+   
+      
+      return true;
+   }
+   
+   
 }//end of class
 
 

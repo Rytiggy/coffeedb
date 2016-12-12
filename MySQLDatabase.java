@@ -15,10 +15,10 @@ public class MySQLDatabase {
    //set up the database connections 
    // hostname, Username, password.
    public MySQLDatabase(){
-      uri= "jdbc:mysql://localhost/facresearchdb?autoReconnect=true&useSSL=false";
+      uri= "jdbc:mysql://localhost:8889/facresearchdb?autoReconnect=true&useSSL=false";
       String driver="com.mysql.jdbc.Driver";
       user = "root";
-      password = "student";
+      password = "root";
    }
    
    //Attempts to connect to the Mysql database with input provided         

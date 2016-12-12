@@ -22,6 +22,7 @@ public class DLUser {
    
    // Constructor
    DLUser() {
+      userId = -1;
       database = new MySQLDatabase();
       String fName = null;
       String lName = null;
