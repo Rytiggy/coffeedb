@@ -49,7 +49,7 @@ public class DLPapers {
    
    /**
     * Get all existing papers in the database
-    * @return papers
+    * @return papers ArrayList
     * @throws DLException
     *
     */
@@ -66,7 +66,7 @@ public class DLPapers {
   
    /**
     * Create a new paper
-    * @return succ
+    * @return succ true / false depending on if the paper was posted
     * @throws DLException
     *
     */
@@ -97,7 +97,7 @@ public class DLPapers {
    
    /**
     * Make changes to update an existing paper
-    * @return succ
+    * @return succ true / false depending on if the paper was updated successfully. 
     * @throws DLException
     *
     */
@@ -125,7 +125,7 @@ public class DLPapers {
    /**
     * create Authorship
     * @param _users
-    * @return succ / true if create authorship inserts into the DB 
+    * @return succ / true if create authorship inserts into the database. 
     * @throws DLException if a system exception occurred
     */
    public boolean createAuthorship(BLUser[] _users) throws DLException {
@@ -151,7 +151,7 @@ public class DLPapers {
 
    /**
     * Delete a paper
-    * @return succ
+    * @return succ true / false depending on if the paper was deleted from the database.
     * @throws DLException if a system exception occurred
     *
     */
@@ -230,7 +230,7 @@ public class DLPapers {
    /**
     * Search and find any papers matching user search input
     * @param searchInput
-    * @return matchedPapers
+    * @return matchedPapers ArrayList
     * @throws DLException if a system exception occurred
     *
     */
