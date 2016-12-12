@@ -294,9 +294,9 @@ public class MySQLDatabase {
    }
    /**
     * prepare statement 
-    * @param mySql
-    * @param values
-    * @return result
+    * @param mySql SQL query
+    * @param values ArrayList of values
+    * @return result PreparedStatement for database
     * @throws DLException
     */   
    public PreparedStatement prepare(String mySql, ArrayList<String> values) throws DLException {
@@ -318,9 +318,9 @@ public class MySQLDatabase {
    }
    /**
     * Method getData returns the data
-    * @param mySql
-    * @param values
-    * @return results
+    * @param mySql SQL query
+    * @param values ArrayList of values
+    * @return results ArrayList
     * @throws DLException
     */   
    public ArrayList<ArrayList<String>> getData(String mySql, ArrayList<String> values) throws DLException {
@@ -368,9 +368,9 @@ public class MySQLDatabase {
    }
    /**
     * sets the Data 
-    * @param sql
-    * @param values
-    * @return results true if set data was successful
+    * @param sql SQL query
+    * @param values ArrayList of values
+    * @return results true/false depending on success or failure of execution
     * @throws DLException
     */   
    public boolean setData(String sql, ArrayList<String> values) throws DLException {
@@ -385,9 +385,9 @@ public class MySQLDatabase {
    }   
    /**
     * execute Stmt 
-    * @param mySql
-    * @param values
-    * @return results
+    * @param mySql SQL query
+    * @param values ArrayList of values
+    * @return results ResultSet
     * @throws DLException
     */    
    public int executeStmt(String mySql, ArrayList<String> values) throws DLException {
@@ -414,8 +414,8 @@ public class MySQLDatabase {
    }
    /**
     * second method that sets the data 
-    * @param sql
-    * @param values
+    * @param sql SQL query
+    * @param values ArrayList of values
     * @return -1
     * @throws DLException
     */ 
@@ -428,9 +428,9 @@ public class MySQLDatabase {
    }
    /**
     * execute Stmt2 
-    * @param mySql
-    * @param values
-    * @return id
+    * @param mySql SQL query
+    * @param values ArrayList of values
+    * @return id ResultSet
     * @throws DLException
     */ 
    public int executeStmt2(String mySql, ArrayList<String> values) throws DLException {
@@ -464,9 +464,10 @@ public class MySQLDatabase {
    }
    /**
     * prepare2 PreparedStatement 
-    * @param mySql
-    * @param values
-    * @return result
+    * @param mySql SQL query
+    * @param values  ArrayList of values
+    * @return result PreparedStatement for database
+
     * @throws DLException
     */    
    public PreparedStatement prepare2(String mySql, ArrayList<String> values) throws DLException {
