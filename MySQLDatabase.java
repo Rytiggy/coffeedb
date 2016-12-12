@@ -25,7 +25,7 @@ public class MySQLDatabase {
   
    /**
     * Attempts to connect to the Mysql database with input provided 
-    * @return result true if db opens connection successfully
+    * @return result true/false depending on 
     * @throws DLException 
     */         
    public static boolean connect() throws DLException{
@@ -47,7 +47,7 @@ public class MySQLDatabase {
 
    /**
     * Attempts to close the Mysql database with input provided 
-    * @return result true if db closes successfully
+    * @return result true / false if db closes successfully
     * @throws DLException 
     */ 
    public static boolean close() throws DLException {
@@ -78,9 +78,9 @@ public class MySQLDatabase {
    
    /**
     * Returns the data 
-    * @param mySql
-    * @param addColumnNames
-    * @return results
+    * @param mySql SQL query
+    * @param addColumnNames boolean
+    * @return results ArrayList
     * @throws DLException 
     */ 
    public ArrayList<ArrayList<String>> getData(String mySql , boolean addColumnNames) throws DLException {
@@ -133,8 +133,8 @@ public class MySQLDatabase {
    }
    /**
     * get Data method that returns the data
-    * @param mySql
-    * @return getData
+    * @param mySql SQL query
+    * @return getData 
     * @throws DLException 
     */ 
    public ArrayList<ArrayList<String>> getData(String mySql) throws DLException {
