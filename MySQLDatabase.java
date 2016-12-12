@@ -77,7 +77,7 @@ public class MySQLDatabase {
    // column names should be included in the returned data the	returned structure.  
    
    /**
-    * getData 
+    * Returns the data 
     * @param mySql
     * @param addColumnNames
     * @return results
@@ -132,7 +132,7 @@ public class MySQLDatabase {
    
    }
    /**
-    * get Data 
+    * get Data method that returns the data
     * @param mySql
     * @return getData
     * @throws DLException 
@@ -148,7 +148,7 @@ public class MySQLDatabase {
    }
    
    /**
-    * set Data 
+    * sets the Data 
     * @param table
     * @return results true if set data was successful / false if error occured 
     * @throws DLException 
@@ -182,7 +182,7 @@ public class MySQLDatabase {
       return results;
    }
     /**
-    * desc Table 
+    * method that describe the Table 
     * @param table
     * @throws DLException 
     */ 
@@ -191,7 +191,7 @@ public class MySQLDatabase {
    }
    
     /**
-    * desc Table 
+    * method that desccribes the Table 
     * @param table
     * @param headers
     * @throws DLException 
@@ -293,7 +293,7 @@ public class MySQLDatabase {
       }     
    }
    /**
-    * prepare 
+    * prepare statement 
     * @param mySql
     * @param values
     * @return result
@@ -317,7 +317,7 @@ public class MySQLDatabase {
    
    }
    /**
-    * get Data 
+    * Method getData returns the data
     * @param mySql
     * @param values
     * @return results
@@ -367,7 +367,7 @@ public class MySQLDatabase {
    
    }
    /**
-    * set Data 
+    * sets the Data 
     * @param sql
     * @param values
     * @return results true if set data was successful
@@ -413,7 +413,7 @@ public class MySQLDatabase {
       return results;          
    }
    /**
-    * set Data2 
+    * second method that sets the data 
     * @param sql
     * @param values
     * @return -1
@@ -488,7 +488,7 @@ public class MySQLDatabase {
    
 
    /**
-    * start Trans 
+    * Start transaction method 
     * @throws DLException
     */    
    public void startTrans() throws DLException {
@@ -505,7 +505,7 @@ public class MySQLDatabase {
    }
    
    /**
-    * end Trans 
+    * end Transaction method 
     * @throws DLException
     */    
    public void endTrans() throws DLException {
@@ -522,7 +522,7 @@ public class MySQLDatabase {
       }
    }
    /**
-    * rollbackTrans 
+    * roll back Transaction method if intermediate values indicate a need to abort or exception/error thrown.
     * @throws DLException
     */ 
    public void rollbackTrans() throws DLException {
