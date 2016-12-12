@@ -115,7 +115,11 @@ public class BLPapers {
     * post Keywords 
     * @param _keywords
     * @throws DLException
-    */      
+    */  
+   public String[] getKeywords() {
+      return dataLayer.getKeywords();
+   } 
+        
    public void postKeywords(ArrayList<String> _keywords) throws DLException {
       dataLayer.postKeywords(_keywords);
    }

@@ -35,10 +35,15 @@ public class Main {
          "| role: " + user.getRole());
          
          /*
-         BLPapers paper = new BLPapers();
-         
+         BLPapers paper = new BLPapers("1");
+         String[] testKeywords = paper.getKeywords();
+         for(int i = 0; i < testKeywords.length; i++) {           
+            System.out.println(testKeywords[i]);
+         }
+         /*
          paper.updatePaper(1, "t23t", "test", "test", "test");
          
+         /*
          BLPapers paper = new BLPapers();
          System.out.println(paper.deletePaper(1));
          */
