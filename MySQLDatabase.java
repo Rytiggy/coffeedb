@@ -25,7 +25,7 @@ public class MySQLDatabase {
   
    /**
     * Attempts to connect to the Mysql database with input provided 
-    * @return result true/false depending on 
+    * @return result true/false depending on if the connection was successful
     * @throws DLException 
     */         
    public static boolean connect() throws DLException{

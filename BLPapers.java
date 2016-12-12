@@ -33,7 +33,7 @@ public class BLPapers {
    /**
     * Uses search input to search all papers 
     * @param searchInput
-    * @return blPapers
+    * @return blPapers ArrayList
     * @throws DLException
     */ 
    public ArrayList<BLPapers> searchPapers(String[] searchInput) throws DLException {
@@ -75,7 +75,7 @@ public class BLPapers {
    /**
     * fetch All Keywords 
     * @param searchInput
-    * @return blPapers
+    * @return dataLayer.fetchAllKeywords
     * @throws DLException
     */    
    public ArrayList<ArrayList<String>> fetchAllKeywords() throws DLException {
@@ -90,20 +90,20 @@ public class BLPapers {
       return dataLayer.postPaper();
    }
    /**
-    * update an exisiting Paper 
+    * update an exisiting Paper in the DB
     * @param myPaperId
     * @param myTitle
     * @param myPaperAbstract
     * @param myCitation
     * @param myPdfPath
-    * @return dataLayer.updatePaper true if paper was updated
+    * @return dataLayer.updatePaper true if paper was updated 
     * @throws DLException
     */    
    public boolean updatePaper(int myPaperId, String myTitle, String myPaperAbstract, String myCitation, String myPdfPath) throws DLException {
       return dataLayer.updatePaper(myPaperId, myTitle, myPaperAbstract, myCitation, myPdfPath);
    }
    /**
-    * delete Paper 
+    * delete Paper from DB
     * @param myPaperId
     * @return dataLayer.deletePaper true if paper was successfully deleted
     * @throws DLException
