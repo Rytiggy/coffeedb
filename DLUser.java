@@ -147,7 +147,7 @@ public class DLUser {
       return exists;
    }
    /**
-    * createGuestUser 
+    * create Guest User and add user to the Database 
     * @param _fName
     * @param _lName
     * @param _email 

@@ -96,7 +96,7 @@ public class DLPapers {
    }
    
    /**
-    * Make changes to an existing paper
+    * Make changes to update an existing paper
     * @return succ
     * @throws DLException
     *
@@ -123,7 +123,7 @@ public class DLPapers {
       return succ;
    }
    /**
-    * createAuthorship
+    * create Authorship
     * @param _users
     * @return succ / true if create authorship inserts into the DB 
     * @throws DLException if a system exception occurred
@@ -295,7 +295,7 @@ public class DLPapers {
    }
 
    /**
-    * Return all papers with a particular keyword
+    * get PDF data
     * @return pdfData
     *
     */
@@ -303,7 +303,7 @@ public class DLPapers {
       return pdfData;
    }
    /**
-    * setPdfData
+    * set Pdf Data
     * @param pdfData
     *
     */
@@ -328,7 +328,7 @@ public class DLPapers {
       return keywords;
    }
    /**
-    * Create a new keyword
+    * create a new keyword
     * @param _keyword
     *
     */

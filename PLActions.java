@@ -11,11 +11,19 @@ import java.util.ArrayList;
 // Functions of the GUI
 public class PLActions {
    
-   // Default Constructor
+   /**
+    * Default Constructor
+    *
+    */   
    public PLActions() {
    }
    
-   // Search FacResearchDB for papers given user input
+   /**
+    * Search FacResearchDB for papers given user input
+    * @param searchInput
+    * @returns matchedPapers
+    * @throws DLException
+    */  
    public ArrayList<BLPapers> search(String searchInput) throws DLException {
       // Used to retrieve all papers and keywords
       BLPapers blPapers = new BLPapers();
@@ -60,18 +68,35 @@ public class PLActions {
       return matchedPapers;
    }   
    
-   // Sign-in ------------------ Jeremy TODO
+   //  ------------------ Jeremy TODO
+   /**
+    * Sign-in
+    */  
    public void signIn() {
       // sign the faculty user in
    }
    
-   // View Details 
+   /**
+    * view details
+    * @param _paperID
+    * @returns blPapers
+    * @throws DLException
+    */  
    public BLPapers viewDetails(String _paperID) throws DLException {
       BLPapers blPapers = new BLPapers(_paperID);
       return blPapers;
    }
    
-   // Upload
+      
+   /**
+    * upload paper
+    * @param _title
+    * @param _abstract
+    * @param _url
+    * @param _keywords
+    * @param _users
+    * @throws DLException
+    */  
    public void uploadPaper(String _title, String _citation, String _abstract, String _url, ArrayList<String> _keywords, String[][] _users) throws DLException {
       // Reads in text from file and then inserts the paper
       // whenever a faculty is "updating" a paper, they will just be re-writing over the old one
@@ -129,7 +154,11 @@ public class PLActions {
       paper.createAuthorship(authors);
 
    }
-
+   /**
+    * open PDF of paper
+    * @param _path
+    * @throws DLException
+    */  
    public void openPDF(String _path) {
       if (Desktop.isDesktopSupported()) {
          try {
