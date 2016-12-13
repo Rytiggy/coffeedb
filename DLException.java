@@ -10,14 +10,19 @@ import java.text.*;
 public class DLException extends Exception{
    private Exception e;
    Writer writer = null;
-
-//constructor that accepts a single parameter of type Exception
+   /**
+    * constructor that accepts a single parameter of type Exception
+    * @param e
+    */ 
    public DLException(Exception e) {
       super("Unable to compleate task. Please check logs for more info.");
       log("\n" + e.getMessage() + "\n");
    }
-   
-//constructor that accepts a parameter of type Exception and a subclass of Map
+   /**
+    * constructor that accepts a parameter of type Exception and a subclass of Map
+    * @param e
+    * @param errorMsg
+    */ 
    public DLException(Exception e, Map<String, String> errorMsg) {
       super("Unable to complete task. Please check logs for more info.");
       String messageString = "\n" + e.getMessage() + "\n";
@@ -28,7 +33,10 @@ public class DLException extends Exception{
       log(messageString);
    }
   
- // log to log file  
+   /**
+    * log to a file
+    * @param errorMsg
+    */ 
    public void log(String errorMsg) {
       Date date = new Date();
       SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");

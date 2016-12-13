@@ -49,7 +49,7 @@ public class DLPapers {
    
    /**
     * Get all existing papers in the database
-    * @return papers
+    * @return papers ArrayList
     * @throws DLException
     *
     */
@@ -66,7 +66,7 @@ public class DLPapers {
   
    /**
     * Create a new paper
-    * @return succ
+    * @return succ true / false depending on if the paper was posted
     * @throws DLException
     *
     */
@@ -96,8 +96,8 @@ public class DLPapers {
    }
    
    /**
-    * Make changes to an existing paper
-    * @return succ
+    * Make changes to update an existing paper
+    * @return succ true / false depending on if the paper was updated successfully. 
     * @throws DLException
     *
     */
@@ -123,8 +123,10 @@ public class DLPapers {
       return succ;
    }
    /**
-    *
-    * @return true
+    * create Authorship
+    * @param _users
+    * @return succ / true if create authorship inserts into the database. 
+    * @throws DLException if a system exception occurred
     */
    public boolean createAuthorship(BLUser[] _users) throws DLException {
       boolean succ = false;
@@ -149,8 +151,8 @@ public class DLPapers {
 
    /**
     * Delete a paper
-    * @return succ
-    * @throws DLException
+    * @return succ true / false depending on if the paper was deleted from the database.
+    * @throws DLException if a system exception occurred
     *
     */
    public boolean deletePaper(int myPaperId) throws DLException {
@@ -175,7 +177,7 @@ public class DLPapers {
    }
    
    /**
-    * 
+    * fetch paper
     * @return this
     * @throws DLException
     *
@@ -186,7 +188,7 @@ public class DLPapers {
 
    /**
     * Fetch and set this paper's attributes
-    * @throws DLException
+    * @throws DLException if a system exception occurred
     *
     */
    public void fetchPaperAttributes() throws DLException {
@@ -206,6 +208,17 @@ public class DLPapers {
        pdfData = paperAttributes.get(1).get(4);
 
    
+
+      
+      // Get paper keywords
+      String getPaperKeywordsSQL = "SELECT keyword FROM paper_keywords WHERE id = ?";
+      paperAttributes = msqlDB.getData(getPaperKeywordsSQL, list);
+      keywords = new String[paperAttributes.get(1).size()];
+      for (int i = 0; i < paperAttributes.get(1).size(); i++) {
+         keywords[i] = paperAttributes.get(1).get(i);
+         System.out.println(keywords[i]);
+      }
+      
       // Add users to the paper
       ArrayList<String> arr = new ArrayList<String>();
       arr.add(this.getPaperID());
@@ -232,8 +245,8 @@ public class DLPapers {
    /**
     * Search and find any papers matching user search input
     * @param searchInput
-    * @return matchedPapers
-    * @throws DLException
+    * @return matchedPapers ArrayList
+    * @throws DLException if a system exception occurred
     *
     */
    public ArrayList<DLPapers> searchPapers(String[] searchInput) throws DLException {
@@ -297,7 +310,7 @@ public class DLPapers {
    }
 
    /**
-    * Return all papers with a particular keyword
+    * get PDF data
     * @return pdfData
     *
     */
@@ -305,7 +318,7 @@ public class DLPapers {
       return pdfData;
    }
    /**
-    * setPdfData
+    * set Pdf Data
     * @param pdfData
     *
     */
@@ -313,11 +326,6 @@ public class DLPapers {
       this.pdfData = pdfData;
    }
 
-   /**
-    * get author
-    * @return author
-    *
-    */
 
    /**
     * Return all keywords from DB
@@ -335,7 +343,7 @@ public class DLPapers {
       return keywords;
    }
    /**
-    * Create a new keyword
+    * create a new keyword
     * @param _keyword
     *
     */
@@ -373,7 +381,7 @@ public class DLPapers {
    /**
     * Make changes to a keyword 
     * @param _keyword
-    * @throws DLException
+    * @throws DLException 
     *
     */
    public void putKeyword(String _keyword) throws DLException {
@@ -422,7 +430,7 @@ public class DLPapers {
    }
    /**
     * get Citation
-    *
+    * @return citation
     */
    public String getCitation() {
       return citation;
@@ -458,11 +466,19 @@ public class DLPapers {
    public String[] getKeywords() {
       return keywords;
    }
-
+   /**
+    * get users
+    * @return users
+    *
+    */
    public BLUser[] getUsers() {
       return users;
    }
-
+   /**
+    * set users
+    * @param users
+    *
+    */
    public void setUsers(BLUser[] users) {
       this.users = users;
    }

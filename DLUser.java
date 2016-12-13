@@ -71,14 +71,9 @@ public class DLUser {
       return isValidLogin;
    }
    
-   // Set this user's role
    /**
-    * 
-    * @param 
-    * @param
-    * @return
-    * @throws
-    *
+    * Set this user's role
+    * @throws DLException
     */   
    public void getUserRole() throws DLException {
       // Has the user been validated?
@@ -99,13 +94,10 @@ public class DLUser {
          role = userData.get(1).get(0);
       }
    }
-
-   // Encrypt a password using SHA1
    /**
-    * 
-    * @param 
-    * @return
-    * @throws
+    * Encrypt a password using SHA1
+    * @param myPassword
+    * @return encryptedPassword
     *
     */   
    public String encryptPassword(String myPassword) {
@@ -127,7 +119,12 @@ public class DLUser {
       }
       return encryptedPassword;
    }
-
+   /**
+    * checkUser 
+    * @param _email
+    * @return exists if the user exists
+    * @throws DLException
+    */ 
    public boolean checkUser(String _email) throws DLException {
       boolean exists = false;
 
@@ -150,7 +147,14 @@ public class DLUser {
       database.close();
       return exists;
    }
-
+   /**
+    * create Guest User and add user to the Database 
+    * @param _fName
+    * @param _lName
+    * @param _email 
+    * @return succ true if the guest user is added to the DB
+    * @throws DLException
+    */ 
    public boolean createGuestUser(String _fName, String _lName, String _email) throws DLException {
       boolean succ = false;
 
@@ -181,9 +185,7 @@ public class DLUser {
    
    // Getters
    /**
-    * 
-    * @param 
-    * @param
+    * get user ID
     * @return userId
     *
     */   
@@ -191,9 +193,7 @@ public class DLUser {
       return userId;
    }
    /**
-    * 
-    * @param 
-    * @param
+    * Get first name
     * @return fName
     *
     */   
@@ -201,9 +201,7 @@ public class DLUser {
       return fName;
    }
    /**
-    * 
-    * @param 
-    * @param
+    * Get last name
     * @return lName
     *
     */      
@@ -211,7 +209,7 @@ public class DLUser {
       return lName;
    }
    /**
-    * 
+    * Get password
     * @return password
     *
     */   
@@ -219,7 +217,7 @@ public class DLUser {
       return password;
    }
    /**
-    * 
+    * Get email
     * @return email
     *
     */      
@@ -227,30 +225,49 @@ public class DLUser {
       return email;
    }
    /**
-    * 
+    * Get role
     * @return role
     *
     */      
    public String getRole() {
       return role;
    }
-
+   /**
+    * set User Id
+    * @param userId
+    *
+    */         
    public void setUserId(int userId) {
       this.userId = userId;
    }
-
+   /**
+    * set first name
+    * @param fName
+    *
+    */      
    public void setfName(String fName) {
       this.fName = fName;
    }
-
+   /**
+    * set last name
+    * @param lName
+    *
+    */      
    public void setlName(String lName) {
       this.lName = lName;
    }
-
+   /**
+    * set email
+    * @param email
+    *
+    */      
    public void setEmail(String email) {
       this.email = email;
    }
-
+   /**
+    * Set role
+    * @param role
+    */      
    public void setRole(String role) {
       this.role = role;
    }
