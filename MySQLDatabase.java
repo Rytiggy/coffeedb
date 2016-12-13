@@ -17,10 +17,10 @@ public class MySQLDatabase {
     * 
     */ 
    public MySQLDatabase(){
-      uri= "jdbc:mysql://localhost/facresearchdb?autoReconnect=true&useSSL=false";
+      uri= "jdbc:mysql://localhost:8889/facresearchdb?autoReconnect=true&useSSL=false";
       String driver="com.mysql.jdbc.Driver";
       user = "root";
-      password = "student";
+      password = "root";
    }
   
    /**

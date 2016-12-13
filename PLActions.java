@@ -107,7 +107,7 @@ public class PLActions {
             authors[k] = user;
             k++;
             }
-      }
+      }        
       for(int f = 0; f < authors.length; f++) {
          System.out.println(authors[f].getLName());
          System.out.println(authors[f].getUserId());
@@ -127,7 +127,7 @@ public class PLActions {
          try {
             File myFile = new File(_path);
             Desktop.getDesktop().open(myFile);
-         } catch (IOException ex) {
+         } catch (IOException | NullPointerException ex) {
             ex.printStackTrace();
          }
       }

@@ -1,0 +1,10 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /usr/local/bin/node /usr/local/bin/firebase deploy --only hosting --debug
+[debug] CLI Version:  3.1.0
+[debug] Platform:     darwin
+[debug] Node Version: v4.6.1
+[debug] Time:         Fri Dec 09 2016 15:26:57 GMT-0500 (EST)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[error] 
+[error] Error: Not in a Firebase app directory (could not locate firebase.json)

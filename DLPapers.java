@@ -83,12 +83,12 @@ public class DLPapers {
    
       String sql = "INSERT INTO papers (title, abstract, citation, path)" +
                 " VALUES (?, ?, ?, ?);";
-
+   
       int in = msqlDB.setData2(sql, list);
       if(in > 0) {
          succ = true;
       }
-
+   
       this.setPaperID(Integer.toString(in));
       msqlDB.close();
    
@@ -130,22 +130,22 @@ public class DLPapers {
     */
    public boolean createAuthorship(BLUser[] _users) throws DLException {
       boolean succ = false;
-
+   
       msqlDB.connect();
-
+   
       for(int i = 0; i < _users.length; i++) {
          ArrayList<String> list = new ArrayList();
          list.add(String.valueOf(_users[i].getUserId()));
          list.add(String.valueOf(this.paperID));
-
+      
          String qu = "INSERT INTO authorship (userId, paperId)" +
                  " VALUES (?, ?);";
-
+      
          System.out.print(msqlDB.setData(qu, list));
       }
-
+   
       msqlDB.close();
-
+   
       return succ;
    }
 
@@ -194,9 +194,9 @@ public class DLPapers {
    public void fetchPaperAttributes() throws DLException {
       ArrayList<ArrayList<String>> paperAttributes = new ArrayList();
       ArrayList<String> list = new ArrayList<String>();
-
+   
       msqlDB.connect();
-
+   
       list.add(this.paperID);
       String sql = "SELECT * FROM papers WHERE ID =?;";
       paperAttributes = msqlDB.getData(sql, list);
@@ -205,6 +205,10 @@ public class DLPapers {
       title = paperAttributes.get(1).get(1);
       paperAbstract = paperAttributes.get(1).get(2);
       citation = paperAttributes.get(1).get(3);
+       pdfData = paperAttributes.get(1).get(4);
+
+   
+
       
       // Get paper keywords
       String getPaperKeywordsSQL = "SELECT keyword FROM paper_keywords WHERE id = ?";
@@ -219,20 +223,22 @@ public class DLPapers {
       ArrayList<String> arr = new ArrayList<String>();
       arr.add(this.getPaperID());
       String sqlUser = "SELECT user.* FROM user, authorship WHERE user.Id = authorship.userId AND authorship.paperId = ?;";
-
+   
       paperAttributes = new ArrayList();
       paperAttributes = msqlDB.getData(sqlUser, arr);
       BLUser[] users = new BLUser[paperAttributes.size()-1];
-
+   
       for(int i = 1; i < paperAttributes.size(); i++) {
          BLUser temp = new BLUser();
+         temp.setUserId( Integer.parseInt(paperAttributes.get(i).get(0)));
          temp.setfName(paperAttributes.get(i).get(1));
          temp.setlName(paperAttributes.get(i).get(2));
          temp.setEmail(paperAttributes.get(i).get(4));
+      
          users[i-1] = temp;
-         }
-
-         this.setUsers(users);
+      }
+   
+      this.setUsers(users);
       msqlDB.close();
    }
       
@@ -299,7 +305,7 @@ public class DLPapers {
             }
          }  
       }
-
+   
       return matchedPapers;
    }
 
@@ -329,11 +335,11 @@ public class DLPapers {
     */
    public ArrayList<ArrayList<String>> fetchAllKeywords() throws DLException {
       ArrayList<ArrayList<String>> keywords = new ArrayList<ArrayList<String>>();
-
+   
       msqlDB.connect();
       String sql = "SELECT * FROM paper_keywords;";
       keywords = msqlDB.getData(sql);
-
+   
       return keywords;
    }
    /**
@@ -342,16 +348,16 @@ public class DLPapers {
     *
     */
    public void postKeywords(ArrayList<String> _keyword) throws DLException {
-         msqlDB.connect();
-
-         for (int i = 0; i < _keyword.size(); i++) {
-            ArrayList<String> arr = new ArrayList<>();
-            arr.add(this.getPaperID());
-            arr.add(_keyword.get(i));
-            String sql = "INSERT INTO paper_keywords (id, keyword) VALUES (?, ?);";
-            msqlDB.setData(sql, arr);
-         }
-
+      msqlDB.connect();
+   
+      for (int i = 0; i < _keyword.size(); i++) {
+         ArrayList<String> arr = new ArrayList<>();
+         arr.add(this.getPaperID());
+         arr.add(_keyword.get(i));
+         String sql = "INSERT INTO paper_keywords (id, keyword) VALUES (?, ?);";
+         msqlDB.setData(sql, arr);
+      }
+   
       msqlDB.close();
    }
    /**
@@ -361,13 +367,13 @@ public class DLPapers {
     *
     */
    public void deleteKeyword(String _keyword) throws DLException {
-
-         msqlDB.connect();
-         ArrayList list = new ArrayList();
-         list.add(_keyword);
-         String sql = "DELETE FROM paper_keywords WHERE keyword = ?;";
-         msqlDB.setData(sql, list);
-         msqlDB.close();
+   
+      msqlDB.connect();
+      ArrayList list = new ArrayList();
+      list.add(_keyword);
+      String sql = "DELETE FROM paper_keywords WHERE keyword = ?;";
+      msqlDB.setData(sql, list);
+      msqlDB.close();
    }
 
    // Make changes to a keyword -- THIS NEEDS TO BE CHANGED.
@@ -379,14 +385,14 @@ public class DLPapers {
     *
     */
    public void putKeyword(String _keyword) throws DLException {
-         ArrayList list = new ArrayList();
-
-         msqlDB.connect();
-         list.add(_keyword);
-         String sql = "UPDATE keyword_papers SET keyword = ? WHERE keyword = ?";
-         list.add(this.keywords);
-         msqlDB.setData(sql, list);
-         msqlDB.close();
+      ArrayList list = new ArrayList();
+   
+      msqlDB.connect();
+      list.add(_keyword);
+      String sql = "UPDATE keyword_papers SET keyword = ? WHERE keyword = ?";
+      list.add(this.keywords);
+      msqlDB.setData(sql, list);
+      msqlDB.close();
    }
    
    // Getters and setters
