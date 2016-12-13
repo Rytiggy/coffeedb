@@ -16,13 +16,12 @@ import java.security.NoSuchAlgorithmException;
 
 public class DLUser {
    // Table attributes
-   private int userId;
+   private int userId = -1;
    private String fName, lName, password, email, role;
    private MySQLDatabase database;
    
    // Constructor
    DLUser() {
-      userId = -1;
       database = new MySQLDatabase();
       String fName = null;
       String lName = null;
@@ -54,6 +53,7 @@ public class DLUser {
          // Attempt to retrieve user attributes
          ArrayList<ArrayList<String>> userData = database.getData(getUserDataSQL, myAttributes);    
          userId = Integer.valueOf(userData.get(1).get(0));
+         System.out.println("USER ID DL"  + userId);
          fName = userData.get(1).get(1); 
          lName = userData.get(1).get(2);
          email = myEmail;

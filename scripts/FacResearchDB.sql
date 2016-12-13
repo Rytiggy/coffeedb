@@ -67,7 +67,7 @@ CREATE TABLE `authorship` (
 
 LOCK TABLES `authorship` WRITE;
 /*!40000 ALTER TABLE `authorship` DISABLE KEYS */;
-INSERT INTO `authorship` VALUES (1,1),(1,2),(1,3),(1,4),(2,3);
+INSERT INTO `authorship` VALUES (1,2),(1,3),(1,4),(2,3),(6,1);
 /*!40000 ALTER TABLE `authorship` ENABLE KEYS */;
 UNLOCK TABLES;
 
