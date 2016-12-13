@@ -167,7 +167,7 @@ public class DLPapers {
       String deleteFromPapersSQL = "DELETE FROM papers WHERE id=?";
       
       // First delete any instances of paper & keywords, then delete from papers
-      if((msqlDB.setData(deleteFromAuthorshipSQL, list) && msqlDB.setData(deleteFromKeywordsSQL, list)) || (msqlDB.setData(deleteFromPapersSQL, list))) {
+      if((msqlDB.setData(deleteFromAuthorshipSQL, list) && msqlDB.setData(deleteFromKeywordsSQL, list)) && (msqlDB.setData(deleteFromPapersSQL, list))) {
          succ = true;
       }
    
@@ -209,7 +209,7 @@ public class DLPapers {
 
    
 
-      
+      /* DEPRECATED
       // Get paper keywords
       String getPaperKeywordsSQL = "SELECT keyword FROM paper_keywords WHERE id = ?";
       paperAttributes = msqlDB.getData(getPaperKeywordsSQL, list);
@@ -218,7 +218,7 @@ public class DLPapers {
          keywords[i] = paperAttributes.get(1).get(i);
          System.out.println(keywords[i]);
       }
-      
+      */
       // Add users to the paper
       ArrayList<String> arr = new ArrayList<String>();
       arr.add(this.getPaperID());

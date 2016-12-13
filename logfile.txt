@@ -16,3 +16,45 @@ Could not create connection to database server. Attempted reconnect 3 times. Giv
 SQLState : 08001
 SQLErrorCode : 0
 Error Occurred : Connect Method
+
+12/13/2016 8:24:39 AM: 
+Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+SQLState : 08001
+SQLErrorCode : 0
+Error Occurred : Connect Method
+
+12/13/2016 8:25:04 AM: 
+Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+SQLState : 08001
+SQLErrorCode : 0
+Error Occurred : Connect Method
+
+12/13/2016 8:31:31 AM: 
+Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+SQLState : 08001
+SQLErrorCode : 0
+Error Occurred : Connect Method
+
+12/13/2016 8:32:16 AM: 
+Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+SQLState : 08001
+SQLErrorCode : 0
+Error Occurred : Connect Method
+
+12/13/2016 8:32:45 AM: 
+Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+SQLState : 08001
+SQLErrorCode : 0
+Error Occurred : Connect Method
+
+12/13/2016 8:32:58 AM: 
+Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+SQLState : 08001
+SQLErrorCode : 0
+Error Occurred : Connect Method
+
+12/13/2016 8:33:40 AM: 
+Could not create connection to database server. Attempted reconnect 3 times. Giving up.
+SQLState : 08001
+SQLErrorCode : 0
+Error Occurred : Connect Method

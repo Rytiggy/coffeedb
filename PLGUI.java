@@ -647,13 +647,13 @@ public class PLGUI {
          
          //BLPapers papers = new BLPapers();
          
-         try{
+         /*try{
             System.out.println(paper.fetchAllKeywords());
          }
          catch(DLException dle){
             System.out.println("Error Please see logs for more info.");
          
-         }
+         }*/
          JPanel panel = new JPanel();
          uploadFrame.add(panel);
          placeComponents(panel);
@@ -896,8 +896,6 @@ public class PLGUI {
    }
    
    public static boolean checkLoginStatus(String paperID){    
-            System.out.println("heheheh");
-            System.out.println(user.getUserId());
       try{ 
            
             deletePaper.setVisible(false);
@@ -905,7 +903,7 @@ public class PLGUI {
             downloadPaper.setVisible(false);
             
          if(user.getUserId() != -1){ //if the user is logged in
-            System.out.println("heyyy your login  ROLE:"  + user.getRole() + " <<ROLE ");
+            //System.out.println("heyyy your login  ROLE:"  + user.getRole() + " <<ROLE ");
             loginButton.setVisible(false);
             userEmailLabel.setText(user.getEmail());
             userEmailLabel.setVisible(true);
@@ -920,11 +918,11 @@ public class PLGUI {
                
                if(!paperID.equals("n/a")){
                   
-                  System.out.println("hey");
+                  //System.out.println("hey");
                   paper = new BLPapers(String.valueOf(paperID));
                   
                   for (int i = 0; i  <  paper.getUsers().length; i++) {
-                     System.out.println(paper.getUsers()[i].getUserId());
+                     //System.out.println(paper.getUsers()[i].getUserId());
                      
                      if(paper.getUsers()[i].getUserId() == user.getUserId() ){
                         deletePaper.setVisible(true);
@@ -952,7 +950,7 @@ public class PLGUI {
             
          }
          else{
-            System.out.println("heyyy your not login in else");
+            //System.out.println("heyyy your not login in else");
          
             return false;
          }
