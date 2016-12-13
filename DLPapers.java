@@ -205,7 +205,16 @@ public class DLPapers {
       title = paperAttributes.get(1).get(1);
       paperAbstract = paperAttributes.get(1).get(2);
       citation = paperAttributes.get(1).get(3);
-
+      
+      // Get paper keywords
+      String getPaperKeywordsSQL = "SELECT keyword FROM paper_keywords WHERE id = ?";
+      paperAttributes = msqlDB.getData(getPaperKeywordsSQL, list);
+      keywords = new String[paperAttributes.get(1).size()];
+      for (int i = 0; i < paperAttributes.get(1).size(); i++) {
+         keywords[i] = paperAttributes.get(1).get(i);
+         System.out.println(keywords[i]);
+      }
+      
       // Add users to the paper
       ArrayList<String> arr = new ArrayList<String>();
       arr.add(this.getPaperID());
